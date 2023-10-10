@@ -1,10 +1,10 @@
 
 #include <iostream>
-
+#include "CConsole.h"
 int main()
 {
 
-    //Hello
+    CConsole::setConsole();
     std::cout << "Hello World!\n";
 }
 
