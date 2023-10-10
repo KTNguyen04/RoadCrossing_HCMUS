@@ -1,9 +1,11 @@
 #include "CConsole.h"
-void CConsole::setConsole()
+CConsole::CConsole()
 {
+	system("color F0");
 	fixConsoleWindow();
 	removeScrollBar();
 	moveConsole();
+
 }
 void CConsole::fixConsoleWindow() {
 	HWND consoleWindow = GetConsoleWindow();
@@ -38,3 +40,45 @@ void CConsole::moveConsole()
 	int consoleHeight = r.bottom - r.top;
 	MoveWindow(console, (screenWidth - consoleWidth) / 2, (screenHeight - consoleHeight) / 2, consoleWidth, consoleHeight, TRUE);
 }
+
+void CConsole::gotoXY(int x, int y)
+{
+	COORD coord;
+	coord.X = x;
+	coord.Y = y;
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
+}
+
+int CConsole::getConsoleHei()
+{
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
+	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
+	return csbi.srWindow.Bottom;
+
+}
+
+void CConsole::drawChar(int x, int y, char c, int color)
+{
+	gotoXY(x, y);
+	color += 15 * 16;
+	setColor(color);
+	cout << c;
+	color = Black + 15 * 16;
+	setColor(color);
+
+}
+
+void CConsole::setColor(int color)
+{
+	HANDLE consoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(consoleOutput, color);
+}
+
+int CConsole::getConsoleWid()
+{
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
+	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
+	return csbi.srWindow.Right;
+
+}
+
