@@ -4,15 +4,15 @@
 
 using namespace std;
 #include "CConsole.h"
-
+#include "CGame.h"
+#include "CPeople.h"
 int main()
 {
 	CConsole c;
-	cout << CConsole::getConsoleHei() << CConsole::getConsoleWid();
-	CConsole::drawChar(1, 2, 254, Blue);
-	//cout << "hello";
+	CGame g;
+	CPeople p;
+
 	system("pause>0");
-	cout << FOREGROUND_RED;
 
 }
 

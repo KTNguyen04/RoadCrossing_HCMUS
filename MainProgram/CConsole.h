@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <Windows.h>
 #include <windows.h>
 #include <winuser.h>
@@ -35,8 +35,10 @@ public:
 	static int getConsoleHei();
 	static void drawChar(int x, int y, char c, int color);
 	static void setColor(int color);
+	static void drawHorLine(int fromX, int toX, int y, char c, int color);         //kẻ ngang
+	static void drawVerLine(int fromY, int toY, int x, char c, int color);
+	static void showConsoleCursor(bool showFlag);
 };
-
 // colors are 0 = black 1 = blue 2 = green and so on to 15 = white
 // colorattribute = foreground + background * 16
 // to get red text on yellow use 4 + 14*16 = 228

@@ -5,6 +5,7 @@ CConsole::CConsole()
 	fixConsoleWindow();
 	removeScrollBar();
 	moveConsole();
+	showConsoleCursor(false);
 
 }
 void CConsole::fixConsoleWindow() {
@@ -57,6 +58,14 @@ int CConsole::getConsoleHei()
 
 }
 
+int CConsole::getConsoleWid()
+{
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
+	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
+	return csbi.srWindow.Right;
+
+}
+
 void CConsole::drawChar(int x, int y, char c, int color)
 {
 	gotoXY(x, y);
@@ -67,18 +76,33 @@ void CConsole::drawChar(int x, int y, char c, int color)
 	setColor(color);
 
 }
-
 void CConsole::setColor(int color)
 {
 	HANDLE consoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(consoleOutput, color);
 }
 
-int CConsole::getConsoleWid()
+void CConsole::drawHorLine(int fromX, int toX, int y, char c, int color)
 {
-	CONSOLE_SCREEN_BUFFER_INFO csbi;
-	GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
-	return csbi.srWindow.Right;
-
+	for (int i = fromX; i <= toX; i++) {
+		drawChar(i, y / 2, c, color);
+	}
 }
+
+void CConsole::drawVerLine(int fromY, int toY, int x, char c, int color)
+{
+	for (int i = fromY; i <= toY; i++) {
+		drawChar(x, i, c, color);
+	}
+}
+
+void CConsole::showConsoleCursor(bool showFlag)
+{
+	HANDLE out = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_CURSOR_INFO cursorInfo;
+	GetConsoleCursorInfo(out, &cursorInfo);
+	cursorInfo.bVisible = showFlag; // set the cursor visibility
+	SetConsoleCursorInfo(out, &cursorInfo);
+}
+
 
