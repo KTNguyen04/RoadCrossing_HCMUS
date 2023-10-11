@@ -105,4 +105,9 @@ void CConsole::showConsoleCursor(bool showFlag)
 	SetConsoleCursorInfo(out, &cursorInfo);
 }
 
+char CConsole::getInput()
+{
+	return tolower(_getch());
+}
+
 

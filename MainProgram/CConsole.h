@@ -3,9 +3,10 @@
 #include <windows.h>
 #include <winuser.h>
 #include<iostream>
+#include <conio.h>
 using namespace std;
 enum {
-	Black,
+	Black,        //0
 	DarkBlue,
 	DarkGreen,
 	DarkCyan,
@@ -20,7 +21,7 @@ enum {
 	Red,
 	Pink,
 	Yellow,
-	White,
+	White,		//15
 };
 class CConsole
 {
@@ -38,6 +39,7 @@ public:
 	static void drawHorLine(int fromX, int toX, int y, char c, int color);         //kẻ ngang
 	static void drawVerLine(int fromY, int toY, int x, char c, int color);
 	static void showConsoleCursor(bool showFlag);
+	static char getInput();
 };
 // colors are 0 = black 1 = blue 2 = green and so on to 15 = white
 // colorattribute = foreground + background * 16

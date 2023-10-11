@@ -10,9 +10,9 @@ int main()
 {
 	CConsole c;
 	CGame g;
-	CPeople p;
+	g.runGame();
 
-	system("pause>0");
+	
 
 }
 

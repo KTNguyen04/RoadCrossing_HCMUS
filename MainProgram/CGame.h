@@ -9,12 +9,17 @@ class CGame
 {
 	static int coorTopLeftX, coorTopLeftY;
 	static int frameWidth, frameHeight;
+	
 public:
 	CGame();
-	void drawBackGround();
+	static void drawFrame();
+	static void drawRoad();
 	static int getWidth();
 	static int getHeight();
 	static int getCoorTopLeftX();
 	static int getCoorTopLeftY();
+	static void insertRectSpace(int x, int y, int hei, int wid, int color);    //bottomLeft coor
+
+	void runGame();
 };
 
