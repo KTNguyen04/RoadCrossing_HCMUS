@@ -67,9 +67,12 @@ void CGame::insertRectSpace(int x, int y, int height, int width, int color)
 void CGame::runGame()
 {
 	CPeople people;
+	CCar car(3, 25.5);
 	while (1) {
-		char c = CConsole::getInput();
-		people.peopleMoving(c);
+		/*char c = CConsole::getInput();
+		people.peopleMoving(c);*/
+		Sleep(100);
+		car.move("right");
 	}
 }
 

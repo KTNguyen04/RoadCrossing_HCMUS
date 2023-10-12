@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CCar.cpp" />
     <ClCompile Include="CConsole.cpp" />
     <ClCompile Include="CGame.cpp" />
     <ClCompile Include="CObstacle.cpp" />
@@ -134,6 +135,7 @@
     <ClCompile Include="MainProgram.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CCar.h" />
     <ClInclude Include="CConsole.h" />
     <ClInclude Include="CGame.h" />
     <ClInclude Include="CObstacle.h" />

@@ -8,6 +8,7 @@ using namespace std;
 #include "CPeople.h"
 int main()
 {
+	system("pause");
 	CConsole c;
 	CGame g;
 	g.runGame();

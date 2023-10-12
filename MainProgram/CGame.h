@@ -1,7 +1,7 @@
 #pragma once
 #include "CConsole.h"
 #include "CPeople.h"
-
+#include "CCar.h"
 #define ThangDung 179
 #define Ngang 196
 #define Vuong 254
