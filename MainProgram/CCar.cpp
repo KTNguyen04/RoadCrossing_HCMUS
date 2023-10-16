@@ -20,7 +20,7 @@ void CCar::move(string direct)
 	drawObject(White);
 	if (direct == "right") {//left to right
 		coorX+=speed;
-		if (!isInBoard() && !isInit()) coorX-=speed;
+		if (!isInBoard() && !isInit()) coorX = CGame::getCoorTopLeftX() + CGame::getWidth() - 1;
 	}
 	else if (direct == "left") {
 		coorX -= speed;

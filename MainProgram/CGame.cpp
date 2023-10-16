@@ -71,11 +71,11 @@ void CGame::runGame()
 	vector<CCar> carList;
 	vector<CCar> carList2;
 
-	createListObstacle<CCar>(carList2, 3, 25-6, 6);
+	createListObstacle<CCar>(carList2, 3, 25-6, 1);
 	createListObstacle<CCar>(carList, 3, 25, 4);
 	while (1) {
 		moveObstacle<CCar>(carList, 1);
-		moveObstacle<CCar>(carList2, 2);
+		moveObstacle<CCar>(carList2, 5);
 	}
 
 
@@ -99,11 +99,13 @@ void CGame::createListObstacle(vector<obstacle>& obs, int x, int y, int number)
 {
 	obs.push_back(obstacle(x, y));
 	int getAvg = frameWidth / number;
+	if (number == 1) getAvg = frameWidth - obs.front().getWidth();
 	int maxDis = (getAvg - obs.front().getWidth() -1) * 2;
 	int minDis = 4;
 
+
 	for (int i = 1; i < number; i++) {
-		int tempX = obs[i - 1].getCoorX() - obs.front().getWidth() - rand() % (maxDis - minDis + 1) - minDis +1;
+		int tempX = obs[i - 1].getCoorX() - obs.front().getWidth() - rand() % (maxDis - minDis ) - minDis ;
 		obs.push_back(obstacle(tempX, y));
 	}
 }
@@ -111,9 +113,9 @@ void CGame::createListObstacle(vector<obstacle>& obs, int x, int y, int number)
 template<class obstacle>
 void CGame::moveObstacle(vector<obstacle>& obs, int speed) {
 
-	int getAvg = frameWidth / obs.size();
+	/*int getAvg = frameWidth / obs.size();
 	int maxDis = (getAvg - obs.front().getWidth()) * 2;
-	int minDis = 4;
+	int minDis = 4;*/
 
 
 	for (int i = 0; i < obs.size(); i++) {
