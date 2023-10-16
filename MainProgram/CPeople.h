@@ -1,6 +1,7 @@
 #pragma once
 #include "CConsole.h"
 #include "CGame.h"
+#include <vector>
 class CPeople
 {
 	int coorX, coorY;

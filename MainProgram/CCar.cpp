@@ -1,30 +1,68 @@
 #include "CCar.h"
 
-CCar::CCar(int x,int y)
+CCar::CCar(int x, int y, int speed)
 {
+	width = carWidth;
+	height = carHeight;
 	coorX = x;
 	coorY = y;
-	width = 6;
-	height = 4;
-	drawObject(Black);
-	
+	this->speed = speed;
+	if (isInBoard())
+		drawObject(Black);
+
 }
 
 void CCar::move(string direct)
 {
 	
+	Sleep(1);
+	if (!isInit() && isInBoard())
 	drawObject(White);
 	if (direct == "right") {//left to right
-		//coorX += 1;
+		coorX+=speed;
+		if (!isInBoard() && !isInit()) coorX-=speed;
 	}
+	else if (direct == "left") {
+		coorX -= speed;
+		if (!isInBoard() && !isInit()) coorX += speed;
+	}
+
 	//CGame::drawRoad();
+	coorX %= CGame::getWidth();
+	if (!isInit() && isInBoard())
 	drawObject(Black);
+
 }
 
 void CCar::drawObject(int color)
 {
-	CConsole::drawHorLine(coorX, coorX + width, coorY * 2, 220, color);
-	CConsole::drawHorLine(coorX, coorX + width, coorY * 2 - height, 220, color);
-	CConsole::drawVerLine(coorY - height / 2, coorY, coorX, 220, color);
-	CConsole::drawVerLine(coorY - height / 2, coorY, coorX + width, 220, color);
+	int toX = coorX + width;
+	if (toX > CGame::getCoorTopLeftX() + CGame::getWidth() - 2)
+		toX = CGame::getCoorTopLeftX() + CGame::getWidth() - 2;
+
+	int fromX = coorX;
+	if (fromX <= CGame::getCoorTopLeftX()) 
+		fromX = CGame::getCoorTopLeftX() + 1;
+	
+	CConsole::drawHorLine(fromX, toX, coorY * 2, 220, color);
+	CConsole::drawHorLine(fromX, toX, coorY * 2 - height, 220, color);
+	CConsole::drawVerLine(coorY - height / 2, coorY, fromX, 220, color);
+	CConsole::drawVerLine(coorY - height / 2, coorY, toX, 220, color);
+}
+
+
+bool CCar::isInBoard()
+{
+	bool b1 = coorX >= CGame::getCoorTopLeftX() && coorX <= CGame::getCoorTopLeftX() + CGame::getWidth() - 1;
+	return b1;
+}
+
+void CCar::setSpeed(int speed)
+{
+	this->speed = speed;
+}
+
+
+bool CCar::isInit() {
+	return  coorX <= CGame::getCoorTopLeftX();
 }
