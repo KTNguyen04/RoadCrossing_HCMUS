@@ -8,12 +8,14 @@ using namespace std;
 #include "CPeople.h"
 int main()
 {
-	srand(time(NULL));
 	system("pause");
+	srand(time(NULL));
 	CConsole c;
+
 	CGame g;
 	g.runGame();
-
+	system("pause");
+	
 	
 
 }

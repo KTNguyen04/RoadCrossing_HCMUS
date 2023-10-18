@@ -33,6 +33,15 @@
     <ClCompile Include="CCar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CRoad.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CLane.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CRiver.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CConsole.h">
@@ -48,6 +57,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CCar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CRoad.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CLane.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CRiver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

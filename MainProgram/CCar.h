@@ -3,8 +3,8 @@
 #include "CConsole.h"
 #include "CGame.h"
 
-onst int carHeight = 3;
-const int carWidth = 7;
+const int carHeight = 8;
+const int carWidth = 12;
 class CCar :public CObstacle
 {
 

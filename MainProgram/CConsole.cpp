@@ -1,10 +1,12 @@
 #include "CConsole.h"
 CConsole::CConsole()
 {
+
 	system("color F0");
 	fixConsoleWindow();
+	setConsole();
 	removeScrollBar();
-	moveConsole();
+	disableClick();
 	showConsoleCursor(false);
 
 }
@@ -30,16 +32,18 @@ void CConsole::removeScrollBar()
 	SetConsoleScreenBufferSize(hOut, newSize);
 }
 
-void CConsole::moveConsole()
+void CConsole::setConsole()
 {
 	HWND console = GetConsoleWindow();
 	RECT r;
 	GetWindowRect(console, &r);
 	int screenWidth = GetSystemMetrics(SM_CXSCREEN);
 	int screenHeight = GetSystemMetrics(SM_CYSCREEN);
-	int consoleWidth = r.right - r.left;
-	int consoleHeight = r.bottom - r.top;
+	int consoleWidth = r.right - r.left + 170;
+	int consoleHeight = r.bottom - r.top + 200;
 	MoveWindow(console, (screenWidth - consoleWidth) / 2, (screenHeight - consoleHeight) / 2, consoleWidth, consoleHeight, TRUE);
+
+	
 }
 
 void CConsole::gotoXY(int x, int y)
@@ -66,13 +70,13 @@ int CConsole::getConsoleWid()
 
 }
 
-void CConsole::drawChar(int x, int y, char c, int color)
+void CConsole::drawChar(int x, int y, char c, int color,int backGround)
 {
 	gotoXY(x, y);
 	color += 15 * 16;
 	setColor(color);
 	cout << c;
-	color = Black + 15 * 16;
+	color = Black + backGround * 16;
 	setColor(color);
 
 }
@@ -80,19 +84,20 @@ void CConsole::setColor(int color)
 {
 	HANDLE consoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(consoleOutput, color);
+
 }
 
-void CConsole::drawHorLine(int fromX, int toX, int y, char c, int color)
+void CConsole::drawHorLine(int fromX, int toX, int y, char c, int color, int backColor )
 {
 	for (int i = fromX; i <= toX; i++) {
-		drawChar(i, y / 2, c, color);
+		drawChar(i, y , c, color,backColor);
 	}
 }
 
-void CConsole::drawVerLine(int fromY, int toY, int x, char c, int color)
+void CConsole::drawVerLine(int fromY, int toY, int x, char c, int color, int backColor )
 {
 	for (int i = fromY; i <= toY; i++) {
-		drawChar(x, i, c, color);
+		drawChar(x, i, c, color,backColor);
 	}
 }
 
@@ -110,4 +115,12 @@ char CConsole::getInput()
 	return tolower(_getch());
 }
 
+void CConsole::disableClick()
+{
+	HANDLE hInput = GetStdHandle(STD_INPUT_HANDLE);
+	DWORD prev_mode;
+	GetConsoleMode(hInput, &prev_mode);
+	SetConsoleMode(hInput, ENABLE_EXTENDED_FLAGS |
+		(prev_mode & ~ENABLE_QUICK_EDIT_MODE));
+}
 

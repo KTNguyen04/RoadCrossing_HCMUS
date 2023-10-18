@@ -2,6 +2,8 @@
 #include "CConsole.h"
 #include "CPeople.h"
 #include "CCar.h"
+#include "CLane.h"
+
 #include <vector>
 #define ThangDung 179
 #define Ngang 196
@@ -16,12 +18,13 @@ public:
 	CGame();
 	static void drawFrame();
 	static void drawRoad();
+//	static void drawBackGround();
 	static int getWidth();
 	static int getHeight();
 	static int getCoorTopLeftX();
 	static int getCoorTopLeftY();
-	static void insertRectSpace(int x, int y, int hei, int wid, int color);    //bottomLeft coor
-
+	//static void insertRectSpace(int x, int y, int hei, int wid, int color);    //bottomLeft coor
+	static void fillRect(int x, int y, int hei, int wid,char c, int color);         //topLeft coor
 	void runGame();
 
 	template<class obstacle>

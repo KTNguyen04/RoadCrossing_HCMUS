@@ -3,37 +3,38 @@
 
 CPeople::CPeople()
 {
-	coorX = CGame::getCoorTopLeftX() + CGame::getWidth() / 2 - 1;
-	coorY = CGame::getCoorTopLeftY() + CGame::getHeight() - 2;
-	height = 1;
-	width = 2;
+	coorX = CGame::getCoorTopLeftX() + CGame::getWidth() / 2-2 ;       //bottom left
+	coorY = CGame::getCoorTopLeftY() + CGame::getHeight()/2 - 1;
+	height = 6;
+	width = 6;
 	color = Black;
+	backColor = paveColor;
 	drawPeople(color);
 }
 
 
 void CPeople::moveUp() {   // test, not real
-	coorY -= 1.5;
-	if (!isInBoard()) coorY += 2;
+	coorY -= 3;
+	if (!isInBoard()) coorY += 3;
 }
 void CPeople::moveDown() {
-	coorY += 2;                       // do hàm vẽ có sử dụng /2 
-	if (!isInBoard()) coorY -= 1.5;
+	coorY += 3;                       // do hàm vẽ có sử dụng /2 
+	if (!isInBoard()) coorY -= 3;
 }
 void CPeople::moveLeft() {
-	coorX -= 4;
-	if (!isInBoard()) coorX += 4;
+	coorX -= 3;
+	if (!isInBoard()) coorX += 3;
 }
 void CPeople::moveRight() {
-	coorX += 4;
-	if (!isInBoard()) coorX -= 4;
+	coorX += 3;
+	if (!isInBoard()) coorX -= 3;
 }
 void CPeople::drawPeople(int pColor)
 {
-	CConsole::drawHorLine(coorX, coorX + width, coorY * 2, 220, pColor);
-	CConsole::drawHorLine(coorX, coorX + width, coorY * 2 - height, 220, pColor);
-	CConsole::drawVerLine(coorY - height / 2, coorY, coorX, 219, pColor);
-	CConsole::drawVerLine(coorY - height / 2, coorY, coorX + width, 219, pColor);
+	CConsole::drawHorLine(coorX, coorX + width, coorY , 220, pColor);
+	CConsole::drawHorLine(coorX, coorX + width, coorY - height/2, 220, pColor);
+	CConsole::drawVerLine(coorY - height / 2, coorY, coorX, 220, pColor);
+	CConsole::drawVerLine(coorY - height / 2, coorY, coorX + width, 220, pColor);
 }
 
 void CPeople::peopleMoving(char c)
@@ -45,14 +46,14 @@ void CPeople::peopleMoving(char c)
 	else if (c == 's') moveDown();
 	else if (c == 'd') moveRight();
 
-	CGame::drawRoad();
 	drawPeople(color);
+	//CGame::drawRoad();
 
 }
 
 bool CPeople::isInBoard()
 {
-	bool b1 = coorX >= CGame::getCoorTopLeftX() && coorX <= CGame::getCoorTopLeftX() + CGame::getWidth() -1 ;
-	bool b2 = coorY >= CGame::getCoorTopLeftY() +2  && coorY <= CGame::getCoorTopLeftX() + CGame::getHeight() - 2;
+	bool b1 = coorX >= CGame::getCoorTopLeftX()  && (coorX+width) <= CGame::getCoorTopLeftX() + CGame::getWidth()  ;
+	bool b2 = (coorY - height/2) >= CGame::getCoorTopLeftY()   &&coorY<= CGame::getCoorTopLeftY() + CGame::getHeight()/2 - 2;
 	return b1 && b2;
 }

@@ -14,7 +14,7 @@ enum {
 	DarkPink,
 	DarkYellow,
 	DarkWhite,
-	Grey,
+	Gray,
 	Blue,
 	Green,
 	Cyan,
@@ -30,16 +30,18 @@ public:
 	//~CConsole();
 	static void fixConsoleWindow();
 	static void removeScrollBar();
-	static void moveConsole();
+	static void setConsole();
 	static void gotoXY(int x, int y);
 	static int getConsoleWid();
 	static int getConsoleHei();
-	static void drawChar(int x, int y, char c, int color);
+	static void drawChar(int x, int y, char c, int color, int backGround=15);
 	static void setColor(int color);
-	static void drawHorLine(int fromX, int toX, int y, char c, int color);         //kẻ ngang
-	static void drawVerLine(int fromY, int toY, int x, char c, int color);
+	static void drawHorLine(int fromX, int toX, int y, char c, int color,int backColor=15);         //kẻ ngang
+	static void drawVerLine(int fromY, int toY, int x, char c, int color,int backColor=15);
 	static void showConsoleCursor(bool showFlag);
 	static char getInput();
+
+	static void disableClick();
 };
 // colors are 0 = black 1 = blue 2 = green and so on to 15 = white
 // colorattribute = foreground + background * 16

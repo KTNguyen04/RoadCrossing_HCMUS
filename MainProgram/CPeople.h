@@ -6,7 +6,7 @@ class CPeople
 {
 	int coorX, coorY;
 	int height, width;
-	int color;
+	int color, backColor;
 public:
 	CPeople();
 	void moveUp();

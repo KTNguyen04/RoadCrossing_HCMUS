@@ -130,16 +130,22 @@
     <ClCompile Include="CCar.cpp" />
     <ClCompile Include="CConsole.cpp" />
     <ClCompile Include="CGame.cpp" />
+    <ClCompile Include="CLane.cpp" />
     <ClCompile Include="CObstacle.cpp" />
     <ClCompile Include="CPeople.cpp" />
+    <ClCompile Include="CRiver.cpp" />
+    <ClCompile Include="CRoad.cpp" />
     <ClCompile Include="MainProgram.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CCar.h" />
     <ClInclude Include="CConsole.h" />
     <ClInclude Include="CGame.h" />
+    <ClInclude Include="CLane.h" />
     <ClInclude Include="CObstacle.h" />
     <ClInclude Include="CPeople.h" />
+    <ClInclude Include="CRiver.h" />
+    <ClInclude Include="CRoad.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

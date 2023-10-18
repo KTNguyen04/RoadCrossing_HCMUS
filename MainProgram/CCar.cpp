@@ -15,7 +15,7 @@ CCar::CCar(int x, int y, int speed)
 void CCar::move(string direct)
 {
 	
-	Sleep(1);
+	Sleep(20);
 	if (!isInit() && isInBoard())
 	drawObject(White);
 	if (direct == "right") {//left to right
@@ -44,14 +44,27 @@ void CCar::drawObject(int color)
 	if (fromX <= CGame::getCoorTopLeftX()) 
 		fromX = CGame::getCoorTopLeftX() + 1;
 	
-	
+
+	CConsole::drawHorLine(fromX, toX, coorY , 223, color);
+
+	CConsole::drawHorLine(fromX, toX, coorY  - height/2, 220, color);
+	CConsole::drawVerLine(coorY - height/2 , coorY-1, fromX, 254, color);
+	CConsole::drawVerLine(coorY - height/2 , coorY-1, toX, 254, color);
+
+	/*int toX, fromX;
 	CConsole::drawHorLine(fromX, toX-6, coorY * 2, 223, color);
 	CConsole::drawHorLine(fromX+5, toX-1, coorY * 2 , 223, color);
-	color = Blue;
-	CConsole::drawHorLine(fromX-1, toX - 6, coorY * 2 - height+1, 219, color);
-	CConsole::drawHorLine(toX-5, toX -1, coorY * 2 - height + 1, 220, color);
-	CConsole::drawHorLine(toX , toX + 1, coorY * 2 - height + 1, 219, color);
-	CConsole::drawHorLine(fromX, fromX+6, coorY * 2 - height , 220, color);
+	color = Black;
+	CConsole::drawHorLine(fromX-1, toX - 6, coorY * 2 - height, 219, color);
+	CConsole::drawHorLine(toX-5, toX -1, coorY * 2 - height , 220, color);
+	CConsole::drawHorLine(toX , toX + 1, coorY * 2 - height , 219, color);
+	CConsole::drawHorLine(fromX, fromX+6, coorY * 2 - height , 220, color);*/
+
+	
+	//CConsole::drawHorLine(fromX, toX, coorY * 2 - height, 220, color);
+	/*CConsole::drawVerLine(coorY - height / 2, coorY, fromX, 220, color);
+	CConsole::drawVerLine(coorY - height / 2, coorY, toX, 220, color);*/
+
 }
 
 
