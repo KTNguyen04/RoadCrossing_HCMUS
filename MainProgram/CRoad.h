@@ -1,33 +1,46 @@
 #pragma once
 #include "CConsole.h"
 #include <vector>
+#include <algorithm>
+#include <map>
 const int lane = 10;    //size
 const int pavement = 8;  //size
-const int laneColor = Gray;
+const int laneColor = DarkWhite;
 const int paveColor = DarkYellow;
-const int riverColor = Blue;
+const int riverColor = DarkCyan;
+const int winColor = Green;
+
+const wchar_t block = L'\u2588';
+const wchar_t topBlock = L'\u2580';
+const wchar_t botBlock = L'\u2584';
 
 
 
 //3 lane and 1 river
 class CRoad
 {
-	int whereRiver;     // 1 or 2,3,4?
+	//int whereRiver;     // 1 or 2,3,4?
+
 public:
-	vector<int> sepLane;
+	static vector<int> sepLane;
+	static vector<int> saveLane;
+	static vector<int>sepPave;
+	static map<int, string> specifyRoad;
 protected:
 	int width, height;
 	int coorX, coorY; //topleft
 	int color;
 public:
-	CRoad();
+	CRoad() {};
+	static void setUpRoad();
 	virtual void drawRoad() {};
 	static void drawPavement();
 
-	 void setCoorY(int y);
-	 void setCoorX(int x);
+	void setCoorY(int y);
+	void setCoorX(int x);
 
-	template<class makeLane>
+	static void drawWinLane();
 	void makeRandomLane();
+	
 };
 

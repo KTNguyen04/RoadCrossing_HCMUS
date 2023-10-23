@@ -135,6 +135,7 @@
     <ClCompile Include="CPeople.cpp" />
     <ClCompile Include="CRiver.cpp" />
     <ClCompile Include="CRoad.cpp" />
+    <ClCompile Include="CTruck.cpp" />
     <ClCompile Include="MainProgram.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -146,6 +147,7 @@
     <ClInclude Include="CPeople.h" />
     <ClInclude Include="CRiver.h" />
     <ClInclude Include="CRoad.h" />
+    <ClInclude Include="CTruck.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,13 +1,32 @@
-#include "CConsole.h"
+﻿#include "CConsole.h"
 CConsole::CConsole()
 {
 
-	system("color F0");
+	system("color 80");
 	fixConsoleWindow();
 	setConsole();
 	removeScrollBar();
 	disableClick();
 	showConsoleCursor(false);
+
+}
+void CConsole::setRange()
+{
+	HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
+	CONSOLE_SCREEN_BUFFER_INFOEX csbi;
+	csbi.cbSize = sizeof(CONSOLE_SCREEN_BUFFER_INFOEX);
+
+	// Lấy thông tin cửa sổ console hiện tại
+	GetConsoleScreenBufferInfoEx(console, &csbi);
+
+	// Thay đổi độ chia (số dòng trên một trang) thành 50
+	csbi.dwSize.Y = 50;
+
+	// Đặt lại kích thước buffer theo độ chia mới
+	csbi.srWindow.Bottom = csbi.srWindow.Top + csbi.dwSize.Y - 1;
+
+	// Áp dụng thay đổi
+	SetConsoleScreenBufferInfoEx(console, &csbi);
 
 }
 void CConsole::fixConsoleWindow() {
@@ -70,14 +89,26 @@ int CConsole::getConsoleWid()
 
 }
 
-void CConsole::drawChar(int x, int y, char c, int color,int backGround)
+void CConsole::drawChar(int x, int y, wchar_t c, int color,int backGround,bool isAscii)
 {
-	gotoXY(x, y);
-	color += 15 * 16;
-	setColor(color);
-	cout << c;
-	color = Black + backGround * 16;
-	setColor(color);
+	if (!isAscii) {
+		int old_mode = _setmode(_fileno(stdout), _O_U16TEXT);
+		gotoXY(x, y);
+		color += backGround * 16;
+		setColor(color);
+		wcout << c;
+		color = Black + backGround * 16;
+		setColor(color);
+		_setmode(_fileno(stdout), old_mode);
+	}
+	else {
+		gotoXY(x, y);
+		color += backGround * 16;
+		setColor(color);
+		cout << (char)c;
+		color = Black + backGround * 16;
+		setColor(color);
+	}
 
 }
 void CConsole::setColor(int color)
@@ -87,14 +118,14 @@ void CConsole::setColor(int color)
 
 }
 
-void CConsole::drawHorLine(int fromX, int toX, int y, char c, int color, int backColor )
+void CConsole::drawHorLine(int fromX, int toX, int y, wchar_t c, int color, int backColor )
 {
 	for (int i = fromX; i <= toX; i++) {
 		drawChar(i, y , c, color,backColor);
 	}
 }
 
-void CConsole::drawVerLine(int fromY, int toY, int x, char c, int color, int backColor )
+void CConsole::drawVerLine(int fromY, int toY, int x, wchar_t c, int color, int backColor )
 {
 	for (int i = fromY; i <= toY; i++) {
 		drawChar(x, i, c, color,backColor);

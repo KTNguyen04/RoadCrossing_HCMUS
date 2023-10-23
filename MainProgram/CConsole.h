@@ -2,6 +2,8 @@
 #include <Windows.h>
 #include <windows.h>
 #include <winuser.h>
+#include <io.h>
+#include <fcntl.h>
 #include<iostream>
 #include <conio.h>
 using namespace std;
@@ -23,21 +25,24 @@ enum {
 	Yellow,
 	White,		//15
 };
+
+const int background = Gray;
 class CConsole
 {
 public:
 	CConsole();
 	//~CConsole();
+	static void setRange();
 	static void fixConsoleWindow();
 	static void removeScrollBar();
 	static void setConsole();
 	static void gotoXY(int x, int y);
 	static int getConsoleWid();
 	static int getConsoleHei();
-	static void drawChar(int x, int y, char c, int color, int backGround=15);
+	static void drawChar(int x, int y, wchar_t c, int color, int backGround=background,bool isAscii = false);
 	static void setColor(int color);
-	static void drawHorLine(int fromX, int toX, int y, char c, int color,int backColor=15);         //kẻ ngang
-	static void drawVerLine(int fromY, int toY, int x, char c, int color,int backColor=15);
+	static void drawHorLine(int fromX, int toX, int y, wchar_t c, int color,int backColor=15);         //kẻ ngang
+	static void drawVerLine(int fromY, int toY, int x, wchar_t c, int color,int backColor=15);
 	static void showConsoleCursor(bool showFlag);
 	static char getInput();
 

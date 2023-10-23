@@ -13,7 +13,7 @@ public:
 	void moveDown();
 	void moveLeft();
 	void moveRight();
-	void drawPeople(int pColor);
+	void drawPeople(bool isForRemove=false);
 
 	void peopleMoving(char c);
 	bool isInBoard();

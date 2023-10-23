@@ -7,17 +7,21 @@ protected:
 	int coorX, coorY;
 	int width, height;
 	int speed;
+	int backColor;
+	string direct;
 public:
-	
-	virtual void move(string direct)=0;
-	virtual void drawObject(int color) =0;
+
+	void move();
+	virtual void drawObject(bool isForRemove = false) = 0;
 	int getCoorX();
 	int getCoorY();
+	bool isInit();
 	int getWidth();
 	int getHeight();
-
+	bool isInBoard(bool isForDraw = false, int x = -1);
 	void setCoorX(int x);
 	void setCoorY(int y);
-	virtual bool isInBoard()=0;
+	void setSpeed(int speed);
+	//virtual bool isInBoard(bool isForDraw = false, int x = -1) = 0;
 };
 
