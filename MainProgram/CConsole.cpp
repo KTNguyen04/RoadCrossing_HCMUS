@@ -143,7 +143,19 @@ void CConsole::showConsoleCursor(bool showFlag)
 
 char CConsole::getInput()
 {
-	return tolower(_getch());
+	char input = 0;
+	while (true)
+	{
+		input = _getch();
+		if (input == 0 || input == 224) // Check for special keys
+		{
+			_getch(); // Discard the second character of a special key
+		}
+		else
+		{
+			return tolower(input);
+		}
+	}
 }
 
 void CConsole::disableClick()
@@ -155,3 +167,26 @@ void CConsole::disableClick()
 		(prev_mode & ~ENABLE_QUICK_EDIT_MODE));
 }
 
+void CConsole::HideCursor() {
+	CONSOLE_CURSOR_INFO cursor_info = { 1, 0 };
+	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursor_info);
+}
+void CConsole::clearScreen() {
+	COORD topLeft = { 0, 0 };
+	DWORD written;
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
+	HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
+
+	GetConsoleScreenBufferInfo(console, &csbi);
+	DWORD consoleSize = csbi.dwSize.X * csbi.dwSize.Y;
+
+	// Điều chỉnh màu sắc và nền trước khi xóa
+	CConsole::setColor(White);
+	CConsole::drawHorLine(0, CConsole::getConsoleWid(), 0, ' ', White, White);
+	for (int i = 1; i < CConsole::getConsoleHei(); ++i) {
+		CConsole::drawHorLine(0, CConsole::getConsoleWid(), i, ' ', White, White);
+	}
+
+	// Đặt lại con trỏ về vị trí ban đầu
+	SetConsoleCursorPosition(console, topLeft);
+}

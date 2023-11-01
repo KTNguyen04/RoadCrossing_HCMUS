@@ -6,16 +6,15 @@ using namespace std;
 #include "CConsole.h"
 #include "CGame.h"
 #include "CPeople.h"
+#include "CMenu.h"
 int main()
 {
 	system("pause");
 	srand(time(NULL));
+	int choice = 0;
 	CConsole c;
-
-	CGame g;
-	g.runGame();
-	system("pause");
-	
+	CMenu m;
+	m.showMenu();
 	
 
 }

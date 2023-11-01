@@ -45,6 +45,9 @@
     <ClCompile Include="CTruck.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CMenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CConsole.h">
@@ -72,6 +75,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CTruck.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CMenu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
