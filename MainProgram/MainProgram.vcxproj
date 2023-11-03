@@ -132,6 +132,7 @@
     <ClCompile Include="CConsole.cpp" />
     <ClCompile Include="CGame.cpp" />
     <ClCompile Include="CLane.cpp" />
+    <ClCompile Include="CMenu.cpp" />
     <ClCompile Include="CObstacle.cpp" />
     <ClCompile Include="CPeople.cpp" />
     <ClCompile Include="CRiver.cpp" />
@@ -145,6 +146,7 @@
     <ClInclude Include="CConsole.h" />
     <ClInclude Include="CGame.h" />
     <ClInclude Include="CLane.h" />
+    <ClInclude Include="CMenu.h" />
     <ClInclude Include="CObstacle.h" />
     <ClInclude Include="CPeople.h" />
     <ClInclude Include="CRiver.h" />

@@ -45,8 +45,9 @@ public:
 	static void drawVerLine(int fromY, int toY, int x, wchar_t c, int color,int backColor=15);
 	static void showConsoleCursor(bool showFlag);
 	static char getInput();
-
+	static void HideCursor();
 	static void disableClick();
+	static void clearScreen();
 };
 // colors are 0 = black 1 = blue 2 = green and so on to 15 = white
 // colorattribute = foreground + background * 16
