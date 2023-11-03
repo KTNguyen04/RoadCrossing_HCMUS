@@ -28,6 +28,7 @@ void Audio::hitAudio() {
 }
 
 void Audio::gameVictoryAudio() {
+	PlaySound(TEXT("Victory.wav"), NULL, SND_FILENAME | SND_ASYNC);
 
 }
 
