@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CAudio.cpp" />
     <ClCompile Include="CCar.cpp" />
     <ClCompile Include="CConsole.cpp" />
     <ClCompile Include="CGame.cpp" />
@@ -139,6 +140,7 @@
     <ClCompile Include="MainProgram.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CAudio.h" />
     <ClInclude Include="CCar.h" />
     <ClInclude Include="CConsole.h" />
     <ClInclude Include="CGame.h" />
@@ -148,6 +150,15 @@
     <ClInclude Include="CRiver.h" />
     <ClInclude Include="CRoad.h" />
     <ClInclude Include="CTruck.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="CarHorn.wav" />
+    <Media Include="Dash.wav" />
+    <Media Include="GameOver.wav" />
+    <Media Include="Hit.wav" />
+    <Media Include="Menu.wav" />
+    <Media Include="Tap.wav" />
+    <Media Include="Victory.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

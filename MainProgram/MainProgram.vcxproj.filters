@@ -45,6 +45,9 @@
     <ClCompile Include="CTruck.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CAudio.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CConsole.h">
@@ -74,5 +77,31 @@
     <ClInclude Include="CTruck.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CAudio.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="CarHorn.wav">
+      <Filter>Source Files</Filter>
+    </Media>
+    <Media Include="Dash.wav">
+      <Filter>Source Files</Filter>
+    </Media>
+    <Media Include="GameOver.wav">
+      <Filter>Source Files</Filter>
+    </Media>
+    <Media Include="Hit.wav">
+      <Filter>Source Files</Filter>
+    </Media>
+    <Media Include="Menu.wav">
+      <Filter>Source Files</Filter>
+    </Media>
+    <Media Include="Tap.wav">
+      <Filter>Source Files</Filter>
+    </Media>
+    <Media Include="Victory.wav">
+      <Filter>Source Files</Filter>
+    </Media>
   </ItemGroup>
 </Project>
