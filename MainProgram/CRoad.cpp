@@ -1,6 +1,7 @@
 #include "CRoad.h"
 #include "CGame.h"
 #include <random>   
+#include <cmath>
 #include <chrono>   
 vector<int>CRoad::sepLane;
 vector<int>CRoad::saveLane;
@@ -14,6 +15,16 @@ void CRoad::setUpRoad()
 		saveLane.push_back(temp);
 		sepPave.push_back(temp + lane);
 	}
+}
+
+void CRoad::drawRoad(const int&y,const int &color)
+{
+	
+	CConsole::drawHorLine(CGame::getCoorTopLeftX(), CGame::getCoorTopLeftX() + CGame::getWidth() - 1, y / 2, block, color, background);
+	CConsole::drawHorLine(CGame::getCoorTopLeftX(), CGame::getCoorTopLeftX() + CGame::getWidth() - 1, y / 2 + 1, block, color, background);
+	CConsole::drawHorLine(CGame::getCoorTopLeftX(), CGame::getCoorTopLeftX() + CGame::getWidth() - 1, y / 2 + 2, block, color, background);
+	CConsole::drawHorLine(CGame::getCoorTopLeftX(), CGame::getCoorTopLeftX() + CGame::getWidth() - 1, y / 2 + 3, block, color, background);
+	CConsole::drawHorLine(CGame::getCoorTopLeftX(), CGame::getCoorTopLeftX() + CGame::getWidth() - 1, y / 2 + 4, block, color, background);
 }
 
 void CRoad::drawPavement()
@@ -42,6 +53,18 @@ void CRoad::setCoorX(int x)
 	this->coorX = x;
 }
 
+void CRoad::drawMap()
+{
+	
+	setUpRoad();
+	drawWinLane();
+	drawRoad(sepLane[0],laneColor);
+	drawRoad(sepLane[1],laneColor);
+	drawRoad(sepLane[2],laneColor);
+	drawRoad(sepLane[3], riverColor);
+	drawPavement();
+}
+
 void CRoad::drawWinLane()
 {
 	CConsole::drawHorLine(CGame::getCoorTopLeftX(), CGame::getCoorTopLeftX() + CGame::getWidth() - 1, CGame::getCoorTopLeftY(), botBlock, winColor, background);
@@ -53,8 +76,9 @@ void CRoad::drawWinLane()
 }
 
 void CRoad::makeRandomLane() {
-	std::random_device rd;
-	std::default_random_engine rng(rd());
-	shuffle(sepLane.begin(), sepLane.end(), std::default_random_engine(rng));
+	swap(sepLane[0], sepLane[1]);
+	swap(sepLane[2], sepLane[3]);
+	swap(sepLane[0], sepLane[3]);
+	
 }
 

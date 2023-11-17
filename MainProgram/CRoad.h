@@ -3,12 +3,13 @@
 #include <vector>
 #include <algorithm>
 #include <map>
+#include "CTrafficLight.h"
 const int lane = 10;    //size
 const int pavement = 8;  //size
 const int laneColor = DarkWhite;
 const int paveColor = DarkYellow;
 const int riverColor = DarkCyan;
-const int winColor = Green;
+const int winColor = DarkBlue;
 
 const wchar_t block = L'\u2588';
 const wchar_t topBlock = L'\u2580';
@@ -31,16 +32,17 @@ protected:
 	int coorX, coorY; //topleft
 	int color;
 public:
-	CRoad() {};
+	//CRoad() {};
 	static void setUpRoad();
-	virtual void drawRoad() {};
+	static void drawRoad(const int &y,const int& color);
 	static void drawPavement();
 
 	void setCoorY(int y);
 	void setCoorX(int x);
-
+	static void drawMap();
 	static void drawWinLane();
-	void makeRandomLane();
+	static void makeRandomLane();
+	
 	
 };
 

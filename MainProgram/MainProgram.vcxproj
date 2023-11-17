@@ -137,6 +137,8 @@
     <ClCompile Include="CPeople.cpp" />
     <ClCompile Include="CRiver.cpp" />
     <ClCompile Include="CRoad.cpp" />
+    <ClCompile Include="CTimer.cpp" />
+    <ClCompile Include="CTrafficLight.cpp" />
     <ClCompile Include="CTruck.cpp" />
     <ClCompile Include="MainProgram.cpp" />
   </ItemGroup>
@@ -151,6 +153,8 @@
     <ClInclude Include="CPeople.h" />
     <ClInclude Include="CRiver.h" />
     <ClInclude Include="CRoad.h" />
+    <ClInclude Include="CTimer.h" />
+    <ClInclude Include="CTrafficLight.h" />
     <ClInclude Include="CTruck.h" />
   </ItemGroup>
   <ItemGroup>
