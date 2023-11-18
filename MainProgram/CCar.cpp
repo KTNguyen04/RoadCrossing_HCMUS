@@ -1,16 +1,10 @@
 #include "CCar.h"
+#include "CGame.h"
 
-CCar::CCar(int x, int y, string direct, int speed)
+CCar::CCar(int x, int y, string direct, int speed):CObstacle(x, y, direct, speed)
 {
 	width = carWidth;
 	height = carHeight;
-	coorX = x;
-	coorY = y;
-	backColor = laneColor;
-	this->direct = direct;
-	this->speed = speed;
-	//if (isInBoard())
-	drawObject();
 
 }
 

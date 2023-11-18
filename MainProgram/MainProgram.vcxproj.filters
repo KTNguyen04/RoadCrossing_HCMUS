@@ -48,6 +48,15 @@
     <ClCompile Include="CMenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CAudio.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CTrafficLight.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CTimer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CConsole.h">
@@ -80,5 +89,37 @@
     <ClInclude Include="CMenu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CAudio.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CTrafficLight.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CTimer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="CarHorn.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Dash.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="GameOver.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Hit.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Menu.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Tap.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="Victory.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
   </ItemGroup>
 </Project>

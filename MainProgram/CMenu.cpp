@@ -71,22 +71,22 @@ void CMenu::start()
     bool isGameOver = false;
 
     // Game loop
-    while (!isGameOver) {
-        // Clear the screen and display game content
-       
-        CGame g;
-        g.runGame();
-        // Get user input
-        char key = CConsole::getInput();
+    //while (!isGameOver) {
+    //    // Clear the screen and display game content
+    //   
+    //    CGame g;
+    //    g.runGame();
+    //    // Get user input
+    //    char key = CConsole::getInput();
 
-        // Process user input
-        if (key == 'q') {
-            isGameOver = true;
-        }
-        else {
-          
-        }
-    }
+    //    // Process user input
+    //    if (key == 'q') {
+    //        isGameOver = true;
+    //    }
+    //    else {
+    //      
+    //    }
+    //}
 
     // Game over screen
     

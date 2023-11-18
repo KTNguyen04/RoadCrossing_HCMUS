@@ -1,11 +1,21 @@
 #include "CObstacle.h"
 #include "CGame.h"
 
+CObstacle::CObstacle(int x, int y, string direct, int speed)
+{
+	coorX = x;
+	coorY = y;
+	backColor = laneColor;
+	this->direct = direct;
+	this->speed = speed;
+	drawObject();
+}
+
 void CObstacle::move()
 {
-	Sleep(1);
 	//	if (isInBoard())
-	drawObject(true);
+	//drawObject(true);
+	
 	if (direct == "right") {//left to right
 		coorX += speed;
 		if ((coorX >= (CGame::getCoorTopLeftX() + CGame::getWidth())) && !isInit()) {
@@ -21,32 +31,39 @@ void CObstacle::move()
 			coorX += CGame::getWidth();
 			coorX += this->width;
 		}
-		//if (!isInBoard() && !isInit()) coorX += speed;
+		//if (!isInBoard() && !isInit()) coorX += speed
 	}
-
+	
 	//CGame::drawRoad();
 	//coorX %= CGame::getWidth();
 
+
 	//if ( isInBoard())
-	drawObject();
+//	startSignalOb.set_value();
+	//drawObject();
+	//this_thread::sleep_for(chrono::milliseconds(1000=);
+//	m_.unlock();
+	//endSignalOb.get();
+	
+
 }
 
-int CObstacle::getCoorX()
+int CObstacle::getCoorX() const
 {
 	return coorX;
 }
 
-int CObstacle::getCoorY() {
+int CObstacle::getCoorY() const {
 	return coorY;
 }
 bool CObstacle::isInit()
 {
 	return  (coorX <= CGame::getCoorTopLeftX() - this->width) || (coorX >= CGame::getCoorTopLeftX() + CGame::getWidth() + 1);
 }
-int CObstacle::getWidth() {
+int CObstacle::getWidth()const {
 	return width;
 }
-int CObstacle::getHeight() {
+int CObstacle::getHeight() const {
 	return height;
 }
 
@@ -75,3 +92,14 @@ void CObstacle::setSpeed(int speed)
 {
 	this->speed = speed;
 }
+
+int CObstacle::getSpeed()
+{
+	return speed;
+}
+
+string CObstacle::getDirect()
+{
+	return direct;
+}
+

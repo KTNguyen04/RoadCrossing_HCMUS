@@ -4,6 +4,6 @@ class CRiver:public CRoad
 {
 public:
 	CRiver();
-	void drawRoad();
+	//void drawRoad();
 };
 

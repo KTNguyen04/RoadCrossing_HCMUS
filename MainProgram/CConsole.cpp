@@ -144,12 +144,15 @@ void CConsole::showConsoleCursor(bool showFlag)
 char CConsole::getInput()
 {
 	char input = 0;
+
 	while (true)
 	{
-		input = _getch();
+		Sleep(20);
+
+		input =  _getch();
 		if (input == 0 || input == 224) // Check for special keys
 		{
-			_getch(); // Discard the second character of a special key
+			input = _getch(); // Discard the second character of a special key
 		}
 		else
 		{
