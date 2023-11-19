@@ -8,6 +8,9 @@ public:
     void drawTitle(bool isForRemove, int color);
 	void showMenu();
 	void start();
+	void options();
+	void about();
+	void help();
 	void exitGame();
     void drawStartOption(bool isForRemove, int color,bool isSelected );
     void drawAboutOption(bool isForRemove, int color, bool isSelected);
@@ -15,10 +18,12 @@ public:
     void drawExitOption(bool isForRemove, int color, bool isSelected);
 	void drawLoadOption(bool isForRemove, int color, bool isSelected);
 	void drawHelpOption(bool isForRemove, int color, bool isSelected);
-
+	void drawMute(bool isForRemove, int color, bool isSelected);
+	void drawUnmute(bool isForRemove, int color, bool isSelected);
 private:
-	std::vector<std::string> options;
+	
 	int currentOption;
 	int displayMenuOptions();
+	int controlOptions();
 };
 
