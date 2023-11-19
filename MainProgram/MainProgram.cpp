@@ -14,9 +14,10 @@ int main()
 	system("pause");
 	srand(time(NULL));
 	int choice = 0;
+	CMenu m;
 	CConsole c;
 	CGame g;
-	g.startGame();
+	m.showMenu();
 //	std::promise<void> start,st2,st3;
 //	std::future<void> end = start.get_future(), end2 = st2.get_future();
 //

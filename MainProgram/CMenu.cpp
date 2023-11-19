@@ -4,26 +4,29 @@ void CMenu::showMenu() {
     clearScreen();  
 
     while (true) {
-        drawTitle();
-        drawMenuOption(false, Black, selectedOption == 0);
-        drawAboutOption(false, Black, selectedOption == 1);
+        drawTitle(false,Red);
+        drawStartOption(false, Black, selectedOption == 0);
+        drawLoadOption(false, Black, selectedOption == 1);
         drawOptionsOption(false, Black, selectedOption == 2);
-        drawExitOption(false, Black, selectedOption == 3);
+        drawAboutOption(false, Black, selectedOption == 3);
+        drawHelpOption(false, Black, selectedOption == 4);
+        drawExitOption(false, Black, selectedOption == 5);
 
         int userInput = displayMenuOptions();
 
         if (userInput == 'w' && selectedOption > 0) {
-            drawMenuOption(true, Black, selectedOption == 0);  // Clear previous selection
+            drawStartOption(true, Black, selectedOption == 0);  // Clear previous selection
             selectedOption--;
         }
-        else if (userInput == 's' && selectedOption < 3) {
-            drawMenuOption(true, Black, selectedOption == 3);  // Clear previous selection
+        else if (userInput == 's' && selectedOption < 5) {
+            drawStartOption(true, Black, selectedOption == 3);  // Clear previous selection
             selectedOption++;
         }
         else if (userInput == 13) {  // Enter key
             if (selectedOption == 0) {
                 clearScreen();
-                start();
+                CGame g;
+                g.startGame();
             }
             else if (selectedOption == 1) {
                 // About option selected
@@ -108,224 +111,207 @@ void CMenu::exitGame() {
     // Exit the program
     exit(0);
 }
-void CMenu::drawTitle(bool isForRemove)
+void CMenu::drawTitle(bool isForRemove,int Color)
 {
-  
+    int Color1 = Color + 1;
     if (!isForRemove)
     {
         //Draw C 
-        drawChar(61, 1, botBlock, Red,15);
-        drawChar(62, 1, botBlock, Red,15);
-        drawChar(60, 2, block, Red,15);
-        drawChar(63, 2, topBlock, Red, 15);
-        drawChar(60, 3, block, Red, 15);
-        drawChar(60, 4, topBlock, Red, 15);
-        drawChar(61, 4, botBlock, Red, 15);
-        drawChar(62, 4, botBlock, Red, 15);
-        drawChar(63, 4, topBlock, Red, 15);
+        drawHorLine(47, 50, 0, block, Color, 15);
+        drawVerLine(1, 3, 45, block, Color, 15);
+        drawVerLine(1, 3, 46, block, Color, 15);
+        drawChar(51, 1, block, Color, 15);
+        drawChar(52, 1, block, Color, 15);
+        drawChar(51, 3, block, Color, 15);
+        drawChar(52, 3, block, Color, 15);
+        drawHorLine(47, 50, 4, block, Color, 15);
+
         //Draw R
-        drawChar(65, 1, botBlock, Red, 15);
-        drawChar(66, 1, botBlock, Red, 15);
-        drawChar(67, 1, botBlock, Red, 15);
-        drawVerLine(2, 4, 65, block, Red, 15);
-        drawChar(66, 3, topBlock, Red, 15);
-        drawChar(67, 3, topBlock, Red, 15);
-        drawVerLine(2, 2, 68, block, Red, 15);
-        drawChar(68, 3, botBlock, Red, 15);
-        drawChar(68, 4, block, Red, 15);
+        drawHorLine(54, 59, 0, block, Color, 15);
+        drawVerLine(1, 4, 54, block, Color, 15);
+        drawVerLine(1, 4, 55, block, Color, 15);
+        drawHorLine(56, 59, 2, block, Color, 15);
+        drawHorLine(58, 59, 3, block, Color, 15);
+        drawHorLine(60, 61, 1, block, Color, 15);
+        drawHorLine(60, 61, 4, block, Color, 15);
         //Draw O
-        drawChar(71, 1, botBlock, Red, 15);
-        drawChar(72, 1, botBlock, Red, 15);
-        drawVerLine(2, 3, 70, block, Red, 15);
-        drawVerLine(2, 3, 73, block, Red, 15);
-        drawChar(70, 4, topBlock, Red, 15);
-        drawChar(73, 4, topBlock, Red, 15);
-        drawChar(71, 4, botBlock, Red, 15);
-        drawChar(72, 4, botBlock, Red, 15);
+        drawHorLine(65, 68, 0, block, Color, 15);
+        drawHorLine(65, 68, 4, block, Color, 15);
+        drawVerLine(1, 3, 63, block, Color, 15);
+        drawVerLine(1, 3, 64, block, Color, 15);
+        drawVerLine(1, 3, 69, block, Color, 15);
+        drawVerLine(1, 3, 70, block, Color, 15);
         //Draw S   
-        drawChar(76, 1, botBlock, Red, 15);
-        drawChar(77, 1, botBlock, Red, 15);
-        drawChar(75, 2, block, Red, 15);
-        drawChar(78, 2, topBlock, Red, 15);
-        drawChar(76, 3, topBlock, Red, 15);
-        drawChar(77, 3, botBlock, Red, 15);
-        drawChar(75, 4, topBlock, Red, 15);
-        drawChar(78, 4, topBlock, Red, 15);
-        drawChar(76, 4, botBlock, Red, 15);
-        drawChar(77, 4, botBlock, Red, 15);
+        drawHorLine(74, 79, 0, block, Color, 15);
+        drawHorLine(72, 73, 1, block, Color, 15);
+        drawHorLine(74, 77, 2, block, Color, 15);
+        drawHorLine(78, 79, 3, block, Color, 15);
+        drawHorLine(72, 77, 4, block, Color, 15);
+
         //Draw S
-        drawChar(81, 1, botBlock, Red, 15);
-        drawChar(82, 1, botBlock, Red, 15);
-        drawChar(80, 2, block, Red, 15);
-        drawChar(83, 2, topBlock, Red, 15);
-        drawChar(81, 3, topBlock, Red, 15);
-        drawChar(82, 3, botBlock, Red, 15);
-        drawChar(80, 4, topBlock, Red, 15);
-        drawChar(83, 4, topBlock, Red, 15);
-        drawChar(81, 4, botBlock, Red, 15);
-        drawChar(82, 4, botBlock, Red, 15);
+        drawHorLine(83, 88, 0, block, Color, 15);
+        drawHorLine(81, 82, 1, block, Color, 15);
+        drawHorLine(83, 86, 2, block, Color, 15);
+        drawHorLine(87, 88, 3, block, Color, 15);
+        drawHorLine(81, 87, 4, block, Color, 15);
         //Draw I
-        drawChar(85, 1, botBlock, Red, 15);
-        drawVerLine(2, 4,85, block, Red, 15);
+        drawHorLine(90, 91, 0, block, Color, 15);
+        drawHorLine(94, 95, 0, block, Color, 15);
+        drawHorLine(90, 91, 4, block, Color, 15);
+        drawHorLine(94, 95, 4, block, Color, 15);
+        drawVerLine(0, 4, 92, block, Color, 15);
+        drawVerLine(0, 4, 93, block, Color, 15);
+
         //Draw N 
-        drawChar(87, 1, botBlock, Red, 15);
-        drawVerLine(2, 4, 87, block, Red, 15);
-        drawChar(88, 1, botBlock, Red, 15);
-        drawChar(89, 2, block, Red, 15);
-        drawChar(89, 3, topBlock, Red, 15);
-        drawChar(90, 3, botBlock, Red, 15);
-        drawChar(90, 4, topBlock, Red, 15);
-        drawChar(91, 4, botBlock, Red, 15);
-        drawChar(92, 1, botBlock, Red, 15);
-        drawVerLine(2, 4, 92, block, Red, 15);
+        drawVerLine(0, 4, 97, block, Color, 15);
+        drawVerLine(0, 4, 98, block, Color, 15);
+        drawVerLine(0, 4, 107, block, Color, 15);
+        drawVerLine(0, 4, 108, block, Color, 15);
+        drawHorLine(99, 100, 0, block, Color, 15);
+        drawHorLine(101, 102, 1, block, Color, 15);
+        drawHorLine(103, 104, 2, block, Color, 15);
+        drawHorLine(105, 106, 3, block, Color, 15);
         //Draw G
-        drawChar(95, 1, botBlock, Red, 15);
-        drawChar(96, 1, botBlock, Red, 15);
-        drawChar(97, 2, topBlock, Red, 15);
-        drawVerLine(2, 3, 94, block, Red, 15);
-        drawChar(94, 4, topBlock, Red, 15);
-        drawChar(95, 4, botBlock, Red, 15);
-        drawChar(96, 4, botBlock, Red, 15);
-        drawChar(97, 4, topBlock, Red, 15);
-        drawChar(97, 3, botBlock, Red, 15);
-        drawChar(96, 3, botBlock, Red, 15);
-        //Draw R(Blue)
-        drawChar(69, 6, botBlock, Blue, 15);
-        drawChar(70, 6, botBlock, Blue, 15);
-        drawChar(71, 6, botBlock, Blue, 15);
-        drawVerLine(7, 9, 69, block, Blue, 15);
-        drawChar(70, 8, topBlock, Blue, 15);
-        drawChar(71, 8, topBlock, Blue, 15);
-        drawVerLine(7, 7, 72, block, Blue, 15);
-        drawChar(72, 8, botBlock, Blue, 15);
-        drawChar(72, 9, block, Blue, 15);
-        //Draw O(Blue)
-        drawChar(75, 6, botBlock, Blue, 15);
-        drawChar(76, 6, botBlock, Blue, 15);
-        drawVerLine(7, 8, 74, block, Blue, 15);
-        drawVerLine(7, 8, 77, block, Blue, 15);
-        drawChar(74, 9, topBlock, Blue, 15);
-        drawChar(77, 9, topBlock, Blue, 15);
-        drawChar(75, 9, botBlock, Blue, 15);
-        drawChar(76, 9, botBlock, Blue, 15);
+        drawVerLine(1, 3, 110, block, Color, 15);
+        drawVerLine(1, 3, 111, block, Color, 15);
+        drawHorLine(112, 117, 0, block, Color, 15);
+        drawHorLine(114, 117, 2, block, Color, 15);
+        drawHorLine(116, 117, 3, block, Color, 15);
+        drawHorLine(112, 115, 4, block, Color, 15);
+
+        //Draw G(Blue)
+        drawVerLine(8, 10, 65, block, Color1, 15);
+        drawVerLine(8, 10, 66, block, Color1, 15);
+        drawHorLine(67, 72, 7, block, Color1, 15);
+        drawHorLine(69, 72, 9, block, Color1, 15);
+        drawHorLine(71, 72, 10, block, Color1, 15);
+        drawHorLine(67, 70, 11, block, Color1, 15);
         //Draw A(Blue)
-        drawHorLine(80, 81, 6, botBlock, Blue, 15);
-        drawVerLine(7, 9, 79, block, Blue, 15);
-        drawVerLine(7, 9, 82, block, Blue, 15);
-        drawHorLine(80, 81, 8, topBlock, Blue, 15);
-        //Draw D(Blue)
-        drawHorLine(84,86,6,botBlock,Blue,15);
-        drawVerLine(7, 9, 84, block, Blue, 15);
-        drawHorLine(85, 86, 9, botBlock, Blue, 15);
-        drawChar(87, 7, topBlock, Blue, 15);
-        drawChar(88, 7, botBlock, Blue, 15);
-        drawChar(87, 9, topBlock, Blue, 15);
-        drawChar(88, 8, block, Blue, 15);
+        drawHorLine(76, 79, 7, block, Color1, 15);
+        drawVerLine(8, 11, 74, block, Color1, 15);
+        drawVerLine(8, 11, 75, block, Color1, 15);
+        drawVerLine(8, 11, 80, block, Color1, 15);
+        drawVerLine(8, 11, 81, block, Color1, 15);
+        drawHorLine(76, 79, 9, block, Color1, 15);
+        //Draw M(Blue)
+        drawVerLine(7, 11, 84, block, Color1, 15);
+        drawVerLine(7, 11, 85, block, Color1, 15);
+        drawVerLine(7, 11, 92, block, Color1, 15);
+        drawVerLine(7, 11, 93, block, Color1, 15);
+        drawHorLine(86, 87, 7, block, Color1, 15);
+        drawHorLine(88, 89, 8, block, Color1, 15);
+        drawHorLine(88, 89, 9, block, Color1, 15);
+        drawHorLine(90, 91, 7, block, Color1, 15);
+        //Draw E(Blue)
+        drawVerLine(7, 11, 95, block, Color1, 15);
+        drawVerLine(7, 11, 96, block, Color1, 15);
+        drawHorLine(97, 100, 7, block, Color1, 15);
+        drawHorLine(97, 100, 9, block, Color1, 15);
+        drawHorLine(97, 100, 11, block, Color1, 15);
+
+
 
     }
 }
-void CMenu::drawMenuOption(bool isForRemove, int color, bool isSelected)
+void CMenu::drawStartOption(bool isForRemove, int color, bool isSelected)
 {
     int highlightColor = isSelected ? Green : color;
     if (!isForRemove)
     {
         //Ve Khung
-       drawHorLine(68, 93, 15, topBlock, highlightColor, 15);
-       drawChar(67,15,botBlock, highlightColor,15);
-       drawChar(94, 15, botBlock, highlightColor, 15);
-       drawVerLine(16, 17, 66, block, highlightColor, 15);
-       drawVerLine(16, 17, 95, block, highlightColor, 15);
-       drawChar(66,18,topBlock, highlightColor,15);
-       drawChar(95, 18, topBlock, highlightColor, 15);
-       drawChar(67, 18, botBlock, highlightColor, 15);
-       drawChar(94, 18, botBlock, highlightColor, 15);
-       drawHorLine(68, 93, 19, topBlock, highlightColor, 15);
-       //Ve Start
-       //Ve S
-       drawHorLine(71,73,16,topBlock, highlightColor,15);
-       drawChar(70, 16, botBlock, highlightColor, 15);
-       drawHorLine(71, 72, 17, topBlock, highlightColor, 15);
-       drawChar(73, 17, botBlock, highlightColor, 15);
-       drawHorLine(70, 72, 18, topBlock, highlightColor, 15);
-       //Ve T
-       drawChar(75,16,topBlock, highlightColor,15);
-       drawChar(77, 16, topBlock, highlightColor, 15);
-       drawVerLine(16,17,76,block, highlightColor,15);
-       drawChar(76, 18, topBlock, highlightColor, 15);
-       //Draw A       
-       drawHorLine(80, 81, 16, topBlock, highlightColor, 15);
-       drawChar(79, 16, botBlock, highlightColor, 15);
-       drawChar(82, 16, botBlock, highlightColor, 15);
-       drawChar(79, 17, block, highlightColor, 15);
-       drawChar(82, 17, block, highlightColor, 15);
-       drawChar(79, 18, topBlock, highlightColor, 15);
-       drawChar(82, 18, topBlock, highlightColor, 15);
-       drawHorLine(80, 81, 17, topBlock, highlightColor, 15);
-       //Draw R
-       drawVerLine(16, 17, 84, block, highlightColor, 15);
-       drawChar(84, 18, topBlock, highlightColor, 15);
-       drawHorLine(85, 86, 17, topBlock, highlightColor, 15);
-       drawHorLine(85, 86, 16, topBlock, highlightColor, 15);
-       drawChar(87, 16, botBlock, highlightColor, 15);
-       drawChar(87, 17, botBlock, highlightColor, 15);
-       drawChar(87, 18, topBlock, highlightColor, 15);
-       //Draw T
-       drawChar(89, 16, topBlock, highlightColor, 15);
-       drawChar(91, 16, topBlock, highlightColor, 15);
-       drawVerLine(16, 17, 90, block, highlightColor, 15);
-       drawChar(90, 18, topBlock, highlightColor, 15);
+        drawHorLine(68, 93, 14, topBlock, highlightColor, 15);
+        drawChar(67, 14, botBlock, highlightColor, 15);
+        drawChar(94, 14, botBlock, highlightColor, 15);
+        drawVerLine(15, 16, 66, block, highlightColor, 15);
+        drawVerLine(15, 16, 95, block, highlightColor, 15);
+        drawChar(66, 17, topBlock, highlightColor, 15);
+        drawChar(95, 17, topBlock, highlightColor, 15);
+        drawChar(67, 17, botBlock, highlightColor, 15);
+        drawChar(94, 17, botBlock, highlightColor, 15);
+        drawHorLine(68, 93, 18, topBlock, highlightColor, 15);
+        //Ve Start
+        //Ve S
+        drawHorLine(71, 73, 15, topBlock, highlightColor, 15);
+        drawChar(70, 15, botBlock, highlightColor, 15);
+        drawHorLine(71, 72, 16, topBlock, highlightColor, 15);
+        drawChar(73, 16, botBlock, highlightColor, 15);
+        drawHorLine(70, 72, 17, topBlock, highlightColor, 15);
+
+        //Ve T
+        drawChar(75, 15, topBlock, highlightColor, 15);
+        drawChar(77, 15, topBlock, highlightColor, 15);
+        drawVerLine(15, 16, 76, block, highlightColor, 15);
+        drawChar(76, 17, topBlock, highlightColor, 15);
+        //Draw A       
+        drawHorLine(80, 81, 15, topBlock, highlightColor, 15);
+        drawChar(79, 15, botBlock, highlightColor, 15);
+        drawChar(82, 15, botBlock, highlightColor, 15);
+        drawChar(79, 16, block, highlightColor, 15);
+        drawChar(82, 16, block, highlightColor, 15);
+        drawChar(79, 17, topBlock, highlightColor, 15);
+        drawChar(82, 17, topBlock, highlightColor, 15);
+        drawHorLine(80, 81, 16, topBlock, highlightColor, 15);
+        //Draw R
+        drawVerLine(15, 16, 84, block, highlightColor, 15);
+        drawChar(84, 17, topBlock, highlightColor, 15);
+        drawHorLine(85, 86, 16, topBlock, highlightColor, 15);
+        drawHorLine(85, 86, 15, topBlock, highlightColor, 15);
+        drawChar(87, 15, botBlock, highlightColor, 15);
+        drawChar(87, 16, botBlock, highlightColor, 15);
+        drawChar(87, 17, topBlock, highlightColor, 15);
+        //Draw T
+        drawChar(89, 15, topBlock, highlightColor, 15);
+        drawChar(91, 15, topBlock, highlightColor, 15);
+        drawVerLine(15, 16, 90, block, highlightColor, 15);
+        drawChar(90, 17, topBlock, highlightColor, 15);
+
+
     }
 }
-void CMenu::drawAboutOption(bool isForRemove,int color, bool isSelected)
+void CMenu::drawLoadOption(bool isForRemove, int color, bool isSelected)
 {
     int highlightColor = isSelected ? Green : color;
     if (!isForRemove)
     {
         //Ve Khung
-        drawHorLine(68, 93, 22, topBlock, highlightColor, 15);
-        drawChar(67, 22, botBlock, highlightColor, 15);
-        drawChar(94, 22, botBlock, highlightColor, 15);
-        drawVerLine(23, 24, 66, block, highlightColor, 15);
-        drawVerLine(23, 24, 95, block, highlightColor, 15);
-        drawChar(66, 25, topBlock, highlightColor, 15);
-        drawChar(95, 25, topBlock, highlightColor, 15);
-        drawChar(67, 25, botBlock, highlightColor, 15);
-        drawChar(94, 25, botBlock, highlightColor, 15);
-        drawHorLine(68, 93, 26, topBlock, highlightColor, 15);
-        //Ve About
-        //Draw A       
-        drawHorLine(70, 71, 23, topBlock, highlightColor, 15);
-        drawChar(69, 23, botBlock, highlightColor, 15);
-        drawChar(72, 23, botBlock, highlightColor, 15);
-        drawChar(69, 24, block, highlightColor, 15);
-        drawChar(72, 24, block, highlightColor, 15);
-        drawChar(69, 25, topBlock, highlightColor, 15);
-        drawChar(72, 25, topBlock, highlightColor, 15);
-        drawHorLine(70, 71, 24, topBlock, highlightColor, 15);
-        //Draw B
-        drawVerLine(23, 24, 74, block, highlightColor, 15);
-        drawChar(74, 25, topBlock, highlightColor, 15);
-        drawHorLine(75, 76, 23, topBlock, highlightColor, 15);
-        drawHorLine(75, 76, 24, topBlock, highlightColor, 15);
-        drawHorLine(75, 76, 25, topBlock, highlightColor, 15);
-        drawChar(77, 23, botBlock, highlightColor, 15);
-        drawChar(77, 24, botBlock, highlightColor, 15);
+        drawHorLine(68, 93, 21, topBlock, highlightColor, 15);
+        drawChar(67, 21, botBlock, highlightColor, 15);
+        drawChar(94, 21, botBlock, highlightColor, 15);
+        drawVerLine(22, 23, 66, block, highlightColor, 15);
+        drawVerLine(22, 23, 95, block, highlightColor, 15);
+        drawChar(66, 24, topBlock, highlightColor, 15);
+        drawChar(95, 24, topBlock, highlightColor, 15);
+        drawChar(67, 24, botBlock, highlightColor, 15);
+        drawChar(94, 24, botBlock, highlightColor, 15);
+        drawHorLine(68, 93, 25, topBlock, highlightColor, 15);
+        //Draw L
+        drawVerLine(22, 23, 71, block, highlightColor, 15);
+        drawChar(71, 24, topBlock, highlightColor, 15);
+        drawHorLine(72, 73, 24, topBlock, highlightColor, 15);
         //Draw O
-        drawHorLine(80, 81, 23, topBlock, highlightColor, 15);
-        drawHorLine(80, 81, 25, topBlock, highlightColor, 15);
-        drawChar(79, 24, block, highlightColor, 15);
-        drawChar(82, 24, block, highlightColor, 15);
-        drawChar(79, 23, botBlock, highlightColor, 15);
-        drawChar(82, 23, botBlock, highlightColor, 15);
-        //Draw U
-        drawVerLine(23, 24, 84, block, highlightColor, 15);
-        drawVerLine(23, 24, 87, block, highlightColor, 15);
-        drawHorLine(85, 86, 25, topBlock, highlightColor, 15);
-        //Draw T
-        drawChar(89, 23, topBlock, highlightColor, 15);
-        drawChar(91, 23, topBlock, highlightColor, 15);
-        drawVerLine(23, 24, 90, block, highlightColor, 15);
-        drawChar(90, 25, topBlock, highlightColor, 15);
+        drawHorLine(76, 77, 22, topBlock, highlightColor, 15);
+        drawHorLine(76, 77, 24, topBlock, highlightColor, 15);
+        drawChar(75, 23, block, highlightColor, 15);
+        drawChar(78, 23, block, highlightColor, 15);
+        drawChar(75, 22, botBlock, highlightColor, 15);
+        drawChar(78, 22, botBlock, highlightColor, 15);
+        //Draw A
+        drawHorLine(81, 82, 22, topBlock, highlightColor, 15);
+        drawChar(80, 22, botBlock, highlightColor, 15);
+        drawChar(83, 22, botBlock, highlightColor, 15);
+        drawChar(80, 23, block, highlightColor, 15);
+        drawChar(83, 23, block, highlightColor, 15);
+        drawChar(80, 24, topBlock, highlightColor, 15);
+        drawChar(83, 24, topBlock, highlightColor, 15);
+        drawHorLine(81, 82, 23, topBlock, highlightColor, 15);
+        //Draw D
+        drawVerLine(22, 23, 85, block, highlightColor, 15);
+        drawChar(85, 24, topBlock, highlightColor, 15);
+        drawHorLine(86, 87, 22, topBlock, highlightColor, 15);
+        drawHorLine(86, 87, 24, topBlock, highlightColor, 15);
+        drawChar(88, 23, block, highlightColor, 15);
+        drawChar(88, 22, botBlock, highlightColor, 15);
+
 
     }
 }
@@ -335,61 +321,161 @@ void CMenu::drawOptionsOption(bool isForRemove, int color, bool isSelected)
     if (!isForRemove)
     {
         //Ve Khung*
-        drawHorLine(68, 99, 29, topBlock, highlightColor, 15);
-        drawChar(67, 29, botBlock, highlightColor, 15);
-        drawChar(100, 29, botBlock, highlightColor, 15);
-        drawVerLine(30, 31, 66, block, highlightColor, 15);
-        drawVerLine(30, 31, 101, block, highlightColor, 15);
-        drawChar(66, 32, topBlock, highlightColor, 15);
-        drawChar(101, 32, topBlock, highlightColor, 15);
-        drawChar(67, 32, botBlock, highlightColor, 15);
-        drawChar(100, 32, botBlock, highlightColor, 15);
-        drawHorLine(68, 99, 33, topBlock, highlightColor, 15);
+        drawHorLine(68, 99, 28, topBlock, highlightColor, 15);
+        drawChar(67, 28, botBlock, highlightColor, 15);
+        drawChar(100, 28, botBlock, highlightColor, 15);
+        drawVerLine(29, 30, 66, block, highlightColor, 15);
+        drawVerLine(29, 30, 101, block, highlightColor, 15);
+        drawChar(66, 31, topBlock, highlightColor, 15);
+        drawChar(101, 31, topBlock, highlightColor, 15);
+        drawChar(67, 31, botBlock, highlightColor, 15);
+        drawChar(100, 31, botBlock, highlightColor, 15);
+        drawHorLine(68, 99, 32, topBlock, highlightColor, 15);
         //Ve Options
         //Draw O
-        drawHorLine(69, 70, 30, topBlock, highlightColor, 15);
-        drawHorLine(69, 70, 32, topBlock, highlightColor, 15);
-        drawChar(68, 31, block, highlightColor, 15);
-        drawChar(71, 31, block, highlightColor, 15);
-        drawChar(68, 30, botBlock, highlightColor, 15);
-        drawChar(71, 30, botBlock, highlightColor, 15);
+        drawHorLine(69, 70, 29, topBlock, highlightColor, 15);
+        drawHorLine(69, 70, 31, topBlock, highlightColor, 15);
+        drawChar(68, 30, block, highlightColor, 15);
+        drawChar(71, 30, block, highlightColor, 15);
+        drawChar(68, 29, botBlock, highlightColor, 15);
+        drawChar(71, 29, botBlock, highlightColor, 15);
         //Draw P
-        drawVerLine(30, 31, 73, block, highlightColor, 15);
-        drawChar(73, 32, topBlock, highlightColor, 15);
+        drawVerLine(29, 30, 73, block, highlightColor, 15);
+        drawChar(73, 31, topBlock, highlightColor, 15);
+        drawHorLine(74, 75, 29, topBlock, highlightColor, 15);
         drawHorLine(74, 75, 30, topBlock, highlightColor, 15);
-        drawHorLine(74, 75, 31, topBlock, highlightColor, 15);
-        drawChar(76, 30, botBlock, highlightColor, 15);
+        drawChar(76, 29, botBlock, highlightColor, 15);
         //Draw T
-        drawChar(78, 30, topBlock, highlightColor, 15);
-        drawChar(80, 30, topBlock, highlightColor, 15);
-        drawVerLine(30, 31, 79, block, highlightColor, 15);
-        drawChar(79, 32, topBlock, highlightColor, 15);
+        drawChar(78, 29, topBlock, highlightColor, 15);
+        drawChar(80, 29, topBlock, highlightColor, 15);
+        drawVerLine(29, 30, 79, block, highlightColor, 15);
+        drawChar(79, 31, topBlock, highlightColor, 15);
         //Draw I
-        drawVerLine(30, 31, 82, block, highlightColor, 15);
-        drawChar(82, 32, topBlock, highlightColor, 15);
+        drawVerLine(29, 30, 82, block, highlightColor, 15);
+        drawChar(82, 31, topBlock, highlightColor, 15);
         //Draw O
-        drawHorLine(85, 86, 30, topBlock, highlightColor, 15);
-        drawHorLine(85, 86, 32, topBlock, highlightColor, 15);
-        drawChar(84, 31, block, highlightColor, 15);
-        drawChar(87, 31, block, highlightColor, 15);
-        drawChar(84, 30, botBlock, highlightColor, 15);
-        drawChar(87, 30, botBlock, highlightColor, 15);
+        drawHorLine(85, 86, 29, topBlock, highlightColor, 15);
+        drawHorLine(85, 86, 31, topBlock, highlightColor, 15);
+        drawChar(84, 30, block, highlightColor, 15);
+        drawChar(87, 30, block, highlightColor, 15);
+        drawChar(84, 29, botBlock, highlightColor, 15);
+        drawChar(87, 29, botBlock, highlightColor, 15);
         //Draw N
-        drawVerLine(30, 31, 89, block, highlightColor, 15);
-        drawChar(89, 32, topBlock, highlightColor, 15);
-        drawVerLine(30, 31, 93, block, highlightColor, 15);
-        drawChar(93, 32, topBlock, highlightColor, 15);
-        drawChar(90, 30, botBlock, highlightColor, 15);
-        drawChar(91, 31, topBlock, highlightColor, 15);
-        drawChar(92, 31, botBlock, highlightColor, 15);
+        drawVerLine(29, 30, 89, block, highlightColor, 15);
+        drawChar(89, 31, topBlock, highlightColor, 15);
+        drawVerLine(29, 30, 93, block, highlightColor, 15);
+        drawChar(93, 31, topBlock, highlightColor, 15);
+        drawChar(90, 29, botBlock, highlightColor, 15);
+        drawChar(91, 30, topBlock, highlightColor, 15);
+        drawChar(92, 30, botBlock, highlightColor, 15);
         //Ve S
-        drawHorLine(96, 98, 30, topBlock, highlightColor, 15);
-        drawChar(95, 30, botBlock, highlightColor, 15);
-        drawHorLine(96, 97, 31, topBlock, highlightColor, 15);
-        drawChar(98, 31, botBlock, highlightColor, 15);
-        drawHorLine(95, 97, 32, topBlock, highlightColor, 15);
+        drawHorLine(96, 98, 29, topBlock, highlightColor, 15);
+        drawChar(95, 29, botBlock, highlightColor, 15);
+        drawHorLine(96, 97, 30, topBlock, highlightColor, 15);
+        drawChar(98, 30, botBlock, highlightColor, 15);
+        drawHorLine(95, 97, 31, topBlock, highlightColor, 15);
+
+
+
     }
 
+}
+void CMenu::drawAboutOption(bool isForRemove, int color, bool isSelected)
+{
+    int highlightColor = isSelected ? Green : color;
+    if (!isForRemove)
+    {
+        //Ve Khung
+        drawHorLine(68, 93, 35, topBlock, highlightColor, 15);
+        drawChar(67, 35, botBlock, highlightColor, 15);
+        drawChar(94, 35, botBlock, highlightColor, 15);
+        drawVerLine(36, 37, 66, block, highlightColor, 15);
+        drawVerLine(36, 37, 95, block, highlightColor, 15);
+        drawChar(66, 38, topBlock, highlightColor, 15);
+        drawChar(95, 38, topBlock, highlightColor, 15);
+        drawChar(67, 38, botBlock, highlightColor, 15);
+        drawChar(94, 38, botBlock, highlightColor, 15);
+        drawHorLine(68, 93, 39, topBlock, highlightColor, 15);
+        //Ve About
+        //Draw A       
+        drawHorLine(70, 71, 36, topBlock, highlightColor, 15);
+        drawChar(69, 36, botBlock, highlightColor, 15);
+        drawChar(72, 36, botBlock, highlightColor, 15);
+        drawChar(69, 37, block, highlightColor, 15);
+        drawChar(72, 37, block, highlightColor, 15);
+        drawChar(69, 38, topBlock, highlightColor, 15);
+        drawChar(72, 38, topBlock, highlightColor, 15);
+        drawHorLine(70, 71, 37, topBlock, highlightColor, 15);
+        //Draw B
+        drawVerLine(36, 37, 74, block, highlightColor, 15);
+        drawChar(74, 38, topBlock, highlightColor, 15);
+        drawHorLine(75, 76, 36, topBlock, highlightColor, 15);
+        drawHorLine(75, 76, 37, topBlock, highlightColor, 15);
+        drawHorLine(75, 76, 38, topBlock, highlightColor, 15);
+        drawChar(77, 36, botBlock, highlightColor, 15);
+        drawChar(77, 37, botBlock, highlightColor, 15);
+        //Draw O
+        drawHorLine(80, 81, 36, topBlock, highlightColor, 15);
+        drawHorLine(80, 81, 38, topBlock, highlightColor, 15);
+        drawChar(79, 37, block, highlightColor, 15);
+        drawChar(82, 37, block, highlightColor, 15);
+        drawChar(79, 36, botBlock, highlightColor, 15);
+        drawChar(82, 36, botBlock, highlightColor, 15);
+        //Draw U
+        drawVerLine(36, 37, 84, block, highlightColor, 15);
+        drawVerLine(36, 37, 87, block, highlightColor, 15);
+        drawHorLine(85, 86, 38, topBlock, highlightColor, 15);
+        //Draw T
+        drawChar(89, 36, topBlock, highlightColor, 15);
+        drawChar(91, 36, topBlock, highlightColor, 15);
+        drawVerLine(36, 37, 90, block, highlightColor, 15);
+        drawChar(90, 38, topBlock, highlightColor, 15);
+
+
+
+
+    }
+}
+void CMenu::drawHelpOption(bool isForRemove, int color, bool isSelected)
+{
+    int highlightColor = isSelected ? Green : color;
+    if (!isForRemove)
+    {
+        //Ve Khung
+        drawHorLine(68, 93, 42, topBlock, highlightColor, 15);
+        drawChar(67, 42, botBlock, highlightColor, 15);
+        drawChar(94, 42, botBlock, highlightColor, 15);
+        drawVerLine(43, 44, 66, block, highlightColor, 15);
+        drawVerLine(43, 44, 95, block, highlightColor, 15);
+        drawChar(66, 45, topBlock, highlightColor, 15);
+        drawChar(95, 45, topBlock, highlightColor, 15);
+        drawChar(67, 45, botBlock, highlightColor, 15);
+        drawChar(94, 45, botBlock, highlightColor, 15);
+        drawHorLine(68, 93, 46, topBlock, highlightColor, 15);
+        //Draw H
+        drawVerLine(43, 44, 72, block, highlightColor, 15);
+        drawChar(72, 45, topBlock, highlightColor, 15);
+        drawVerLine(43, 44, 75, block, highlightColor, 15);
+        drawChar(75, 45, topBlock, highlightColor, 15);
+        drawHorLine(73, 74, 44, topBlock, highlightColor, 15);
+        //Draw E
+        drawVerLine(43, 44, 77, block, highlightColor, 15);
+        drawChar(77, 45, topBlock, highlightColor, 15);
+        drawHorLine(78, 79, 43, topBlock, highlightColor, 15);
+        drawHorLine(78, 79, 44, topBlock, highlightColor, 15);
+        drawHorLine(78, 79, 45, topBlock, highlightColor, 15);
+        //Draw L
+        drawVerLine(43, 44, 81, block, highlightColor, 15);
+        drawChar(81, 45, topBlock, highlightColor, 15);
+        drawHorLine(82, 83, 45, topBlock, highlightColor, 15);
+        //Draw P
+        drawVerLine(43, 44, 85, block, highlightColor, 15);
+        drawChar(85, 45, topBlock, highlightColor, 15);
+        drawHorLine(86, 87, 43, topBlock, highlightColor, 15);
+        drawHorLine(86, 87, 44, topBlock, highlightColor, 15);
+        drawChar(88, 43, botBlock, highlightColor, 15);
+
+    }
 }
 void CMenu::drawExitOption(bool isForRemove, int color, bool isSelected)
 {
@@ -397,41 +483,42 @@ void CMenu::drawExitOption(bool isForRemove, int color, bool isSelected)
     if (!isForRemove)
     {
         //Ve Khung
-        drawHorLine(68, 93, 36, topBlock, highlightColor, 15);
-        drawChar(67, 36, botBlock, highlightColor, 15);
-        drawChar(94, 36, botBlock, highlightColor, 15);
-        drawVerLine(37, 38, 66, block, highlightColor, 15);
-        drawVerLine(37, 38, 95, block, highlightColor, 15);
-        drawChar(66, 39, topBlock, highlightColor, 15);
-        drawChar(95, 39, topBlock, highlightColor, 15);
-        drawChar(67, 39, botBlock, highlightColor, 15);
-        drawChar(94, 39, botBlock, highlightColor, 15);
-        drawHorLine(68, 93, 40, topBlock, highlightColor, 15);
+        drawHorLine(68, 93, 49, topBlock, highlightColor, 15);
+        drawChar(67, 49, botBlock, highlightColor, 15);
+        drawChar(94, 49, botBlock, highlightColor, 15);
+        drawVerLine(50, 51, 66, block, highlightColor, 15);
+        drawVerLine(50, 51, 95, block, highlightColor, 15);
+        drawChar(66, 52, topBlock, highlightColor, 15);
+        drawChar(95, 52, topBlock, highlightColor, 15);
+        drawChar(67, 52, botBlock, highlightColor, 15);
+        drawChar(94, 52, botBlock, highlightColor, 15);
+        drawHorLine(68, 93, 53, topBlock, highlightColor, 15);
         //Draw E
-        drawVerLine(37, 38, 72, block, highlightColor, 15);
-        drawChar(72, 39, topBlock, highlightColor, 15);
-        drawHorLine(73, 74, 37, topBlock, highlightColor, 15);
-        drawHorLine(73, 74, 38, topBlock, highlightColor, 15);
-        drawHorLine(73, 74, 39, topBlock, highlightColor, 15);
+        drawVerLine(50, 51, 72, block, highlightColor, 15);
+        drawChar(72, 52, topBlock, highlightColor, 15);
+        drawHorLine(73, 74, 50, topBlock, highlightColor, 15);
+        drawHorLine(73, 74, 51, topBlock, highlightColor, 15);
+        drawHorLine(73, 74, 52, topBlock, highlightColor, 15);
         //Draw X
-        drawChar(76, 37, topBlock, highlightColor, 15);
-        drawChar(76, 39, topBlock, highlightColor, 15);
-        drawChar(80, 37, topBlock, highlightColor, 15);
-        drawChar(80, 39, topBlock, highlightColor, 15);
+        drawChar(76, 50, topBlock, highlightColor, 15);
+        drawChar(76, 52, topBlock, highlightColor, 15);
+        drawChar(80, 50, topBlock, highlightColor, 15);
+        drawChar(80, 52, topBlock, highlightColor, 15);
 
-        drawChar(77, 37, botBlock, highlightColor, 15);
-        drawChar(77, 38, botBlock, highlightColor, 15);
-        drawChar(79, 37, botBlock, highlightColor, 15);
-        drawChar(79, 38, botBlock, highlightColor, 15);
-        drawChar(78, 38, topBlock, highlightColor, 15);
+        drawChar(77, 50, botBlock, highlightColor, 15);
+        drawChar(77, 51, botBlock, highlightColor, 15);
+        drawChar(79, 50, botBlock, highlightColor, 15);
+        drawChar(79, 51, botBlock, highlightColor, 15);
+        drawChar(78, 51, topBlock, highlightColor, 15);
         //Draw I
-        drawVerLine(37, 38, 82, block, highlightColor, 15);
-        drawChar(82, 39, topBlock, highlightColor, 15);
+        drawVerLine(50, 51, 82, block, highlightColor, 15);
+        drawChar(82, 52, topBlock, highlightColor, 15);
         //Draw T
-        drawChar(84, 37, topBlock, highlightColor, 15);
-        drawChar(86, 37, topBlock, highlightColor, 15);
-        drawVerLine(37, 38, 85, block, highlightColor, 15);
-        drawChar(85, 39, topBlock, highlightColor, 15);
+        drawChar(84, 50, topBlock, highlightColor, 15);
+        drawChar(86, 50, topBlock, highlightColor, 15);
+        drawVerLine(50, 51, 85, block, highlightColor, 15);
+        drawChar(85, 52, topBlock, highlightColor, 15);
+
 
     }
 }
