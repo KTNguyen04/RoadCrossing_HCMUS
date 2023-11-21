@@ -58,16 +58,6 @@ void CMenu::showMenu() {
             }
             else if (selectedOption == 5) {
                 CConsole::clearScreen();
-                about();
-                break;
-            }
-            else if (selectedOption == 4) {
-                CConsole::clearScreen();
-                help();
-                break;
-            }
-            else if (selectedOption == 5) {
-                CConsole::clearScreen();
                 exitGame();
                 break;
             }
@@ -500,6 +490,7 @@ void CMenu::exitGame() {
     // Optionally, you can add any cleanup or save game data logic here.
     // ...
     cin.ignore();
+    exit(0);
     // Exit the program
 }
 void CMenu::drawTitle(bool isForRemove,int Color)
