@@ -17,9 +17,9 @@ int main()
 	CMenu m;
 	CConsole c;
 	m.showMenu();
-	CGame g;
+	/*CGame g;
 
-	g.startGame();
+	g.startGame();*/
 	
 
 
