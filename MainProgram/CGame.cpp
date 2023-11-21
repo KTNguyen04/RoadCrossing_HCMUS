@@ -369,8 +369,8 @@ bool CGame::saveGame()
 		for (int i = 0; i < CRoad::sepLane.size(); i++) {
 			fileM.getInfo(to_string(CRoad::sepLane[i]));
 		}
-		for (int i = 0; i < sepBridges.size(); i++) {
-			fileM.getInfo(to_string(sepBridges[i]));
+		for (int i = 0; i < bridges.size(); i++) {
+			fileM.getInfo(to_string(bridges[i].getCoorX()));
 		}
 		for (int i = 0; i < trafficLights.size(); i++) {
 			fileM.getInfo((trafficLights[i].getState()));
@@ -408,6 +408,11 @@ bool CGame::saveGame()
 	return false;
 
 
+}
+
+void CGame::loadGame()
+{
+	fileM.loading();
 }
 
 void CGame::resetPosTrafficLight()
