@@ -16,9 +16,10 @@ bool CTimer::countDown(int secs)
 {
 	timeNow = std::chrono::high_resolution_clock::now();
 	int t = std::chrono::duration_cast<std::chrono::seconds>(timeNow - stone).count();
-	if (t >= secs) {
-		stone = timeNow;
-		return true;
-	}
-	return false;
+	return t >= secs;
+}
+
+void CTimer::setStone()
+{
+	stone =	startTime = std::chrono::high_resolution_clock::now();
 }

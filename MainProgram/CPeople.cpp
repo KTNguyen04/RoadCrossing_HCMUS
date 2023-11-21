@@ -1,6 +1,6 @@
 ﻿#include "CPeople.h"
 #include "CGame.h"
-mutex mPeo;
+
 CPeople::CPeople()
 {
 	coorX = CGame::getCoorTopLeftX() + CGame::getWidth() / 2 - 2;       //bottom left
@@ -12,6 +12,7 @@ CPeople::CPeople()
 	isDead = false;
 	oldX = coorX;
 	oldY = coorY;
+	bcl.resize(height / 2);
 	//drawPeople(color);
 }
 
@@ -60,41 +61,62 @@ void CPeople::drawPeople(bool isForRemove)
 
 		x = coorX;
 		y = coorY;
-		CGame::relaxBackGround(y, bcl0);
-		CGame::relaxBackGround(y - 1, bcl1);
-		CGame::relaxBackGround(y - 2, bcl2);
+		bcl0 = relaxBackGround(y, x);
+		bcl1 = relaxBackGround(y - 1, x);
+		bcl2 = relaxBackGround(y - 2, x);
 		CConsole::drawChar(x, y, topBlock, DarkRed, bcl0);
 
 		x++;
+		bcl0 = relaxBackGround(y, x);
+		bcl1 = relaxBackGround(y - 1, x);
+		bcl2 = relaxBackGround(y - 2, x);
 		CConsole::drawChar(x, y, topBlock, DarkRed, bcl0);
 		CConsole::drawChar(x, y - 1, botBlock, DarkRed, bcl1);
 
 		x++;
+		bcl0 = relaxBackGround(y, x);
+		bcl1 = relaxBackGround(y - 1, x);
+		bcl2 = relaxBackGround(y - 2, x);
 		CConsole::drawChar(x, y, topBlock, DarkRed, bcl0);
 		CConsole::drawChar(x, y - 1, block, DarkRed, bcl1);
 
 
 		x++;
+		bcl0 = relaxBackGround(y, x);
+		bcl1 = relaxBackGround(y - 1, x);
+		bcl2 = relaxBackGround(y - 2, x);
 		CConsole::drawChar(x, y, topBlock, DarkRed, bcl0);
 		CConsole::drawChar(x, y - 1, topBlock, Black, DarkRed);
 		CConsole::drawChar(x, y - 2, block, Black, bcl2);
 
 		x++;
+		bcl0 = relaxBackGround(y, x);
+		bcl1 = relaxBackGround(y - 1, x);
+		bcl2 = relaxBackGround(y - 2, x);
 		CConsole::drawChar(x, y, block, Black, bcl0);
 		CConsole::drawChar(x, y - 1, topBlock, Black, DarkRed);
 		CConsole::drawChar(x, y - 2, topBlock, Black, DarkGreen);
 
 		x++;
+		bcl0 = relaxBackGround(y, x);
+		bcl1 = relaxBackGround(y - 1, x);
+		bcl2 = relaxBackGround(y - 2, x);
 		CConsole::drawChar(x, y, topBlock, Black, bcl0);
 		CConsole::drawChar(x, y - 1, block, Black, bcl1);
 		CConsole::drawChar(x, y - 2, block, Black, bcl2);
 
 		x++;
+		bcl0 = relaxBackGround(y, x);
+		bcl1 = relaxBackGround(y - 1, x);
+		bcl2 = relaxBackGround(y - 2, x);
 		CConsole::drawChar(x, y, block, Black, bcl0);
 		CConsole::drawChar(x, y - 1, topBlock, Black, DarkRed);
 		CConsole::drawChar(x, y - 2, topBlock, Black, DarkGreen);
 
 		x++;
+		bcl0 = relaxBackGround(y, x);
+		bcl1 = relaxBackGround(y - 1, x);
+		bcl2 = relaxBackGround(y - 2, x);
 		//CConsole::drawChar(x, y, topBlock, DarkRed, backColor);
 		CConsole::drawChar(x, y - 1, topBlock, Black, bcl1);
 		CConsole::drawChar(x, y - 2, block, Black, bcl2);
@@ -102,42 +124,63 @@ void CPeople::drawPeople(bool isForRemove)
 	else {
 		x = oldX;
 		y = oldY;
-		CGame::relaxBackGround(y, bcl0);
-		CGame::relaxBackGround(y - 1, bcl1);
-		CGame::relaxBackGround(y - 2, bcl2);
+		bcl0 = relaxBackGround(y, x);
+		bcl1 = relaxBackGround(y - 1, x);
+		bcl2 = relaxBackGround(y - 2, x);
 
 		CConsole::drawChar(x, y, topBlock, bcl0, bcl0);
 
 		x++;
+		bcl0 = relaxBackGround(y, x);
+		bcl1 = relaxBackGround(y - 1, x);
+		bcl2 = relaxBackGround(y - 2, x);
 		CConsole::drawChar(x, y, topBlock, bcl0, bcl0);
 		CConsole::drawChar(x, y - 1, botBlock, bcl1, bcl1);
 
 		x++;
+		bcl0 = relaxBackGround(y, x);
+		bcl1 = relaxBackGround(y - 1, x);
+		bcl2 = relaxBackGround(y - 2, x);
 		CConsole::drawChar(x, y, topBlock, bcl0, bcl0);
 		CConsole::drawChar(x, y - 1, block, bcl1, bcl1);
 
 
 		x++;
+		bcl0 = relaxBackGround(y, x);
+		bcl1 = relaxBackGround(y - 1, x);
+		bcl2 = relaxBackGround(y - 2, x);
 		CConsole::drawChar(x, y, topBlock, bcl0, bcl0);
 		CConsole::drawChar(x, y - 1, topBlock, bcl1, bcl1);
 		CConsole::drawChar(x, y - 2, block, bcl2, bcl2);
 
 		x++;
+		bcl0 = relaxBackGround(y, x);
+		bcl1 = relaxBackGround(y - 1, x);
+		bcl2 = relaxBackGround(y - 2, x);
 		CConsole::drawChar(x, y, block, bcl0, bcl0);
 		CConsole::drawChar(x, y - 1, topBlock, bcl1, bcl1);
 		CConsole::drawChar(x, y - 2, topBlock, bcl2, bcl2);
 
 		x++;
+		bcl0 = relaxBackGround(y, x);
+		bcl1 = relaxBackGround(y - 1, x);
+		bcl2 = relaxBackGround(y - 2, x);
 		CConsole::drawChar(x, y, topBlock, bcl0, bcl0);
 		CConsole::drawChar(x, y - 1, block, bcl1, bcl1);
 		CConsole::drawChar(x, y - 2, block, bcl2, bcl2);
 
 		x++;
+		bcl0 = relaxBackGround(y, x);
+		bcl1 = relaxBackGround(y - 1, x);
+		bcl2 = relaxBackGround(y - 2, x);
 		CConsole::drawChar(x, y, block, bcl0, bcl0);
 		CConsole::drawChar(x, y - 1, topBlock, bcl1, bcl1);
 		CConsole::drawChar(x, y - 2, topBlock, bcl2, bcl2);
 
 		x++;
+		bcl0 = relaxBackGround(y, x);
+		bcl1 = relaxBackGround(y - 1, x);
+		bcl2 = relaxBackGround(y - 2, x);
 		//CConsole::drawChar(x, y, topBlock, DarkRed, backColor);
 		CConsole::drawChar(x, y - 1, topBlock, bcl1, bcl1);
 		CConsole::drawChar(x, y - 2, block, bcl2, bcl2);
@@ -148,6 +191,11 @@ void CPeople::drawPeople(bool isForRemove)
 bool CPeople::IS_DEAD()
 {
 	return isDead;
+}
+
+void CPeople::dead()
+{
+	isDead = true;
 }
 
 void CPeople::peopleMoving(char c)
@@ -173,6 +221,11 @@ bool CPeople::isInBoard(int x, int y)
 	bool b1 = x >= CGame::getCoorTopLeftX() && (x + width) <= CGame::getCoorTopLeftX() + CGame::getWidth();
 	bool b2 = (y - height / 2) >= CGame::getCoorTopLeftY() && y <= CGame::getCoorTopLeftY() + CGame::getHeight() / 2;
 	return b1 && b2;
+}
+
+void CPeople::setBackColor(const int& bcl)
+{
+	backColor = bcl;
 }
 
 bool CPeople::isNeedDraw()
@@ -202,4 +255,50 @@ bool CPeople::isCollide(const CObstacle& obs)
 		if (coorY >= obs.getCoorY() - obs.getHeight() / 2 + 1 && coorY <= obs.getCoorY()) return true;
 	}
 	return false;
+}
+
+bool CPeople::isDrown(const CBridge& br)
+{
+	if (coorY <= br.getCoorY() / 2 && coorY >= br.getCoorY() / 2 - br.getHeight() / 2 + 1)
+		return (coorX < br.getCoorX()) || (coorX + width > (br.getCoorX() + br.getWidth()));
+	return false;
+}
+
+int CPeople::relaxBackGround(const int& y, const int& x)
+{
+	int backColor = -1;
+	//if (y >= CRoad::sepPave[3]) backColor = paveColor;
+	if (y >= CRoad::sepLane[3] / 2 && y < CRoad::sepLane[3] / 2 + lane / 2) {
+		/*if (CRoad::specifyRoad[CRoad::sepLane[3]] == "lane") {
+			backColor = laneColor;
+		}*/
+		backColor = riverColor;
+		for (int i = 0; i < CGame::sepBridges.size(); i++) {
+			if (x >= CGame::sepBridges[i] && x < CGame::sepBridges[i] + bridgeWidth )
+				backColor = bridgeColor;
+		}
+	}
+	else if (y >= CRoad::sepLane[2] / 2 && y < CRoad::sepLane[2] / 2 + lane / 2) {
+		/*if (CRoad::specifyRoad[CRoad::sepLane[2]] == "lane") {
+			backColor = laneColor;
+		}*/
+		backColor = laneColor;
+	}
+	else if (y >= CRoad::sepLane[1] / 2 && y < CRoad::sepLane[1] / 2 + lane / 2) {
+		/*if (CRoad::specifyRoad[CRoad::sepLane[1]] == "lane") {
+			backColor = laneColor;
+		}*/
+		backColor = laneColor;
+	}
+	else if (y >= CRoad::sepLane[0] / 2 && y < CRoad::sepLane[0] / 2 + lane / 2) {
+		/*if (CRoad::specifyRoad[CRoad::sepLane[0]] == "lane") {
+			backColor = laneColor;
+		}*/
+		backColor = laneColor;
+	}
+	else if (y < CRoad::saveLane[0]) backColor = winColor;
+	else {
+		backColor = paveColor;
+	}
+	return backColor;
 }

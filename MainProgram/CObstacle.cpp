@@ -18,9 +18,9 @@ void CObstacle::move()
 	
 	if (direct == "right") {//left to right
 		coorX += speed;
-		if ((coorX >= (CGame::getCoorTopLeftX() + CGame::getWidth())) && !isInit()) {
-			coorX -= CGame::getWidth();
-			coorX -= this->width;
+		if ((coorX >= (CGame::getCoorTopLeftX() + CGame::getWidth())-1) && !isInit()) {
+			coorX = CGame::getCoorTopLeftX()+1-width;
+			//coorX -= this->width;
 		}
 		//if (!isInBoard() && !isInit()) coorX = CGame::getCoorTopLeftX() + CGame::getWidth() - 1;
 	}
@@ -28,8 +28,8 @@ void CObstacle::move()
 		coorX -= speed;
 
 		if ((coorX <= (CGame::getCoorTopLeftX() - this->width + 1)) && !isInit()) {
-			coorX += CGame::getWidth();
-			coorX += this->width;
+			coorX = CGame::getCoorTopLeftX()+ CGame::getWidth();
+			//coorX += this->width;
 		}
 		//if (!isInBoard() && !isInit()) coorX += speed
 	}

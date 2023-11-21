@@ -16,11 +16,13 @@ CTrafficLight::CTrafficLight(int x, int y):CTrafficLight()
 	coorX = x;
 	coorY = y;
 }
-void CTrafficLight::drawTrafficLight()
+void CTrafficLight::drawTrafficLight(bool isForRemove)
 {
+	int cl = color;
+	if (isForRemove) cl = background;
 
 	for (int i = 0; i < height; i++)
-		CConsole::drawHorLine(coorX, coorX + width, coorY / 2 + i/2, block, color, background);
+		CConsole::drawHorLine(coorX, coorX + width, coorY / 2 + i/2, block, cl, background);
 
 
 }
@@ -74,6 +76,11 @@ void CTrafficLight::changeLight()
 {
 	changeState();
 	lightUp();
+}
+
+void CTrafficLight::setState(const string & ls)
+{
+	lightState = ls;
 }
 
 void CTrafficLight::changeState()

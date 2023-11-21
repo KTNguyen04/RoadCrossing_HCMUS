@@ -10,6 +10,7 @@ protected:
 	int backColor;
 	string direct;
 public:
+	CObstacle() {};
 	CObstacle(int x, int y, string direct, int speed=1) ;
 	void move();
 	virtual void drawObject(bool isForRemove = false) {};

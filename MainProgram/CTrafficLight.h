@@ -13,7 +13,7 @@ class CTrafficLight
 public:
 	CTrafficLight();
 	CTrafficLight(int x, int y);
-	void drawTrafficLight();
+	void drawTrafficLight(bool isForRemove =false);
 	void setCoorX(const int& x);
 	void setCoorY(const int& y);
 	void setRedTime(const int& r);
@@ -22,6 +22,7 @@ public:
 	int getTime();
 	string getState();
 	void changeLight();
+	void setState(const string& ls);
 	void changeState();
 	
 };

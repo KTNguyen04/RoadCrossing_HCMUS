@@ -9,6 +9,7 @@ public:
 	CTimer();
 	int timeLapse();
 	bool countDown(int secs);
+	void setStone();
 
 };
 

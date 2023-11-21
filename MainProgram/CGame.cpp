@@ -1,12 +1,13 @@
 ﻿#include "CGame.h"
 #include "CRoad.h"
+#include <cmath>
 #include <condition_variable>
 int CGame::coorTopLeftX = 2;
 int CGame::coorTopLeftY = 0;
 int CGame::frameWidth = 100;
 int CGame::frameHeight = 82;
 
-
+vector<int> CGame::sepBridges;
 
 CGame::CGame()
 {
@@ -20,7 +21,9 @@ CGame::CGame()
 	initTrafficLights();
 	bool flag = false;
 	initObstacle();
+	initBridges();
 	isRunning = true;
+	//sepBridges.resize(bridges.size());
 
 
 }
@@ -142,24 +145,30 @@ void CGame::fillRect(int x, int y, int hei, int wid, wchar_t c, int color)
 //	virtualRoad.drawPavement();
 //
 //}
-condition_variable cv, cv2;
-mutex m, m2;
-bool ready_input = false;
-bool canmove = true;
+
+
 void CGame::startGame()
 {
-
-	thread t1(&CGame::subThread, this);
+	bool canmove = true;
+	pp.drawPeople();
+	thread t1(&CGame::subThread, this, std::ref(canmove));
 	while (1) {
 		//unique_lock<mutex> lock(m);
 		//cv2.wait(lock, [] {return finish_move; });
 		if (canmove) {
 			key = CConsole::getInput();
-			ready_input = true;
+			if (key == 'q') {
+				saveGame();
+				system("pause");
+			}
 			pp.peopleMoving(key);
+			audio.playSound(moveSound);
+
+
 		}
 
-		
+
+
 		//this_thread::sleep_for(chrono::microseconds(100));
 
 
@@ -179,54 +188,24 @@ void CGame::initTrafficLights()
 		CTrafficLight tf(coorTopLeftX + frameWidth, CRoad::sepLane[i]);
 		trafficLights.push_back(tf);
 		trafficLights[i].drawTrafficLight();
-		trafficLights[i].setGreenTime(rand() % 3 + 1);
-		trafficLights[i].setRedTime(rand() % 3 + 1);
+		trafficLights[i].setGreenTime(rand() % 10 + 5);
+		trafficLights[i].setRedTime(rand() % 4 + 2);
 		trafficLights[i].lightUp();
 
 	}
 }
 
-void CGame::relaxBackGround(const int& y, int& backColor)
+void CGame::initBridges()
 {
 
-	//if (y >= CRoad::sepPave[3]) backColor = paveColor;
-	if (y >= CRoad::sepLane[3] / 2 && y < CRoad::sepLane[3] / 2 + lane / 2) {
-		/*if (CRoad::specifyRoad[CRoad::sepLane[3]] == "lane") {
-			backColor = laneColor;
-		}*/
-		backColor = riverColor;
-	}
-	else if (y >= CRoad::sepLane[2] / 2 && y < CRoad::sepLane[2] / 2 + lane / 2) {
-		/*if (CRoad::specifyRoad[CRoad::sepLane[2]] == "lane") {
-			backColor = laneColor;
-		}*/
-		backColor = laneColor;
-	}
-	else if (y >= CRoad::sepLane[1] / 2 && y < CRoad::sepLane[1] / 2 + lane / 2) {
-		/*if (CRoad::specifyRoad[CRoad::sepLane[1]] == "lane") {
-			backColor = laneColor;
-		}*/
-		backColor = laneColor;
-	}
-	else if (y >= CRoad::sepLane[0] / 2 && y < CRoad::sepLane[0] / 2 + lane / 2) {
-		/*if (CRoad::specifyRoad[CRoad::sepLane[0]] == "lane") {
-			backColor = laneColor;
-		}*/
-		backColor = laneColor;
-	}
-	else if (y < CRoad::saveLane[0]) backColor = winColor;
-	else {
-		backColor = paveColor;
+	for (int i = 0; i < 2; i++) {
+		CBridge brid(rand() % (frameWidth - bridgeWidth) + coorTopLeftX + 1, CRoad::sepLane[3] + lane - 1);
+		bridges.push_back(brid);
+		bridges[i].drawObject();
+		sepBridges.push_back(bridges[i].getCoorX());
 	}
 }
 
-
-//int CGame::getNumberOfObstacle()
-//{
-//	if ()
-//	return 0;
-//}
-//
 
 template<class obstacle>
 bool CGame::isAbleToCreate(obstacle& O1, obstacle& O2) {
@@ -303,30 +282,7 @@ void CGame::levelUp()
 {
 
 	level += 1;
-	/*if (level %10==0) {
 
-		addObs(trucks);
-	}
-	else if (level % 10 == 1) {
-
-		addObs(cars);
-	}
-	else if (level % 10 == 2) {
-		addObs(truck2s);
-
-	}
-	else if (level % 10 == 3&&level >6) {
-		setObssSpeed(trucks);
-	}*/
-	/*else if (level % 10 == 4) {
-		setObssSpeed(truck2s);
-	}
-	else if (level % 10 == 5) {
-		setObssSpeed(cars);
-	}
-	else if (level % 10 == 6) {
-		setObssSpeed(trucks);
-	}*/
 	deleteShadow(trucks);
 	deleteShadow(truck2s);
 	deleteShadow(cars);
@@ -334,9 +290,133 @@ void CGame::levelUp()
 		CRoad::makeRandomLane();
 	CRoad::drawMap();
 	//setGame();
+	increDifficulty();
+	//if(level<)
 	resetPosObs(trucks, 0);
-	resetPosObs(truck2s, 1);
-	resetPosObs(cars, 2);
+	resetPosObs(truck2s, 2);
+	resetPosObs(cars, 1);
+
+	for (int i = 0; i < 3; i++) {
+
+		trafficLights[i].drawTrafficLight(true);
+		trafficLights[i].setState("green");
+		trafficLights[i].setGreenTime(rand() % 10 + 5);
+		trafficLights[i].setRedTime(rand() % 4 + 2);
+
+	}
+	resetPosTrafficLight();
+	for (int i = 0; i < 3; i++) {
+		trafficLights[i].lightUp();
+	}
+
+	resetPosBridge();
+	for (auto& e : bridges) {
+		e.drawObject();
+	}
+}
+
+
+
+void CGame::resetPosBridge()
+{
+	for (int i = 0; i < bridges.size(); i++) {
+		bridges[i].setCoorY(CRoad::sepLane[3] + lane - 1);
+		bridges[i].setCoorX(rand() % frameWidth + coorTopLeftX + 1);
+		sepBridges[i] = bridges[i].getCoorX();
+	}
+}
+
+void CGame::increDifficulty()
+{
+	if (level <= 22) {
+		if (level % 6 == 2) {
+
+			addObs(trucks);
+		}
+		else if (level % 6 == 3) {
+
+			addObs(cars);
+		}
+		else if (level % 6 == 4) {
+			addObs(truck2s);
+
+		}
+		if (level >= 5) {
+			if (level % 6 == 5 && level) {
+				setObssSpeed(trucks);
+			}
+			else if (level % 6 == 6) {
+				setObssSpeed(truck2s);
+			}
+			else if (level % 6 == 1) {
+				setObssSpeed(cars);
+			}
+		}
+	}
+	if (level == 12) bridges.pop_back();
+}
+
+
+bool CGame::saveGame()
+{
+
+	if (fileM.openFile("test2.bin")) {
+		fileM.getInfo(to_string(level));
+		fileM.getInfo(to_string(score));
+		fileM.getInfo(to_string(pp.getX()));
+		fileM.getInfo(to_string(pp.getY()));
+		fileM.getInfo(to_string(pp.IS_DEAD()));
+		for (int i = 0; i < CRoad::sepLane.size(); i++) {
+			fileM.getInfo(to_string(CRoad::sepLane[i]));
+		}
+		for (int i = 0; i < sepBridges.size(); i++) {
+			fileM.getInfo(to_string(sepBridges[i]));
+		}
+		for (int i = 0; i < trafficLights.size(); i++) {
+			fileM.getInfo((trafficLights[i].getState()));
+		}
+
+		fileM.getInfo(to_string(trucks.size()));
+
+		for (auto& i : trucks) {
+			fileM.getInfo(to_string(i.getCoorX()));
+			fileM.getInfo(to_string(i.getCoorY()));
+		}
+
+
+		fileM.getInfo(to_string(truck2s.size()));
+
+		for (auto& i : truck2s) {
+			fileM.getInfo(to_string(i.getCoorX()));
+			fileM.getInfo(to_string(i.getCoorY()));
+
+		}
+		fileM.getInfo(to_string(cars.size()));
+
+		for (auto& i : cars) {
+			fileM.getInfo(to_string(i.getCoorX()));
+			fileM.getInfo(to_string(i.getCoorY()));
+
+		}
+
+		fileM.saving();
+		fileM.closeFile();
+
+
+		return true;
+	}
+	return false;
+
+
+}
+
+void CGame::resetPosTrafficLight()
+{
+	int i = 0;
+	for (auto& e : trafficLights) {
+		e.setCoorY(CRoad::sepLane[i]);
+		i++;
+	}
 
 }
 
@@ -403,32 +483,11 @@ void CGame::setObssSpeed(vector<obs>& obss)
 	}
 }
 
-void CGame::subThread()
+void CGame::subThread(bool& canmove)
 {
-
-	/*thread subsub([this]() {
-
-		while (isRunning) {
-			for (auto& e : cars) {
-				e.drawObject(true);
-				e.move();
-				e.drawObject();
-			}
-			for (auto& e : trucks) {
-				e.drawObject(true);
-				e.move();
-				e.drawObject();
-			}
-		}});*/
+	bool isDrowned = true;
 	while (isRunning) {
-
-
 		if (!pp.IS_DEAD()) {
-			//	unique_lock<mutex> lock(m);
-				//cv.wait(lock, []() {return ready_input; });
-				//m.unlock();
-			ready_input = false;
-
 			/*pp.peopleMoving(key);*/
 				//pp.drawPeople(true);
 			mutex mt, mt2;
@@ -436,8 +495,10 @@ void CGame::subThread()
 
 			if (pp.isNeedDraw()) {
 				//	m.unlock();
+
+
 				pp.drawPeople(true);
-				pp.drawPeople();
+				pp.drawPeople(false);
 
 				pp.setOldx(pp.getX());
 				pp.setOldy(pp.getY());
@@ -449,9 +510,12 @@ void CGame::subThread()
 				//this_thread::sleep_for(chrono::microseconds(50));
 
 				levelUp();
+				pp.drawPeople(true);
+
+				pp.drawPeople();
 				pp.resetPos();
 
-				this_thread::sleep_for(chrono::microseconds(100));
+				//this_thread::sleep_for(chrono::microseconds(100));
 
 			}
 			//	cv2.notify_one();
@@ -459,39 +523,88 @@ void CGame::subThread()
 			//lock_guard<mutex> lg(mt);
 
 		}
+		isDrowned = true;
 
+		sort(bridges.begin(), bridges.end(), [](const CBridge& a, const CBridge& b) {
+			return a.getCoorX() <= b.getCoorX();
+			});
+		for (int i = 0; i < bridges.size(); i++) {
+			isDrowned = isDrowned && pp.isDrown(bridges[i]);
+			for (int j = i + 1; j < bridges.size(); j++) {
+				if (bridges[i].getCoorX() + bridges[i].getWidth() >= bridges[j].getCoorX()) {
+
+					CBridge temp(bridges[i].getCoorX(), bridges[i].getCoorY());
+					temp.setWidth(2 * bridges[i].getWidth() - (bridges[i].getCoorX() + bridges[i].getWidth() - bridges[j].getCoorX()));
+					if (pp.isDrown(temp)) isDrowned = true;
+					else isDrowned = false;
+				}
+			}
+
+		}
+
+		if (isDrowned) {
+
+			pp.drawPeople(true);
+			//this_thread::sleep_for(chrono::microseconds(50));
+			pp.drawPeople();
+			exit(0);
+		}
+
+
+
+		int maxx = 4;
+		for (int i = 0; i < trafficLights.size(); i++) {
+
+			maxx = trafficLights[i].getTime();
+			if (trafficLights[i].getTime() > maxx) maxx = trafficLights[i].getTime();
+			if (timer.countDown(trafficLights[i].getTime())) {
+				trafficLights[i].changeLight();
+			}
+
+		}
+		if (timer.countDown(maxx)) timer.setStone();
+		Sleep(1);
 		for (auto& e : cars) {
 
 
+			if (trafficLights[1].getState() == "green") {
 				e.drawObject(true);
 				e.move();
 				e.drawObject();
-			
+			}
 			if (pp.isCollide(e)) {
+				audio.playSound(hitSound);
 				pp.drawPeople(true);
 				//this_thread::sleep_for(chrono::microseconds(50));
 				pp.drawPeople();
-				exit(0);
+				system("pause");
 			}
+
 		}
 		for (auto& e : trucks) {
 			//	this_thread::sleep_for(chrono::microseconds(200 / e.getSpeed()));
 
-			
+
+			if (trafficLights[0].getState() == "green") {
 				e.drawObject(true);
 				e.move();
 				e.drawObject();
+			}
+
 			if (pp.isCollide(e)) {
+				audio.playSound(hitSound);
 				pp.drawPeople(true);
 				//this_thread::sleep_for(chrono::microseconds(50));
 				pp.drawPeople();
-				exit(0);
-			}
 
+				system("pause");
+
+			}
 
 		}
 		for (auto& e : truck2s) {
 			//	this_thread::sleep_for(chrono::microseconds(200 / e.getSpeed()));
+
 
 			if (trafficLights[2].getState() == "green") {
 				e.drawObject(true);
@@ -499,19 +612,15 @@ void CGame::subThread()
 				e.drawObject();
 			}
 			if (pp.isCollide(e)) {
+				audio.playSound(hitSound);
 				pp.drawPeople(true);
 				//this_thread::sleep_for(chrono::microseconds(50));
 				pp.drawPeople();
-				exit(0);
+
+				system("pause");
+
 			}
 
-
-		}
-
-		for (int i = 0; i < trafficLights.size(); i++) {
-			if (timer.countDown(trafficLights[i].getTime())) {
-				trafficLights[i].changeLight();
-			}
 		}
 		canmove = true;
 
