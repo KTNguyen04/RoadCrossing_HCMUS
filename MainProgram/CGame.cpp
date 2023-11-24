@@ -158,7 +158,8 @@ void CGame::startGame()
 		if (canmove) {
 			key = CConsole::getInput();
 			if (key == 'q') {
-				saveGame();
+				saveGame("test12.bin");
+				loadGame("test12.bin");
 				system("pause");
 			}
 			pp.peopleMoving(key);
@@ -357,51 +358,83 @@ void CGame::increDifficulty()
 }
 
 
-bool CGame::saveGame()
+bool CGame::saveGame(const string& name)
 {
+	fileM.setPath(name, rootP);
+	if (fileM.openFile()) {
 
-	if (fileM.openFile("test2.bin")) {
-		fileM.getInfo(to_string(level));
-		fileM.getInfo(to_string(score));
-		fileM.getInfo(to_string(pp.getX()));
-		fileM.getInfo(to_string(pp.getY()));
-		fileM.getInfo(to_string(pp.IS_DEAD()));
-		for (int i = 0; i < CRoad::sepLane.size(); i++) {
-			fileM.getInfo(to_string(CRoad::sepLane[i]));
-		}
-		for (int i = 0; i < bridges.size(); i++) {
-			fileM.getInfo(to_string(bridges[i].getCoorX()));
-		}
-		for (int i = 0; i < trafficLights.size(); i++) {
-			fileM.getInfo((trafficLights[i].getState()));
-		}
+		saveInfo info = { 0 };
+		info.level = level;
+		info.score = score;
+		info.peopleX = pp.getX();
+		info.peopleY = pp.getY();
+		info.people_isDead = pp.IS_DEAD();
 
-		fileM.getInfo(to_string(trucks.size()));
+		info.numLane = CRoad::sepLane.size();
+		info.coorYLane.assign(CRoad::sepLane.begin(), CRoad::sepLane.end());
 
-		for (auto& i : trucks) {
-			fileM.getInfo(to_string(i.getCoorX()));
-			fileM.getInfo(to_string(i.getCoorY()));
-		}
+		info.numBridge = sepBridges.size();
+		info.coorXBridge.resize(info.numBridge);
+		transform(bridges.begin(), bridges.end(), info.coorXBridge.begin(),
+			[](const CBridge& st) { return st.getCoorX(); });
+		info.coorYBridge.resize(info.numBridge);
+		transform(bridges.begin(), bridges.end(), info.coorYBridge.begin(),
+			[](const CBridge& st) { return st.getCoorY(); });
 
+		info.numLight = trafficLights.size();
+		info.stateLight.resize(info.numLight);
+		transform(trafficLights.begin(), trafficLights.end(), info.stateLight.begin(),
+			[](const CTrafficLight& st) { return st.getState(); });
+		info.coorXLight.resize(info.numLight);
+		transform(trafficLights.begin(), trafficLights.end(), info.coorXLight.begin(),
+			[](const CTrafficLight& st) { return st.getCoorX(); });
+		info.coorYLight.resize(info.numLight);
+		transform(trafficLights.begin(), trafficLights.end(), info.coorYLight.begin(),
+			[](const CTrafficLight& st) { return st.getCoorY(); });
 
-		fileM.getInfo(to_string(truck2s.size()));
+		info.numTruck = trucks.size();
+		info.coorXTruck.resize(info.numTruck);
 
-		for (auto& i : truck2s) {
-			fileM.getInfo(to_string(i.getCoorX()));
-			fileM.getInfo(to_string(i.getCoorY()));
+		transform(trucks.begin(), trucks.end(), info.coorXTruck.begin(),
+			[](const CTruck& st) { return st.getCoorX(); });
+		info.coorYTruck.resize(info.numTruck);
 
-		}
-		fileM.getInfo(to_string(cars.size()));
+		transform(trucks.begin(), trucks.end(), info.coorYTruck.begin(),
+			[](const CTruck& st) { return st.getCoorY(); });
 
-		for (auto& i : cars) {
-			fileM.getInfo(to_string(i.getCoorX()));
-			fileM.getInfo(to_string(i.getCoorY()));
+		info.numTruck2 = truck2s.size();
+		info.coorXTruck2.resize(info.numTruck2);
 
-		}
+		transform(truck2s.begin(), truck2s.end(), info.coorXTruck2.begin(),
+			[](const CTruck& st) { return st.getCoorX(); });
+		info.coorYTruck2.resize(info.numTruck2);
 
-		fileM.saving();
+		transform(truck2s.begin(), truck2s.end(), info.coorYTruck2.begin(),
+			[](const CTruck& st) { return st.getCoorY(); });
+
+		info.numCar = cars.size();
+		info.coorXCar.resize(info.numCar);
+
+		transform(cars.begin(), cars.end(), info.coorXCar.begin(),
+			[](const CCar& st) { return st.getCoorX(); });
+		info.coorYCar.resize(info.numCar);
+
+		transform(cars.begin(), cars.end(), info.coorYCar.begin(),
+			[](const CCar& st) { return st.getCoorY(); });
+
+		fileM.saving<saveInfo>(info);
+
 		fileM.closeFile();
 
+		fileM.setPath("fi.bin", rootP);
+		if (fileM.openFile()) {
+
+			fileNames fn;
+			fn = fileM.loading<fileNames>();
+			fn.names.push_back(name);
+			fileM.saving<fileNames>(fn);
+			fileM.closeFile();
+		}
 
 		return true;
 	}
@@ -410,9 +443,14 @@ bool CGame::saveGame()
 
 }
 
-void CGame::loadGame()
+void CGame::loadGame(const string& name)
 {
-	fileM.loading();
+	fileM.setPath(name, rootP);
+	if (fileM.openFile()) {
+		saveInfo info;
+		info = fileM.loading<saveInfo>();
+		fileM.closeFile();
+	}
 }
 
 void CGame::resetPosTrafficLight()

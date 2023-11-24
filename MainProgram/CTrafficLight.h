@@ -20,7 +20,9 @@ public:
 	void setGreenTime(const int& g);
 	void lightUp();
 	int getTime();
-	string getState();
+	string getState() const;
+	int getCoorX() const;
+	int getCoorY() const;
 	void changeLight();
 	void setState(const string& ls);
 	void changeState();

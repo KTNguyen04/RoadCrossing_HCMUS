@@ -67,9 +67,18 @@ int CTrafficLight::getTime()
 	return redTime;
 }
 
-string CTrafficLight::getState()
+string CTrafficLight::getState() const
 {
 	return lightState;
+}
+
+int CTrafficLight::getCoorX() const
+{
+	return coorX;
+}
+int CTrafficLight::getCoorY() const
+{
+	return coorY;
 }
 
 void CTrafficLight::changeLight()

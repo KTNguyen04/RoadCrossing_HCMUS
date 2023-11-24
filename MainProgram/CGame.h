@@ -13,6 +13,7 @@
 #include "CTruck.h"
 #include "CAudio.h"
 #include "CFileWork.h"
+
 #define ThangDung 179
 #define Ngang 196
 #define Vuong 254
@@ -93,8 +94,8 @@ public:
 	static vector<int> sepBridges;
 
 	
-	bool saveGame();
-	void loadGame();
+	bool saveGame(const string& name);
+	void loadGame(const string& name);
 
 };
 

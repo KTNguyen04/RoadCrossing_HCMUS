@@ -4,6 +4,7 @@
 #include <vector>
 #include <iostream>
 #include "StructSaveInfo.h"
+const string rootP = "savegame/";
 using namespace std;
 
 
@@ -12,17 +13,20 @@ class CFileWork
 	string rootLocation;
 	string fileName;
 	fstream file;
-	saveInfo savedInf;
-	saveInfo loadedInf;
+	
+	
 public:
 	CFileWork();
-	bool openFile(const string& name);
+	void setPath(const string& name,const string& rootFolder );
+	bool openFile();
 	void closeFile();
 	void setFileName(const string& fileName);
 
-	void getInfo(string info);	
-	void saving();
-	void loading();
+	template<class T>
+	void saving(const T& data);
+	template<class T>
+	T loading();
+	bool isEmpty();
 
 
 };
