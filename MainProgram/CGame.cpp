@@ -871,7 +871,7 @@ void CGame::deadPopUp()
 }
 
 string CGame::chooseSavedFile() {
-	CConsole::clearScreen();
+	CConsole::clearScreen(White);
 	CConsole::drawHorLine(68 + 20, 93 + 20, 21 - 15, topBlock, 4, 15);
 	CConsole::drawChar(67 + 20, 21 - 15, botBlock, 4, 15);
 	CConsole::drawChar(94 + 20, 21 - 15, botBlock, 4, 15);
