@@ -97,5 +97,9 @@ public:
 	bool saveGame(const string& name);
 	void loadGame(const string& name);
 
+	void deadPopUp();
+	string chooseSavedFile(); //dung trong option load
+	string enterSaveFileName(); //dung de nhap ten file muon save
+	friend bool isAvail(string input); //kiem tra ten file nhap vao ko bi trung vs cac file da save
 };
 

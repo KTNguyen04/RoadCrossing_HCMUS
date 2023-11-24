@@ -672,3 +672,305 @@ void CGame::subThread(bool& canmove)
 	//subsub.join();
 	}
 }
+
+
+
+
+bool isAvail(string input)
+{
+	vector<string> strings;
+	ifstream file("savedfile.bin", ios::binary);
+
+	if (!file.is_open()) {
+		cerr << "Error opening file\n";
+	}
+
+	string currentString;
+
+	// Đọc từng ký tự từ tệp nhị phân
+	char currentChar;
+	char prevChar;
+	while (file.read(&currentChar, sizeof(char))) {
+		// Nếu gặp ký tự null, lưu chuỗi hiện tại vào vector và reset chuỗi
+		if (currentChar == '0' && prevChar == '\\') {
+			strings.push_back(currentString);
+			currentString.clear();
+		}
+		else {
+			if (currentChar != '\\')
+				currentString += currentChar;
+		}
+		prevChar = currentChar;
+	}
+
+	file.close();
+	for (int i = 0; i < strings.size(); i++) {
+		if (input == strings[i])
+			return false;
+	}
+	return true;
+}
+
+void CGame::deadPopUp()
+{
+	//clean khung;
+	for (int i = 1; i <= 102; i++) {
+		for (int j = 8; j <= 32; j++) {
+			CConsole::drawChar(i, j, block, 15, 0, false);
+		}
+	}
+
+	//ve khung
+	CConsole::drawHorLine(2, 101, 9, topBlock, 0, 15);
+	CConsole::drawVerLine(9, 31, 2, block, 0, 15);
+	CConsole::drawVerLine(9, 31, 101, block, 0, 15);
+	CConsole::drawHorLine(2, 101, 31, botBlock, 15, 0);
+
+	//ve khung phu
+	CConsole::drawHorLine(4, 12, 10, topBlock, 0, 15);
+	CConsole::drawVerLine(10, 16, 4, block, 0, 15);
+	CConsole::drawVerLine(23, 29, 99, block, 0, 15);
+	CConsole::drawHorLine(91, 99, 30, botBlock, 15, 0);
+
+	//ve cham trang tri;
+	CConsole::drawChar(99, 10, block, 0, 15, false);
+	CConsole::drawChar(98, 10, block, 0, 15, false);
+
+	CConsole::drawHorLine(4, 5, 30, topBlock, 0, 15);
+	CConsole::drawHorLine(4, 5, 29, botBlock, 0, 15);
+
+
+	//ve game over
+	 //Draw G
+	CConsole::drawVerLine(11 + 1, 13 + 1, 9 + 1, block, 4, 15);
+	CConsole::drawVerLine(11 + 1, 13 + 1, 10 + 1, block, 4, 15);
+	CConsole::drawHorLine(11 + 1, 16 + 1, 10 + 1, block, 4, 15);
+	CConsole::drawHorLine(13 + 1, 16 + 1, 12 + 1, block, 4, 15);
+	CConsole::drawHorLine(15 + 1, 16 + 1, 13 + 1, block, 4, 15);
+	CConsole::drawHorLine(11 + 1, 14 + 1, 14 + 1, block, 4, 15);
+	//Draw A
+	CConsole::drawHorLine(19 + 1 + 1, 22 + 1 + 1, 10 + 1, block, 4, 15);
+	CConsole::drawVerLine(11 + 1, 14 + 1, 17 + 1 + 1, block, 4, 15);
+	CConsole::drawVerLine(11 + 1, 14 + 1, 18 + 1 + 1, block, 4, 15);
+	CConsole::drawVerLine(11 + 1, 14 + 1, 23 + 1 + 1, block, 4, 15);
+	CConsole::drawVerLine(11 + 1, 14 + 1, 24 + 1 + 1, block, 4, 15);
+	CConsole::drawHorLine(19 + 1 + 1, 22 + 1 + 1, 12 + 1, block, 4, 15);
+	//Draw M
+	CConsole::drawVerLine(10 + 1, 14 + 1, 27 + 1 + 1, block, 4, 15);
+	CConsole::drawVerLine(10 + 1, 14 + 1, 28 + 1 + 1, block, 4, 15);
+	CConsole::drawVerLine(10 + 1, 14 + 1, 35 + 1 + 1, block, 4, 15);
+	CConsole::drawVerLine(10 + 1, 14 + 1, 36 + 1 + 1, block, 4, 15);
+	CConsole::drawHorLine(29 + 1 + 1, 30 + 1 + 1, 10 + 1, block, 4, 15);
+	CConsole::drawHorLine(31 + 1 + 1, 32 + 1 + 1, 11 + 1, block, 4, 15);
+	CConsole::drawHorLine(31 + 1 + 1, 32 + 1 + 1, 12 + 1, block, 4, 15);
+	CConsole::drawHorLine(33 + 1 + 1, 34 + 1 + 1, 10 + 1, block, 4, 15);
+	//Draw E
+	CConsole::drawVerLine(10 + 1, 14 + 1, 38 + 1 + 1, block, 4, 15);
+	CConsole::drawVerLine(10 + 1, 14 + 1, 39 + 1 + 1, block, 4, 15);
+	CConsole::drawHorLine(40 + 1 + 1, 43 + 1 + 1, 10 + 1, block, 4, 15);
+	CConsole::drawHorLine(40 + 1 + 1, 43 + 1 + 1, 12 + 1, block, 4, 15);
+	CConsole::drawHorLine(40 + 1 + 1, 43 + 1 + 1, 14 + 1, block, 4, 15);
+
+	//Draw O
+	CConsole::drawHorLine(59, 62, 10 + 1, block, 4, 15);
+	CConsole::drawHorLine(59, 62, 14 + 1, block, 4, 15);
+	CConsole::drawVerLine(11 + 1, 13 + 1, 57, block, 4, 15);
+	CConsole::drawVerLine(11 + 1, 13 + 1, 58, block, 4, 15);
+	CConsole::drawVerLine(11 + 1, 13 + 1, 63, block, 4, 15);
+	CConsole::drawVerLine(11 + 1, 13 + 1, 64, block, 4, 15);
+
+	//Draw V
+	CConsole::drawVerLine(10 + 1, 12 + 1, 66, block, 4, 15);
+	CConsole::drawVerLine(10 + 1, 12 + 1, 67, block, 4, 15);
+	CConsole::drawVerLine(13 + 1, 13 + 1, 68, block, 4, 15);
+	CConsole::drawVerLine(13 + 1, 14 + 1, 69, block, 4, 15);
+	CConsole::drawVerLine(13 + 1, 14 + 1, 70, block, 4, 15);
+	CConsole::drawVerLine(13 + 1, 13 + 1, 71, block, 4, 15);
+	CConsole::drawVerLine(10 + 1, 12 + 1, 72, block, 4, 15);
+	CConsole::drawVerLine(10 + 1, 12 + 1, 73, block, 4, 15);
+
+	//Draw E
+	CConsole::drawVerLine(10 + 1, 14 + 1, 66 + 9, block, 4, 15);
+	CConsole::drawVerLine(10 + 1, 14 + 1, 67 + 9, block, 4, 15);
+	CConsole::drawHorLine(68 + 9, 71 + 9, 10 + 1, block, 4, 15);
+	CConsole::drawHorLine(68 + 9, 71 + 9, 12 + 1, block, 4, 15);
+	CConsole::drawHorLine(68 + 9, 71 + 9, 14 + 1, block, 4, 15);
+
+	//Draw R
+	CConsole::drawHorLine(54 + 28, 59 + 28, 0 + 10 + 1, block, 4, 15);
+	CConsole::drawVerLine(1 + 10 + 1, 4 + 10 + 1, 54 + 28, block, 4, 15);
+	CConsole::drawVerLine(1 + 10 + 1, 4 + 10 + 1, 55 + 28, block, 4, 15);
+	CConsole::drawHorLine(56 + 28, 59 + 28, 2 + 10 + 1, block, 4, 15);
+	CConsole::drawHorLine(58 + 28, 59 + 28, 3 + 10 + 1, block, 4, 15);
+	CConsole::drawHorLine(60 + 28, 61 + 28, 1 + 10 + 1, block, 4, 15);
+	CConsole::drawHorLine(60 + 28, 61 + 28, 4 + 10 + 1, block, 4, 15);
+
+	CConsole::gotoXY(7, 20);
+	cout << "               Press: ";
+	CConsole::gotoXY(30, 22);
+	cout << "               S To SAVE";
+	CConsole::gotoXY(30, 24);
+	cout << "               B To BACK";
+	CConsole::gotoXY(30, 26);
+	cout << "               T To CONTINUE";
+
+	char choice;
+	do {
+		choice = _getch();
+	} while (choice != 's' && choice != 'b' && choice != 't');
+	switch (choice)
+	{
+	case 's':
+		enterSaveFileName();
+		break;
+	case 'b':
+		break;
+	case 't':
+		break;
+	}
+}
+
+string CGame::chooseSavedFile() {
+	CConsole::clearScreen();
+	CConsole::drawHorLine(68 + 20, 93 + 20, 21 - 15, topBlock, 4, 15);
+	CConsole::drawChar(67 + 20, 21 - 15, botBlock, 4, 15);
+	CConsole::drawChar(94 + 20, 21 - 15, botBlock, 4, 15);
+	CConsole::drawVerLine(22 - 15, 23 - 15, 66 + 20, block, 4, 15);
+	CConsole::drawVerLine(22 - 15, 23 - 15, 95 + 20, block, 4, 15);
+	CConsole::drawChar(66 + 20, 24 - 15, topBlock, 4, 15);
+	CConsole::drawChar(95 + 20, 24 - 15, topBlock, 4, 15);
+	CConsole::drawChar(67 + 20, 24 - 15, botBlock, 4, 15);
+	CConsole::drawChar(94 + 20, 24 - 15, botBlock, 4, 15);
+	CConsole::drawHorLine(68 + 20, 93 + 20, 25 - 15, topBlock, 4, 15);
+	//Draw L
+	CConsole::drawVerLine(22 - 15, 23 - 15, 71 + 20 + 1, block, 4, 15);
+	CConsole::drawChar(71 + 20 + 1, 24 - 15, topBlock, 4, 15);
+	CConsole::drawHorLine(72 + 20 + 1, 73 + 20 + 1, 24 - 15, topBlock, 4, 15);
+	//Draw O 
+	CConsole::drawHorLine(76 + 20 + 1, 77 + 20 + 1, 22 - 15, topBlock, 4, 15);
+	CConsole::drawHorLine(76 + 20 + 1, 77 + 20 + 1, 24 - 15, topBlock, 4, 15);
+	CConsole::drawChar(75 + 20 + 1, 23 - 15, block, 4, 15);
+	CConsole::drawChar(78 + 20 + 1, 23 - 15, block, 4, 15);
+	CConsole::drawChar(75 + 20 + 1, 22 - 15, botBlock, 4, 15);
+	CConsole::drawChar(78 + 20 + 1, 22 - 15, botBlock, 4, 15);
+	//Draw A
+	CConsole::drawHorLine(81 + 20 + 1, 82 + 20 + 1, 22 - 15, topBlock, 4, 15);
+	CConsole::drawChar(80 + 20 + 1, 22 - 15, botBlock, 4, 15);
+	CConsole::drawChar(83 + 20 + 1, 22 - 15, botBlock, 4, 15);
+	CConsole::drawChar(80 + 20 + 1, 23 - 15, block, 4, 15);
+	CConsole::drawChar(83 + 20 + 1, 23 - 15, block, 4, 15);
+	CConsole::drawChar(80 + 20 + 1, 24 - 15, topBlock, 4, 15);
+	CConsole::drawChar(83 + 20 + 1, 24 - 15, topBlock, 4, 15);
+	CConsole::drawHorLine(81 + 20 + 1, 82 + 20 + 1, 23 - 15, topBlock, 4, 15);
+	//Draw D
+	CConsole::drawVerLine(22 - 15, 23 - 15, 85 + 20 + 1, block, 4, 15);
+	CConsole::drawChar(85 + 20 + 1, 24 - 15, topBlock, 4, 15);
+	CConsole::drawHorLine(86 + 20 + 1, 87 + 20 + 1, 22 - 15, topBlock, 4, 15);
+	CConsole::drawHorLine(86 + 20 + 1, 87 + 20 + 1, 24 - 15, topBlock, 4, 15);
+	CConsole::drawChar(88 + 20 + 1, 23 - 15, block, 4, 15);
+	CConsole::drawChar(88 + 20 + 1, 22 - 15, botBlock, 4, 15);
+	vector<string> choices;
+	ifstream file("savedfile.bin", ios::binary);
+
+	if (!file.is_open()) {
+		cerr << "Error opening file\n";
+	}
+
+	string currentString;
+
+	//// Đọc từng ký tự từ tệp nhị phân
+	char currentChar;
+	char prevChar;
+	while (file.read(&currentChar, sizeof(char))) {
+		// Nếu gặp ký tự null, lưu chuỗi hiện tại vào vector và reset chuỗi
+		if (currentChar == '0' && prevChar == '\\') {
+			choices.push_back(currentString);
+			currentString.clear();
+		}
+		else {
+			if (currentChar != '\\')
+				currentString += currentChar;
+		}
+		prevChar = currentChar;
+	}
+	file.close();
+
+	int startIndex = 0;
+	int currChoice = 1; // i = choice - 1, tuc choice = 1 thi index trong mang la 0
+
+	char userInput;
+	do {
+		CConsole::gotoXY(95, 20);
+		for (int i = 0; i < 20; i++) {
+			cout << "                                                                                                                        " << endl;
+		}
+		CConsole::gotoXY(95, 20);
+		// Clear the console, you can change this based on your system
+		for (int i = startIndex; i < startIndex + 5 && i < choices.size(); ++i) {
+			if (i == currChoice - 1) {
+				std::cout << "> " << choices[i] << endl << std::endl << std::endl << "                                                                                               ";
+			}
+			else {
+				std::cout << "  " << choices[i] << std::endl << std::endl << std::endl << "                                                                                               ";
+			}
+		}
+		userInput = _getch();  // Using _getch() for non-blocking key input
+		switch (userInput) {
+		case 's':
+			if (currChoice < choices.size())
+				++currChoice;
+			if (startIndex + 5 < choices.size() && currChoice > 5 && currChoice % 5 == 1) {
+				startIndex += 5;
+			}
+			break;
+		case 'w':
+			if (currChoice > 1)
+				--currChoice;
+			if (startIndex - 5 >= 0 && currChoice >= 5 && currChoice % 5 == 0) {
+				startIndex -= 5;
+			}
+			break;
+		}
+	} while (userInput != 'q');
+	return choices[currChoice - 1];
+}
+
+string CGame::enterSaveFileName() {
+	CConsole::gotoXY(6, 20);
+	cout << "                               ";
+	CConsole::gotoXY(30 - 1, 22);
+	cout << "                                   ";
+	CConsole::gotoXY(30 - 1, 24);
+	cout << "                                   ";
+	CConsole::gotoXY(30 - 1, 26);
+	cout << "                                    ";
+
+	string file_name;
+
+	do {
+		CConsole::gotoXY(15, 21);
+		cout << "Enter filename you would like to save as (required .bin): ";
+		CConsole::gotoXY(75, 21);
+		cin >> file_name;
+		if (file_name.find(".bin") == std::string::npos) {
+			CConsole::gotoXY(15, 23);
+			cout << "File name required .bin ! Try again        ";
+			CConsole::gotoXY(75, 21);
+			cout << "               ";
+		}
+		else if (!isAvail(file_name)) {
+			CConsole::gotoXY(15, 23);
+			cout << "This name is already exist ! Try again    ";
+			CConsole::gotoXY(75, 21);
+			cout << "               ";
+		}
+		else {
+			CConsole::gotoXY(59, 22);
+			cout << "                   " << endl;
+			CConsole::gotoXY(14, 23);
+			cout << " Save successfully !!                              ";
+			return file_name;
+		}
+	} while (!isAvail(file_name) || file_name.find(".bin") == std::string::npos);
+	return file_name;
+}
