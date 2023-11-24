@@ -58,7 +58,7 @@ void CConsole::setConsole()
 	GetWindowRect(console, &r);
 	int screenWidth = GetSystemMetrics(SM_CXSCREEN);
 	int screenHeight = GetSystemMetrics(SM_CYSCREEN);
-	int consoleWidth = r.right - r.left + 170;
+	int consoleWidth = r.right - r.left + 150;
 	int consoleHeight = r.bottom - r.top + 200;
 	MoveWindow(console, (screenWidth - consoleWidth) / 2, (screenHeight - consoleHeight) / 2, consoleWidth, consoleHeight, TRUE);
 
@@ -174,7 +174,7 @@ void CConsole::HideCursor() {
 	CONSOLE_CURSOR_INFO cursor_info = { 1, 0 };
 	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursor_info);
 }
-void CConsole::clearScreen() {
+void CConsole::clearScreen(int color) {
 	COORD topLeft = { 0, 0 };
 	DWORD written;
 	CONSOLE_SCREEN_BUFFER_INFO csbi;
@@ -184,10 +184,10 @@ void CConsole::clearScreen() {
 	DWORD consoleSize = csbi.dwSize.X * csbi.dwSize.Y;
 
 	// Điều chỉnh màu sắc và nền trước khi xóa
-	CConsole::setColor(White);
-	CConsole::drawHorLine(0, CConsole::getConsoleWid(), 0, ' ', White, White);
-	for (int i = 1; i < CConsole::getConsoleHei(); ++i) {
-		CConsole::drawHorLine(0, CConsole::getConsoleWid(), i, ' ', White, White);
+	CConsole::setColor(color);
+	CConsole::drawHorLine(0, CConsole::getConsoleWid(), 0, ' ', color, color);
+	for (int i = 1; i < CConsole::getConsoleHei()+1; ++i) {
+		CConsole::drawHorLine(0, CConsole::getConsoleWid(), i, ' ', color, color);
 	}
 
 	// Đặt lại con trỏ về vị trí ban đầu

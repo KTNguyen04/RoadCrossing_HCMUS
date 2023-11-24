@@ -47,7 +47,7 @@ public:
 	static char getInput();
 	static void HideCursor();
 	static void disableClick();
-	static void clearScreen();
+	static void clearScreen(int color);
 };
 // colors are 0 = black 1 = blue 2 = green and so on to 15 = white
 // colorattribute = foreground + background * 16
