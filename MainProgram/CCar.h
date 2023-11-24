@@ -8,6 +8,7 @@ class CCar :public CObstacle
 {
 
 public:
+	CCar();
 	CCar(int x, int y, string direct,int speed = 1);      //bottom left coor
 	//void move();
 	void drawObject(bool isForRemove = false);

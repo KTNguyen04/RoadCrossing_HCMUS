@@ -1,6 +1,10 @@
 #include "CCar.h"
 #include "CGame.h"
 
+CCar::CCar():CObstacle()
+{
+}
+
 CCar::CCar(int x, int y, string direct, int speed):CObstacle(x, y, direct, speed)
 {
 	width = carWidth;

@@ -3,6 +3,10 @@
 #include "CGame.h"
 
 
+CTruck::CTruck() :CObstacle()
+{
+}
+
 CTruck::CTruck(int x, int y, string direct, int speed) :CObstacle(x, y, direct, speed)
 {
 

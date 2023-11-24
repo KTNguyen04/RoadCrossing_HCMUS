@@ -13,13 +13,15 @@ class CPeople
 	vector<int> bcl; 
 public:
 	CPeople();
+	void setX(const int& x);
+	void setY(const int& y);
 	void moveUp();
 	void moveDown();
 	void moveLeft();
 	void moveRight();
 	void drawPeople(bool isForRemove = false);
 	bool IS_DEAD();
-	void dead();
+	void dead(bool state = true);
 	void peopleMoving(char c);
 	bool isInBoard(int, int y);
 	void setOldx(int x) { oldX = x; }

@@ -426,11 +426,12 @@ bool CGame::saveGame(const string& name)
 
 		fileM.closeFile();
 
-		fileM.setPath("fi.bin", rootP);
+		fileM.setPath("testname.bin", rootP);
 		if (fileM.openFile()) {
 
 			fileNames fn;
-			fn = fileM.loading<fileNames>();
+			if (!fileM.isEmpty())
+				fn = fileM.loading<fileNames>();
 			fn.names.push_back(name);
 			fileM.saving<fileNames>(fn);
 			fileM.closeFile();
@@ -449,6 +450,45 @@ void CGame::loadGame(const string& name)
 	if (fileM.openFile()) {
 		saveInfo info;
 		info = fileM.loading<saveInfo>();
+		level = info.level;
+		score = info.score;
+		pp.setX(info.peopleX);
+		pp.setY(info.peopleY);
+		pp.dead(info.people_isDead);
+
+		for (int i = 0; i < info.numLane;i++) {
+			CRoad::sepLane[i] = info.coorYLane[i];
+		}
+
+		bridges.resize(info.numBridge);
+		for (int i = 0; i < info.numBridge; i++) {
+			bridges[i].setCoorX(info.coorXBridge[i]);
+			bridges[i].setCoorY(info.coorYBridge[i]);
+		}
+
+		trafficLights.resize(info.numLight);
+		for (int i = 0; i < info.numLight; i++) {
+			trafficLights[i].setState(info.stateLight[i]);
+			trafficLights[i].setCoorX(info.coorXLight[i]);
+			trafficLights[i].setCoorY(info.coorYLight[i]);
+		}
+
+		trucks.resize(info.numTruck);
+		for (int i = 0; i < info.numTruck; i++) {
+			trucks[i].setCoorX(info.coorXTruck[i]);
+			trucks[i].setCoorY(info.coorYTruck[i]);
+		}
+
+		truck2s.resize(info.numTruck2);
+		for (int i = 0; i < info.numTruck; i++) {
+			truck2s[i].setCoorX(info.coorXTruck2[i]);
+			truck2s[i].setCoorY(info.coorYTruck2[i]);
+		}
+		cars.resize(info.numCar);
+		for (int i = 0; i < info.numTruck; i++) {
+			cars[i].setCoorX(info.coorXCar[i]);
+			cars[i].setCoorY(info.coorYCar[i]);
+		}
 		fileM.closeFile();
 	}
 }

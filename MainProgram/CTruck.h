@@ -7,6 +7,7 @@ const int truckWidth = 12;
 class CTruck :public CObstacle
 {
 public:
+	CTruck();
 	CTruck(int x, int y, string direct, int speed = 1);      //bottom left coor
 	//void move();
 	void drawObject(bool isForRemove = false);

@@ -162,13 +162,15 @@ istream& operator>>(istream& inDev, saveInfo& info) {
 ostream& operator<<(ostream& outDev, const fileNames& fn) {
 	for (auto& i : fn.names) {
 		outDev << i;
+		outDev << '\n';
 	}
 	return outDev;
 }
 
 istream& operator>>(istream& inDev, fileNames& fn) {
 	decltype(fn.names)::value_type temp;
-	while (inDev >> temp) {
+
+	while (inDev>>temp) {
 		fn.names.push_back(temp);
 	}
 	return inDev;

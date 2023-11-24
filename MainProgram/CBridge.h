@@ -6,7 +6,7 @@ class CBridge:public CObstacle
 {
 	int color;
 public:
-	CBridge() {};
+	CBridge() ;
 	CBridge(int x, int y);
 	void drawObject(bool isForRemove=false);
 	void setWidth(const int & w);

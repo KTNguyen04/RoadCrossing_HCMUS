@@ -1,14 +1,18 @@
 #include "CObstacle.h"
 #include "CGame.h"
 
-CObstacle::CObstacle(int x, int y, string direct, int speed)
+CObstacle::CObstacle()
+{
+	backColor = laneColor;
+}
+
+CObstacle::CObstacle(int x, int y, string direct, int speed):CObstacle()
 {
 	coorX = x;
 	coorY = y;
 	backColor = laneColor;
 	this->direct = direct;
 	this->speed = speed;
-	drawObject();
 }
 
 void CObstacle::move()

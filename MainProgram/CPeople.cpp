@@ -16,6 +16,16 @@ CPeople::CPeople()
 	//drawPeople(color);
 }
 
+void CPeople::setX(const int& x)
+{
+	coorX = x;
+}
+
+void CPeople::setY(const int& y)
+{
+	coorY = y;
+}
+
 
 void CPeople::moveUp() {   // test, not real4
 	int temp = coorY;
@@ -193,9 +203,9 @@ bool CPeople::IS_DEAD()
 	return isDead;
 }
 
-void CPeople::dead()
+void CPeople::dead(bool state)
 {
-	isDead = true;
+	isDead = state;
 }
 
 void CPeople::peopleMoving(char c)
@@ -274,7 +284,7 @@ int CPeople::relaxBackGround(const int& y, const int& x)
 		}*/
 		backColor = riverColor;
 		for (int i = 0; i < CGame::sepBridges.size(); i++) {
-			if (x >= CGame::sepBridges[i] && x < CGame::sepBridges[i] + bridgeWidth )
+			if (x >= CGame::sepBridges[i] && x < CGame::sepBridges[i] + bridgeWidth)
 				backColor = bridgeColor;
 		}
 	}

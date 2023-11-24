@@ -71,7 +71,7 @@ public:
 	template<class T>
 	vector<T> createListObstacle(int x, int y, int number, string direct);
 
-	void initTrafficLight();
+	
 	template <class obs>
 	void deleteShadow(vector<obs>& obss);
 
