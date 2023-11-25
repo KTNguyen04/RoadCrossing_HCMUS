@@ -31,6 +31,8 @@ const string victorySound = "Victory";
 const string gameOverSound = "GameOver";
 const string hitSound = "Hit";
 
+const string savedFilePath = "save_game";
+
 class CGame
 {
 	static int coorTopLeftX, coorTopLeftY;
@@ -46,9 +48,9 @@ class CGame
 	CPeople pp;
 	CTimer timer;
 	Audio audio;
-	CFileWork fileM;
 	int key;
 	//vector<CTruck> truckL ;
+	CFileWork fileM;
 
 public:
 	CGame();
@@ -95,11 +97,11 @@ public:
 
 	
 	bool saveGame(const string& name);
-	void (const string& name);
+	void loadGame (const string& name);
 
-	static void deadPopUp();
-	static string loadPopUp(); //dung trong option load
-	static string savePopUp(); //dung de nhap ten file muon save
+	void deadPopUp();
+	string loadPopUp(); //dung trong option load
+	string savePopUp(); //dung de nhap ten file muon save
 	friend bool isAvail(string input); //kiem tra ten file nhap vao ko bi trung vs cac file da save
 };
 

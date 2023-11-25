@@ -4,8 +4,8 @@ CConsole::CConsole()
 
 	system("color 80");
 	fixConsoleWindow();
-	setConsole();
 	removeScrollBar();
+	setConsole();
 	disableClick();
 	showConsoleCursor(false);
 
@@ -40,7 +40,7 @@ void CConsole::setConsole()
 	GetWindowRect(console, &r);
 	int screenWidth = GetSystemMetrics(SM_CXSCREEN);
 	int screenHeight = GetSystemMetrics(SM_CYSCREEN);
-	int consoleWidth = r.right - r.left + 150;
+	int consoleWidth = r.right - r.left + 250;
 	int consoleHeight = r.bottom - r.top + 200;
 	MoveWindow(console, (screenWidth - consoleWidth) / 2, (screenHeight - consoleHeight) / 2, consoleWidth, consoleHeight, TRUE);
 

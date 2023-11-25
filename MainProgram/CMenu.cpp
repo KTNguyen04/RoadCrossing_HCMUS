@@ -49,7 +49,7 @@ void CMenu::showMenu() {
             }
             else if (selectedOption == 1) {
 
-                CGame::loadPopUp();
+                //CGame::loadPopUp();
                 
             }
             else if(selectedOption==2)

@@ -158,8 +158,8 @@ void CGame::startGame()
 		if (canmove) {
 			key = CConsole::getInput();
 			if (key == 'q') {
-				//saveGame("mytest.bin");
-				loadGame("mytest.bin");
+			//	saveGame("mytest.bin");
+				//loadGame("mytest.bin");
 				system("pause");
 			}
 			pp.peopleMoving(key);
@@ -426,7 +426,7 @@ bool CGame::saveGame(const string& name)
 
 		fileM.closeFile();
 
-		fileM.setPath("testname.bin", rootP);
+		fileM.setPath(savedFilePath, rootP);
 		if (fileM.openFile()) {
 
 			fileNames fn;
@@ -865,7 +865,7 @@ void CGame::deadPopUp()
 	switch (choice)
 	{
 	case 's':
-		savePopUp();
+		//savePopUp();
 		break;
 	case 'b':
 		break;
@@ -875,7 +875,7 @@ void CGame::deadPopUp()
 }
 
 string CGame::loadPopUp() {
-	CConsole::clearScreen();
+	CConsole::clearScreen(White);
 	CConsole::drawHorLine(68 + 20, 93 + 20, 21 - 15, topBlock, 4, 15);
 	CConsole::drawChar(67 + 20, 21 - 15, botBlock, 4, 15);
 	CConsole::drawChar(94 + 20, 21 - 15, botBlock, 4, 15);
@@ -913,70 +913,70 @@ string CGame::loadPopUp() {
 	CConsole::drawHorLine(86 + 20 + 1, 87 + 20 + 1, 24 - 15, topBlock, 4, 15);
 	CConsole::drawChar(88 + 20 + 1, 23 - 15, block, 4, 15);
 	CConsole::drawChar(88 + 20 + 1, 22 - 15, botBlock, 4, 15);
-	vector<string> choices;
-	ifstream file("testname.bin", ios::binary);
 
-	if (!file.is_open()) {
-		cerr << "Error opening file\n";
+	fileM.setPath(savedFilePath, rootP);
+	if (fileM.openFile()) {
+		fileNames fn = fileM.loading<fileNames>();
+
+
+		//string currentString;
+
+		////// Đọc từng ký tự từ tệp nhị phân
+		//char currentChar;
+		//char prevChar;
+		//while (file.read(&currentChar, sizeof(char))) {
+		//	// Nếu gặp ký tự null, lưu chuỗi hiện tại vào vector và reset chuỗi
+		//	if (currentChar == '0' && prevChar == '\\') {
+		//		fn.names.push_back(currentString);
+		//		currentString.clear();
+		//	}
+		//	else {
+		//		if (currentChar != '\\')
+		//			currentString += currentChar;
+		//	}
+		//	prevChar = currentChar;
+		//}
+		//file.close();
+
+		int startIndex = 0;
+		int currChoice = 1; // i = choice - 1, tuc choice = 1 thi index trong mang la 0
+
+		char userInput;
+		do {
+			CConsole::gotoXY(95, 20);
+			for (int i = 0; i < 20; i++) {
+				cout << "                                                                                                                        " << endl;
+			}
+			CConsole::gotoXY(95, 20);
+			// Clear the console, you can change this based on your system
+			for (int i = startIndex; i < startIndex + 5 && i < fn.names.size(); ++i) {
+				if (i == currChoice - 1) {
+					std::cout << "> " << fn.names[i] << endl << std::endl << std::endl << "                                                                                               ";
+				}
+				else {
+					std::cout << "  " << fn.names[i] << std::endl << std::endl << std::endl << "                                                                                               ";
+				}
+			}
+			userInput = _getch();  // Using _getch() for non-blocking key input
+			switch (userInput) {
+			case 's':
+				if (currChoice < fn.names.size())
+					++currChoice;
+				if (startIndex + 5 < fn.names.size() && currChoice > 5 && currChoice % 5 == 1) {
+					startIndex += 5;
+				}
+				break;
+			case 'w':
+				if (currChoice > 1)
+					--currChoice;
+				if (startIndex - 5 >= 0 && currChoice >= 5 && currChoice % 5 == 0) {
+					startIndex -= 5;
+				}
+				break;
+			}
+		} while (userInput != 'q');
+		return fn.names[currChoice - 1];
 	}
-
-	string currentString;
-
-	//// Đọc từng ký tự từ tệp nhị phân
-	char currentChar;
-	char prevChar;
-	while (file.read(&currentChar, sizeof(char))) {
-		// Nếu gặp ký tự null, lưu chuỗi hiện tại vào vector và reset chuỗi
-		if (currentChar == '0' && prevChar == '\\') {
-			choices.push_back(currentString);
-			currentString.clear();
-		}
-		else {
-			if (currentChar != '\\')
-				currentString += currentChar;
-		}
-		prevChar = currentChar;
-	}
-	file.close();
-
-	int startIndex = 0;
-	int currChoice = 1; // i = choice - 1, tuc choice = 1 thi index trong mang la 0
-
-	char userInput;
-	do {
-		CConsole::gotoXY(95, 20);
-		for (int i = 0; i < 20; i++) {
-			cout << "                                                                                                                        " << endl;
-		}
-		CConsole::gotoXY(95, 20);
-		// Clear the console, you can change this based on your system
-		for (int i = startIndex; i < startIndex + 5 && i < choices.size(); ++i) {
-			if (i == currChoice - 1) {
-				std::cout << "> " << choices[i] << endl << std::endl << std::endl << "                                                                                               ";
-			}
-			else {
-				std::cout << "  " << choices[i] << std::endl << std::endl << std::endl << "                                                                                               ";
-			}
-		}
-		userInput = _getch();  // Using _getch() for non-blocking key input
-		switch (userInput) {
-		case 's':
-			if (currChoice < choices.size())
-				++currChoice;
-			if (startIndex + 5 < choices.size() && currChoice > 5 && currChoice % 5 == 1) {
-				startIndex += 5;
-			}
-			break;
-		case 'w':
-			if (currChoice > 1)
-				--currChoice;
-			if (startIndex - 5 >= 0 && currChoice >= 5 && currChoice % 5 == 0) {
-				startIndex -= 5;
-			}
-			break;
-		}
-	} while (userInput != 'q');
-	return choices[currChoice - 1];
 }
 
 string CGame::savePopUp() {

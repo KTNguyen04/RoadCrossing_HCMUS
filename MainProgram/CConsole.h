@@ -32,7 +32,7 @@ class CConsole
 public:
 	CConsole();
 	//~CConsole();
-	static void setRange();
+	
 	static void fixConsoleWindow();
 	static void removeScrollBar();
 	static void setConsole();
