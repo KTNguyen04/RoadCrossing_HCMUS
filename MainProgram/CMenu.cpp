@@ -4,7 +4,7 @@ void CMenu::showMenu() {
     Audio au;
    // au.mainMenuAudio();
     int selectedOption = 0; 
-    clearScreen(Blue);
+    CConsole::clearScreen(Blue);
     while (true) {
         drawTitle(false,Red);
         drawStartOption(false, Black, selectedOption == 0);
@@ -395,7 +395,7 @@ void CMenu::exitGame() {
     int Color = Red;
     bool isForRemove=false;
     int backColor= White;
-    clearScreen(backColor);
+    CConsole::clearScreen(backColor);
     //Draw Thank You
     if (!isForRemove)
     {
@@ -957,10 +957,6 @@ void CMenu::drawExitOption(bool isForRemove, int color, bool isSelected)
 
     }
 }
-
-
-
-
 void CMenu::drawMute(bool isForRemove, int color, bool isSelected)
 {
     int Color = color;
@@ -1152,19 +1148,19 @@ int CMenu::controlOptions()
 void CMenu::drawSubMenu(bool isForRemove, int color)
 {
     //draw Line
-    drawVerLine(0, 53, 115, block, color, 15);
+    CConsole::drawVerLine(0, 53, 115, block, color, 15);
     //draw Khung Score
     int Color1 = Blue;//khung color
-    drawVerLine(1, 13, 122, block, color, 15);
-    drawVerLine(1, 13, 157, block, color, 15);
-    drawHorLine(123, 156, 1, topBlock, color, Color1);
-    drawHorLine(123, 156, 13, botBlock, color, Color1);
+    CConsole::drawVerLine(1, 13, 122, block, color, 15);
+    CConsole::drawVerLine(1, 13, 157, block, color, 15);
+    CConsole::drawHorLine(123, 156, 1, topBlock, color, Color1);
+    CConsole::drawHorLine(123, 156, 13, botBlock, color, Color1);
     //To mau
     for (int i = 123; i < 157; i++)
     {
         for (int j = 2; j < 13; j++)
         {
-            drawChar(i, j, block, Color1);
+            CConsole::drawChar(i, j, block, Color1);
         }
 
     }
@@ -1181,8 +1177,8 @@ void CMenu::drawSubMenu(bool isForRemove, int color)
         CConsole::drawHorLine(128, 130, 5, topBlock, color, Color1);
         //draw C
         CConsole::drawHorLine(134, 136, 3, topBlock, color, Color1);
-        drawChar(133, 3, botBlock, color, Color1);
-        drawChar(133, 4, block, color, Color1);
+        CConsole::drawChar(133, 3, botBlock, color, Color1);
+        CConsole::drawChar(133, 4, block, color, Color1);
         CConsole::drawHorLine(134, 136, 5, topBlock, color, Color1);
         //draw O
         CConsole::drawHorLine(139, 140, 3, topBlock, color, Color1);
@@ -1210,16 +1206,16 @@ void CMenu::drawSubMenu(bool isForRemove, int color)
    
     //Draw Khung Huong Dan
     int Color2 = Green;
-    drawVerLine(20, 46, 122, block, color, 15);
-    drawVerLine(20, 46, 157, block, color, 15);
-    drawHorLine(123, 156, 20, topBlock, color, Color2);
-    drawHorLine(123, 156, 46, botBlock, color, Color2);
+    CConsole::drawVerLine(20, 46, 122, block, color, 15);
+    CConsole::drawVerLine(20, 46, 157, block, color, 15);
+    CConsole::drawHorLine(123, 156, 20, topBlock, color, Color2);
+    CConsole::drawHorLine(123, 156, 46, botBlock, color, Color2);
     //To mau
     for (int i = 123; i < 157; i++)
     {
         for (int j = 21; j < 46; j++)
         {
-            drawChar(i, j, block, Color2);
+            CConsole::drawChar(i, j, block, Color2);
         }
 
     }
@@ -1242,8 +1238,8 @@ void CMenu::drawSubMenu(bool isForRemove, int color)
         CConsole::drawHorLine(128, 130, 24, topBlock, color, Color2);
         //draw C
         CConsole::drawHorLine(134, 136, 22, topBlock, color, Color2);
-        drawChar(133, 22, botBlock, color, Color2);
-        drawChar(133, 23, block, color, Color2);
+        CConsole::drawChar(133, 22, botBlock, color, Color2);
+        CConsole::drawChar(133, 23, block, color, Color2);
         CConsole::drawHorLine(134, 136, 24, topBlock, color, Color2);
         //draw :
         CConsole::drawChar(138, 23, topBlock, color, Color2);
@@ -1310,7 +1306,7 @@ void CMenu::drawSubMenu(bool isForRemove, int color)
         CConsole::drawChar(143, 28, topBlock, color, Color2);
         CConsole::drawChar(144, 27, botBlock, color, Color2);
         //draw E
-        drawVerLine(26, 27, 147, block, color, Color2);
+        CConsole::drawVerLine(26, 27, 147, block, color, Color2);
         CConsole::drawChar(147, 28, topBlock, color, Color2);
         CConsole::drawHorLine(148, 149, 26, topBlock, color, Color2);
         CConsole::drawHorLine(148, 149, 27, topBlock, color, Color2);
@@ -1320,8 +1316,8 @@ void CMenu::drawSubMenu(bool isForRemove, int color)
     if (!isForRemove)
     {
         //Draw W
-        drawVerLine(30, 31, 124, block, color, Color2);
-        drawVerLine(30, 31, 128, block, color, Color2);
+        CConsole::drawVerLine(30, 31, 124, block, color, Color2);
+        CConsole::drawVerLine(30, 31, 128, block, color, Color2);
         CConsole::drawChar(125, 32, topBlock, color, Color2);
         CConsole::drawChar(127, 32, topBlock, color, Color2);
         CConsole::drawChar(126, 31, botBlock, color, Color2);
@@ -1329,8 +1325,8 @@ void CMenu::drawSubMenu(bool isForRemove, int color)
         CConsole::drawChar(130, 31, topBlock, color, Color2);
         CConsole::drawChar(130, 32, topBlock, color, Color2);
         //draw U
-        drawVerLine(30, 31, 133, block, color, Color2);
-        drawVerLine(30, 31, 136, block, color, Color2);
+        CConsole::drawVerLine(30, 31, 133, block, color, Color2);
+        CConsole::drawVerLine(30, 31, 136, block, color, Color2);
         CConsole::drawHorLine(134, 135, 32, topBlock, color, Color2);
         //draw P
         CConsole::drawVerLine(30, 31, 138, block, color, Color2);
@@ -1366,8 +1362,8 @@ void CMenu::drawSubMenu(bool isForRemove, int color)
         CConsole::drawChar(137, 34, botBlock, color, Color2);
         CConsole::drawChar(140, 34, botBlock, color, Color2);
         //draw W
-        drawVerLine(34, 35, 142, block, color, Color2);
-        drawVerLine(34, 35, 146, block, color, Color2);
+        CConsole::drawVerLine(34, 35, 142, block, color, Color2);
+        CConsole::drawVerLine(34, 35, 146, block, color, Color2);
         CConsole::drawChar(143, 36, topBlock, color, Color2);
         CConsole::drawChar(145, 36, topBlock, color, Color2);
         CConsole::drawChar(144, 35, botBlock, color, Color2);
@@ -1466,12 +1462,12 @@ void CMenu::drawNumber0(bool isForRemove, int color, int x)
     int Color1 = Blue;
     if (!isForRemove)
     {
-        drawHorLine(x+1,x+2,7,topBlock,color,Color1);
-        drawHorLine(x + 1, x + 2, 10, topBlock, color, Color1);
-        drawVerLine(8, 9, x, block, color, Color1);
-        drawChar(x,7,botBlock,color,Color1);
-        drawVerLine(8, 9, x+3, block, color, Color1);
-        drawChar(x+3, 7, botBlock, color, Color1);
+        CConsole::drawHorLine(x+1,x+2,7,topBlock,color,Color1);
+        CConsole::drawHorLine(x + 1, x + 2, 10, topBlock, color, Color1);
+        CConsole::drawVerLine(8, 9, x, block, color, Color1);
+        CConsole::drawChar(x,7,botBlock,color,Color1);
+        CConsole::drawVerLine(8, 9, x+3, block, color, Color1);
+        CConsole::drawChar(x+3, 7, botBlock, color, Color1);
     }
 }
 void CMenu::drawNumber1(bool isForRemove, int color, int x)
@@ -1479,9 +1475,9 @@ void CMenu::drawNumber1(bool isForRemove, int color, int x)
     int Color1 = Blue;
     if (!isForRemove)
     {
-        drawChar(x, 7, botBlock, color, Color1);
-        drawHorLine(x , x + 2, 10, topBlock, color, Color1);
-        drawVerLine(7, 9, x + 1, block, color, Color1);
+        CConsole::drawChar(x, 7, botBlock, color, Color1);
+        CConsole::drawHorLine(x , x + 2, 10, topBlock, color, Color1);
+        CConsole::drawVerLine(7, 9, x + 1, block, color, Color1);
     }
 }
 void CMenu::drawNumber2(bool isForRemove, int color, int x)
@@ -1489,14 +1485,14 @@ void CMenu::drawNumber2(bool isForRemove, int color, int x)
     int Color1 = Blue;
     if (!isForRemove)
     {
-        drawChar(x, 7, botBlock, color, Color1);
-        drawChar(x+3, 7, botBlock, color, Color1);
-        drawChar(x, 9, botBlock, color, Color1);
-        drawChar(x+1, 9, topBlock, color, Color1);
-        drawChar(x+2, 8, botBlock, color, Color1);
-        drawChar(x + 3, 8, topBlock, color, Color1);
-        drawHorLine(x+1, x + 2, 7, topBlock, color, Color1);
-        drawHorLine(x , x + 3, 10, topBlock, color, Color1);
+        CConsole::drawChar(x, 7, botBlock, color, Color1);
+        CConsole::drawChar(x+3, 7, botBlock, color, Color1);
+        CConsole::drawChar(x, 9, botBlock, color, Color1);
+        CConsole::drawChar(x+1, 9, topBlock, color, Color1);
+        CConsole::drawChar(x+2, 8, botBlock, color, Color1);
+        CConsole::drawChar(x + 3, 8, topBlock, color, Color1);
+        CConsole::drawHorLine(x+1, x + 2, 7, topBlock, color, Color1);
+        CConsole::drawHorLine(x , x + 3, 10, topBlock, color, Color1);
     }
 }
 void CMenu::drawNumber3(bool isForRemove, int color, int x)
@@ -1504,14 +1500,14 @@ void CMenu::drawNumber3(bool isForRemove, int color, int x)
     int Color1 = Blue;
     if (!isForRemove)
     {
-        drawChar(x, 7, botBlock, color, Color1);
-        drawChar(x + 3, 7, botBlock, color, Color1);
-        drawChar(x + 3, 8, topBlock, color, Color1);
-        drawChar(x, 9, botBlock, color, Color1);
-        drawChar(x+3, 9, block, color, Color1);
-        drawHorLine(x + 1, x + 2, 7, topBlock, color, Color1);
-        drawHorLine(x + 1, x + 2, 8, botBlock, color, Color1);
-        drawHorLine(x + 1, x + 2, 10, topBlock, color, Color1);
+        CConsole::drawChar(x, 7, botBlock, color, Color1);
+        CConsole::drawChar(x + 3, 7, botBlock, color, Color1);
+        CConsole::drawChar(x + 3, 8, topBlock, color, Color1);
+        CConsole::drawChar(x, 9, botBlock, color, Color1);
+        CConsole::drawChar(x+3, 9, block, color, Color1);
+        CConsole::drawHorLine(x + 1, x + 2, 7, topBlock, color, Color1);
+        CConsole::drawHorLine(x + 1, x + 2, 8, botBlock, color, Color1);
+        CConsole::drawHorLine(x + 1, x + 2, 10, topBlock, color, Color1);
 
     }
 }
@@ -1520,10 +1516,10 @@ void CMenu::drawNumber4(bool isForRemove, int color, int x)
     int Color1 = Blue;
     if (!isForRemove)
     {
-        drawVerLine(7, 8, x , block, color, Color1);
-        drawVerLine(7, 9, x+3, block, color, Color1);
-        drawChar(x + 3, 10, topBlock, color, Color1);
-        drawHorLine(x + 1, x + 2, 8, botBlock, color, Color1);
+        CConsole::drawVerLine(7, 8, x , block, color, Color1);
+        CConsole::drawVerLine(7, 9, x+3, block, color, Color1);
+        CConsole::drawChar(x + 3, 10, topBlock, color, Color1);
+        CConsole::drawHorLine(x + 1, x + 2, 8, botBlock, color, Color1);
     }
 }
 void CMenu::drawNumber5(bool isForRemove, int color, int x)
@@ -1531,12 +1527,12 @@ void CMenu::drawNumber5(bool isForRemove, int color, int x)
     int Color1 = Blue;
     if (!isForRemove)
     {
-        drawVerLine(7, 8, x, block, color, Color1);
-        drawHorLine(x + 1, x + 3, 7, topBlock, color, Color1);
-        drawHorLine(x + 1, x + 2, 8, botBlock, color, Color1);
-        drawHorLine(x , x + 3, 10, topBlock, color, Color1);
-        drawChar(x+3, 8, botBlock, color, Color1);
-        drawChar(x + 3, 9, block, color, Color1);
+        CConsole::drawVerLine(7, 8, x, block, color, Color1);
+        CConsole::drawHorLine(x + 1, x + 3, 7, topBlock, color, Color1);
+        CConsole::drawHorLine(x + 1, x + 2, 8, botBlock, color, Color1);
+        CConsole::drawHorLine(x , x + 3, 10, topBlock, color, Color1);
+        CConsole::drawChar(x+3, 8, botBlock, color, Color1);
+        CConsole::drawChar(x + 3, 9, block, color, Color1);
     }
 }
 void CMenu::drawNumber6(bool isForRemove, int color, int x)
@@ -1544,12 +1540,12 @@ void CMenu::drawNumber6(bool isForRemove, int color, int x)
     int Color1 = Blue;
     if (!isForRemove)
     {
-        drawVerLine(7, 9, x , block, color, Color1);
-        drawChar(x + 3, 8, botBlock, color, Color1);
-        drawChar(x + 3, 9, block, color, Color1);
-        drawHorLine(x + 1, x + 3, 7, topBlock, color, Color1);
-        drawHorLine(x + 1, x + 2, 8, botBlock, color, Color1);
-        drawHorLine(x, x + 3, 10, topBlock, color, Color1);
+        CConsole::drawVerLine(7, 9, x , block, color, Color1);
+        CConsole::drawChar(x + 3, 8, botBlock, color, Color1);
+        CConsole::drawChar(x + 3, 9, block, color, Color1);
+        CConsole::drawHorLine(x + 1, x + 3, 7, topBlock, color, Color1);
+        CConsole::drawHorLine(x + 1, x + 2, 8, botBlock, color, Color1);
+        CConsole::drawHorLine(x, x + 3, 10, topBlock, color, Color1);
     }
 }
 void CMenu::drawNumber7(bool isForRemove, int color, int x)
@@ -1557,14 +1553,14 @@ void CMenu::drawNumber7(bool isForRemove, int color, int x)
     int Color1 = Blue;
     if (!isForRemove)
     {
-        drawHorLine(x, x + 3, 7, topBlock, color, Color1);
-        drawChar(x , 7, botBlock, color, color);
-        drawChar(x+3, 7, botBlock, color, color);
-        drawChar(x + 3, 8, topBlock, color, Color1);
-        drawChar(x + 2, 8, botBlock, color, Color1);
-        drawChar(x + 2, 9, topBlock, color, Color1);
-        drawChar(x + 1, 9, botBlock, color, Color1);
-        drawChar(x + 1, 10, topBlock, color, Color1);
+        CConsole::drawHorLine(x, x + 3, 7, topBlock, color, Color1);
+        CConsole::drawChar(x , 7, botBlock, color, color);
+        CConsole::drawChar(x+3, 7, botBlock, color, color);
+        CConsole::drawChar(x + 3, 8, topBlock, color, Color1);
+        CConsole::drawChar(x + 2, 8, botBlock, color, Color1);
+        CConsole::drawChar(x + 2, 9, topBlock, color, Color1);
+        CConsole::drawChar(x + 1, 9, botBlock, color, Color1);
+        CConsole::drawChar(x + 1, 10, topBlock, color, Color1);
 
     }
 }
@@ -1573,15 +1569,15 @@ void CMenu::drawNumber8(bool isForRemove, int color, int x)
     int Color1 = Blue;
     if (!isForRemove)
     {
-        drawHorLine(x + 1, x + 2, 7, topBlock, color, Color1);
-        drawHorLine(x + 1, x + 2, 8, botBlock, color, Color1);
-        drawHorLine(x + 1, x + 2, 10, topBlock, color, Color1);
-        drawChar(x, 7, botBlock, color, Color1);
-        drawChar(x + 3, 7, botBlock, color, Color1);
-        drawChar(x, 8, topBlock, color, Color1);
-        drawChar(x + 3, 8, topBlock, color, Color1);
-        drawChar(x, 9, block, color, Color1);
-        drawChar(x + 3, 9, block, color, Color1);
+        CConsole::drawHorLine(x + 1, x + 2, 7, topBlock, color, Color1);
+        CConsole::drawHorLine(x + 1, x + 2, 8, botBlock, color, Color1);
+        CConsole::drawHorLine(x + 1, x + 2, 10, topBlock, color, Color1);
+        CConsole::drawChar(x, 7, botBlock, color, Color1);
+        CConsole::drawChar(x + 3, 7, botBlock, color, Color1);
+        CConsole::drawChar(x, 8, topBlock, color, Color1);
+        CConsole::drawChar(x + 3, 8, topBlock, color, Color1);
+        CConsole::drawChar(x, 9, block, color, Color1);
+        CConsole::drawChar(x + 3, 9, block, color, Color1);
     }
 }
 void CMenu::drawNumber9(bool isForRemove, int color, int x)
@@ -1589,10 +1585,10 @@ void CMenu::drawNumber9(bool isForRemove, int color, int x)
     int Color1 = Blue;
     if (!isForRemove)
     {
-        drawVerLine(7, 8, x, block, color, Color1);
-        drawVerLine(7, 9, x+3, block, color, Color1);
-        drawHorLine(x + 1, x + 2, 7, topBlock, color, Color1);
-        drawHorLine(x + 1, x + 2, 8, botBlock, color, Color1);
-        drawHorLine(x, x + 3, 10, topBlock, color, Color1);
+        CConsole::drawVerLine(7, 8, x, block, color, Color1);
+        CConsole::drawVerLine(7, 9, x+3, block, color, Color1);
+        CConsole::drawHorLine(x + 1, x + 2, 7, topBlock, color, Color1);
+        CConsole::drawHorLine(x + 1, x + 2, 8, botBlock, color, Color1);
+        CConsole::drawHorLine(x, x + 3, 10, topBlock, color, Color1);
     }
 }

@@ -168,7 +168,7 @@ void CConsole::clearScreen(int color) {
 	// Điều chỉnh màu sắc và nền trước khi xóa
 	CConsole::setColor(color);
 	CConsole::drawHorLine(0, CConsole::getConsoleWid(), 0, ' ', color, color);
-	for (int i = 1; i < CConsole::getConsoleHei()+1; ++i) {
+	for (int i = 1; i < CConsole::getConsoleHei(); ++i) {
 		CConsole::drawHorLine(0, CConsole::getConsoleWid(), i, ' ', color, color);
 	}
 
