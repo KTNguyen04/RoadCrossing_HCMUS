@@ -97,11 +97,7 @@ public:
 
 	
 	bool saveGame(const string& name);
-<<<<<<< HEAD
-	void loadGame (const string& name);
-=======
 	void loadGame(const string& name);
->>>>>>> e39b2868e93da583d4c0c568b62def78f1aa588e
 
 	void deadPopUp();
 	string loadPopUp(); //dung trong option load
