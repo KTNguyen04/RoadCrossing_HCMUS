@@ -27,13 +27,13 @@ void CMenu::showMenu() {
         }
         else if (userInput == 13) {  // Enter key
             if (selectedOption == 0) {
-                CConsole::clearScreen();
+                //CConsole::clearScreen();
                 CGame g;
                 g.startGame();
             }
             else if (selectedOption == 1) {
 
-                // load game
+                CGame::loadPopUp();
                 
             }
             else if(selectedOption==2)

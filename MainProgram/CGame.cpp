@@ -158,8 +158,8 @@ void CGame::startGame()
 		if (canmove) {
 			key = CConsole::getInput();
 			if (key == 'q') {
-				saveGame("test12.bin");
-				loadGame("test12.bin");
+				//saveGame("mytest.bin");
+				loadGame("mytest.bin");
 				system("pause");
 			}
 			pp.peopleMoving(key);
@@ -448,6 +448,7 @@ void CGame::loadGame(const string& name)
 {
 	fileM.setPath(name, rootP);
 	if (fileM.openFile()) {
+		system("cls");
 		saveInfo info;
 		info = fileM.loading<saveInfo>();
 		level = info.level;
@@ -490,7 +491,10 @@ void CGame::loadGame(const string& name)
 			cars[i].setCoorY(info.coorYCar[i]);
 		}
 		fileM.closeFile();
+
+		
 	}
+
 }
 
 void CGame::resetPosTrafficLight()
@@ -861,7 +865,7 @@ void CGame::deadPopUp()
 	switch (choice)
 	{
 	case 's':
-		enterSaveFileName();
+		savePopUp();
 		break;
 	case 'b':
 		break;
@@ -870,7 +874,7 @@ void CGame::deadPopUp()
 	}
 }
 
-string CGame::chooseSavedFile() {
+string CGame::loadPopUp() {
 	CConsole::clearScreen();
 	CConsole::drawHorLine(68 + 20, 93 + 20, 21 - 15, topBlock, 4, 15);
 	CConsole::drawChar(67 + 20, 21 - 15, botBlock, 4, 15);
@@ -910,7 +914,7 @@ string CGame::chooseSavedFile() {
 	CConsole::drawChar(88 + 20 + 1, 23 - 15, block, 4, 15);
 	CConsole::drawChar(88 + 20 + 1, 22 - 15, botBlock, 4, 15);
 	vector<string> choices;
-	ifstream file("savedfile.bin", ios::binary);
+	ifstream file("testname.bin", ios::binary);
 
 	if (!file.is_open()) {
 		cerr << "Error opening file\n";
@@ -975,7 +979,7 @@ string CGame::chooseSavedFile() {
 	return choices[currChoice - 1];
 }
 
-string CGame::enterSaveFileName() {
+string CGame::savePopUp() {
 	CConsole::gotoXY(6, 20);
 	cout << "                               ";
 	CConsole::gotoXY(30 - 1, 22);

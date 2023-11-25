@@ -10,25 +10,7 @@ CConsole::CConsole()
 	showConsoleCursor(false);
 
 }
-void CConsole::setRange()
-{
-	HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
-	CONSOLE_SCREEN_BUFFER_INFOEX csbi;
-	csbi.cbSize = sizeof(CONSOLE_SCREEN_BUFFER_INFOEX);
 
-	// Lấy thông tin cửa sổ console hiện tại
-	GetConsoleScreenBufferInfoEx(console, &csbi);
-
-	// Thay đổi độ chia (số dòng trên một trang) thành 50
-	csbi.dwSize.Y = 50;
-
-	// Đặt lại kích thước buffer theo độ chia mới
-	csbi.srWindow.Bottom = csbi.srWindow.Top + csbi.dwSize.Y - 1;
-
-	// Áp dụng thay đổi
-	SetConsoleScreenBufferInfoEx(console, &csbi);
-
-}
 void CConsole::fixConsoleWindow() {
 	HWND consoleWindow = GetConsoleWindow();
 	LONG style = GetWindowLong(consoleWindow, GWL_STYLE);
