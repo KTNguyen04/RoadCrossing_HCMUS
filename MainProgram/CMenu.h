@@ -1,7 +1,7 @@
 #pragma once
 #include "CGame.h"
 #include "CRoad.h"
-class CMenu : CConsole
+class CMenu 
 {
 public:
 	CMenu() : currentOption(0) {}
