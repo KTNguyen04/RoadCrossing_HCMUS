@@ -1,7 +1,8 @@
 #include"CMenu.h"
 #include "CAudio.h"
 void CMenu::showMenu() {
-	
+	Audio au;
+	au.playSound(menuSound);
 	int selectedOption = 0;
 	CConsole::clearScreen(Blue);
 	while (true) {
@@ -117,37 +118,6 @@ int CMenu::displayMenuOptions() {
 	}
 }
 
-void CMenu::start()
-{
-	// Initialize game variables and setup
-	int score = 0;
-	bool isGameOver = false;
-
-	// Game loop
-	//while (!isGameOver) {
-	//    // Clear the screen and display game content
-	//   
-	//    CGame g;
-	//    g.runGame();
-	//    // Get user input
-	//    char key = CConsole::getInput();
-
-	//    // Process user input
-	//    if (key == 'q') {
-	//        isGameOver = true;
-	//    }
-	//    else {
-	//      
-	//    }
-	//}
-
-	// Game over screen
-
-
-	// Wait for user input to return to the main menu
-	CConsole::getInput();
-}
-
 void CMenu::options()
 {
 	CConsole::clearScreen(White);
@@ -217,13 +187,12 @@ void CMenu::options()
 
 	}
 
-
-
+	CConsole::gotoXY(85, 50);
+	cout << "Press R to return to the main menu...";
 	Color = Black;
 	while (true)
 	{
-		CConsole::gotoXY(85, 50);
-		cout << "Press R to return to the main menu...";
+		
 		//Draw Mute
 		drawMute(false, Color, selectedOption == 1);
 		//Draw UnMute
@@ -240,20 +209,18 @@ void CMenu::options()
 		}
 		else if (userInput == 13) {  // Enter key
 			if (selectedOption == 1) {
-				// Audio au;
-				// au.stopAudio();
+				 Audio au;
+				 au.stopSound();
 			}
 			else if (selectedOption == 0) {
-				// Audio au;
-				// au.mainMenuAudio();
+				 Audio au;
+				 au.playSound(menuSound);
 			}
 		}
 		else if (userInput == 'r') {
 			showMenu();
 		}
-
 	}
-
 	cin.ignore();
 }
 
@@ -1639,6 +1606,7 @@ void CMenu::drawNumber9(bool isForRemove, int color, int x)
 		CConsole::drawHorLine(x + 1, x + 2, 8, botBlock, color, Color1);
 		CConsole::drawHorLine(x, x + 3, 10, topBlock, color, Color1);
 	}
+}
 }
 void CMenu::clearScoreBoard(bool isForRemove,int color)
 {

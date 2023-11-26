@@ -26,6 +26,10 @@ void Audio::playSound(string type)
 
  
 }
+void Audio::stopSound()
+{
+	mciSendString(L"stop sound", NULL, 0, NULL);
+}
 
 //void Audio::mainMenuAudio() {
 //	if (!isSoundPlaying) {
