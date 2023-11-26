@@ -71,6 +71,11 @@ int CObstacle::getHeight() const {
 	return height;
 }
 
+int CObstacle::getSpeed() const
+{
+	return speed;
+}
+
 bool CObstacle::isInBoard(bool isForDraw  , int x )
 {
 	if (!isForDraw) {
@@ -84,11 +89,11 @@ bool CObstacle::isInBoard(bool isForDraw  , int x )
 	return b1;
 }
 
-void CObstacle::setCoorX(int x)
+void CObstacle::setCoorX(const int& x)
 {
 	this->coorX = x;
 }
-void CObstacle::setCoorY(int y) {
+void CObstacle::setCoorY(const int &y) {
 	this->coorY = y;
 }
 

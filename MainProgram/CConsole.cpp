@@ -5,11 +5,14 @@ CConsole::CConsole()
 	system("color 80");
 	fixConsoleWindow();
 	removeScrollBar();
-	setConsole();
 	disableClick();
 	showConsoleCursor(false);
+	setConsole();
 
 }
+
+
+
 
 void CConsole::fixConsoleWindow() {
 	HWND consoleWindow = GetConsoleWindow();
@@ -40,11 +43,11 @@ void CConsole::setConsole()
 	GetWindowRect(console, &r);
 	int screenWidth = GetSystemMetrics(SM_CXSCREEN);
 	int screenHeight = GetSystemMetrics(SM_CYSCREEN);
-	int consoleWidth = r.right - r.left + 250;
-	int consoleHeight = r.bottom - r.top + 200;
+	int consoleWidth = r.right - r.left + 500;
+	int consoleHeight = r.bottom - r.top + 400;
 	MoveWindow(console, (screenWidth - consoleWidth) / 2, (screenHeight - consoleHeight) / 2, consoleWidth, consoleHeight, TRUE);
 
-	
+
 }
 
 void CConsole::gotoXY(int x, int y)
@@ -71,7 +74,7 @@ int CConsole::getConsoleWid()
 
 }
 
-void CConsole::drawChar(int x, int y, wchar_t c, int color,int backGround,bool isAscii)
+void CConsole::drawChar(int x, int y, wchar_t c, int color, int backGround, bool isAscii)
 {
 	if (!isAscii) {
 		int old_mode = _setmode(_fileno(stdout), _O_U16TEXT);
@@ -100,17 +103,17 @@ void CConsole::setColor(int color)
 
 }
 
-void CConsole::drawHorLine(int fromX, int toX, int y, wchar_t c, int color, int backColor )
+void CConsole::drawHorLine(int fromX, int toX, int y, wchar_t c, int color, int backColor)
 {
 	for (int i = fromX; i <= toX; i++) {
-		drawChar(i, y , c, color,backColor);
+		drawChar(i, y, c, color, backColor);
 	}
 }
 
-void CConsole::drawVerLine(int fromY, int toY, int x, wchar_t c, int color, int backColor )
+void CConsole::drawVerLine(int fromY, int toY, int x, wchar_t c, int color, int backColor)
 {
 	for (int i = fromY; i <= toY; i++) {
-		drawChar(x, i, c, color,backColor);
+		drawChar(x, i, c, color, backColor);
 	}
 }
 
@@ -131,7 +134,7 @@ char CConsole::getInput()
 	{
 		Sleep(20);
 
-		input =  _getch();
+		input = _getch();
 		if (input == 0 || input == 224) // Check for special keys
 		{
 			input = _getch(); // Discard the second character of a special key

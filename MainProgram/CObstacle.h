@@ -19,9 +19,10 @@ public:
 	bool isInit();
 	int getWidth() const;
 	int getHeight() const;
+	int getSpeed() const;
 	bool isInBoard(bool isForDraw = false, int x = -1);
-	void setCoorX(int x);
-	void setCoorY(int y);
+	void setCoorX(const int &x);
+	void setCoorY(const int &y);
 	void setSpeed(int speed);
 	int getSpeed();
 	string getDirect();

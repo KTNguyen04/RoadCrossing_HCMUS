@@ -11,23 +11,25 @@ vector<int> CGame::sepBridges;
 
 CGame::CGame()
 {
-	level = 1;
-	//drawFrame();
-	//drawRoad();
-
-
-	CRoad::drawMap();
-
-	initTrafficLights();
-	bool flag = false;
-	initObstacle();
-	initBridges();
-	isRunning = true;
+	//CRoad::setUpRoad();
 	//sepBridges.resize(bridges.size());
 
 
 }
 
+void CGame::initGame() {
+	level = 1;
+	//drawFrame();
+	//drawRoad();
+
+
+	//CRoad::drawMap();
+	initTrafficLights();
+	bool flag = false;
+	initObstacle();
+	initBridges();
+	isRunning = true;
+}
 void CGame::drawFrame()
 {
 	wchar_t wc1 = L'\u2500';//   mảng ngang
@@ -48,7 +50,12 @@ void CGame::drawFrame()
 
 
 }
+void CGame::drawBridge() {
+	for (int i = 0; i < bridges.size(); i++) {
+		bridges[i].drawObject();
 
+	}
+}
 void CGame::drawRoad()
 {
 	wchar_t wc1 = L'\u2500';//   mảng ngang
@@ -151,6 +158,8 @@ void CGame::startGame()
 {
 	bool canmove = true;
 	pp.drawPeople();
+	tlLightUp();
+	drawBridge();
 	thread t1(&CGame::subThread, this, std::ref(canmove));
 	while (1) {
 		//unique_lock<mutex> lock(m);
@@ -158,7 +167,7 @@ void CGame::startGame()
 		if (canmove) {
 			key = CConsole::getInput();
 			if (key == 'q') {
-			//	saveGame("mytest.bin");
+				saveGame("saving9.bin");
 				//loadGame("mytest.bin");
 				system("pause");
 			}
@@ -184,14 +193,13 @@ void CGame::startGame()
 
 void CGame::initTrafficLights()
 {
-
+	
 	for (int i = 0; i < 3; i++) {
 		CTrafficLight tf(coorTopLeftX + frameWidth, CRoad::sepLane[i]);
 		trafficLights.push_back(tf);
 		trafficLights[i].drawTrafficLight();
 		trafficLights[i].setGreenTime(rand() % 10 + 5);
 		trafficLights[i].setRedTime(rand() % 4 + 2);
-		trafficLights[i].lightUp();
 
 	}
 }
@@ -202,7 +210,6 @@ void CGame::initBridges()
 	for (int i = 0; i < 2; i++) {
 		CBridge brid(rand() % (frameWidth - bridgeWidth) + coorTopLeftX + 1, CRoad::sepLane[3] + lane - 1);
 		bridges.push_back(brid);
-		bridges[i].drawObject();
 		sepBridges.push_back(bridges[i].getCoorX());
 	}
 }
@@ -297,7 +304,7 @@ void CGame::levelUp()
 	resetPosObs(truck2s, 2);
 	resetPosObs(cars, 1);
 
-	for (int i = 0; i < 3; i++) {
+	for (int i = 0; i < trafficLights.size(); i++) {
 
 		trafficLights[i].drawTrafficLight(true);
 		trafficLights[i].setState("green");
@@ -306,9 +313,7 @@ void CGame::levelUp()
 
 	}
 	resetPosTrafficLight();
-	for (int i = 0; i < 3; i++) {
-		trafficLights[i].lightUp();
-	}
+	tlLightUp();
 
 	resetPosBridge();
 	for (auto& e : bridges) {
@@ -316,6 +321,11 @@ void CGame::levelUp()
 	}
 }
 
+void CGame::tlLightUp() {
+	for (int i = 0; i < trafficLights.size(); i++) {
+		trafficLights[i].lightUp();
+	}
+}
 
 
 void CGame::resetPosBridge()
@@ -385,6 +395,12 @@ bool CGame::saveGame(const string& name)
 		info.stateLight.resize(info.numLight);
 		transform(trafficLights.begin(), trafficLights.end(), info.stateLight.begin(),
 			[](const CTrafficLight& st) { return st.getState(); });
+		info.redTime.resize(info.numLight);
+		transform(trafficLights.begin(), trafficLights.end(), info.redTime.begin(),
+			[](const CTrafficLight& st) { return st.getRedTime(); });
+		info.greenTime.resize(info.numLight);
+		transform(trafficLights.begin(), trafficLights.end(), info.greenTime.begin(),
+			[](const CTrafficLight& st) { return st.getGreenTime(); });
 		info.coorXLight.resize(info.numLight);
 		transform(trafficLights.begin(), trafficLights.end(), info.coorXLight.begin(),
 			[](const CTrafficLight& st) { return st.getCoorX(); });
@@ -401,6 +417,10 @@ bool CGame::saveGame(const string& name)
 
 		transform(trucks.begin(), trucks.end(), info.coorYTruck.begin(),
 			[](const CTruck& st) { return st.getCoorY(); });
+		info.truckSpeed.resize(info.numTruck);
+
+		transform(trucks.begin(), trucks.end(), info.truckSpeed.begin(),
+			[](const CTruck& st) { return st.getSpeed(); });
 
 		info.numTruck2 = truck2s.size();
 		info.coorXTruck2.resize(info.numTruck2);
@@ -411,6 +431,10 @@ bool CGame::saveGame(const string& name)
 
 		transform(truck2s.begin(), truck2s.end(), info.coorYTruck2.begin(),
 			[](const CTruck& st) { return st.getCoorY(); });
+		info.truck2Speed.resize(info.numTruck2);
+
+		transform(truck2s.begin(), truck2s.end(), info.truck2Speed.begin(),
+			[](const CTruck& st) { return st.getSpeed(); });
 
 		info.numCar = cars.size();
 		info.coorXCar.resize(info.numCar);
@@ -421,7 +445,10 @@ bool CGame::saveGame(const string& name)
 
 		transform(cars.begin(), cars.end(), info.coorYCar.begin(),
 			[](const CCar& st) { return st.getCoorY(); });
+		info.carSpeed.resize(info.numCar);
 
+		transform(cars.begin(), cars.end(), info.carSpeed.begin(),
+			[](const CCar& st) { return st.getSpeed(); });
 		fileM.saving<saveInfo>(info);
 
 		fileM.closeFile();
@@ -430,8 +457,6 @@ bool CGame::saveGame(const string& name)
 		if (fileM.openFile()) {
 
 			fileNames fn;
-			if (!fileM.isEmpty())
-				fn = fileM.loading<fileNames>();
 			fn.names.push_back(name);
 			fileM.saving<fileNames>(fn);
 			fileM.closeFile();
@@ -448,28 +473,33 @@ void CGame::loadGame(const string& name)
 {
 	fileM.setPath(name, rootP);
 	if (fileM.openFile()) {
-		system("cls");
-		saveInfo info;
-		info = fileM.loading<saveInfo>();
+		//system("cls");
+		saveInfo info =  fileM.loading<saveInfo>();
 		level = info.level;
 		score = info.score;
 		pp.setX(info.peopleX);
 		pp.setY(info.peopleY);
 		pp.dead(info.people_isDead);
 
+		CRoad::sepLane.resize(info.numLane);
 		for (int i = 0; i < info.numLane;i++) {
 			CRoad::sepLane[i] = info.coorYLane[i];
 		}
 
 		bridges.resize(info.numBridge);
+		sepBridges.resize(info.numBridge);
 		for (int i = 0; i < info.numBridge; i++) {
 			bridges[i].setCoorX(info.coorXBridge[i]);
 			bridges[i].setCoorY(info.coorYBridge[i]);
+			sepBridges[i] = bridges[i].getCoorX();
+
 		}
 
 		trafficLights.resize(info.numLight);
 		for (int i = 0; i < info.numLight; i++) {
 			trafficLights[i].setState(info.stateLight[i]);
+			trafficLights[i].setGreenTime(info.greenTime[i]);
+			trafficLights[i].setRedTime(info.redTime[i]);
 			trafficLights[i].setCoorX(info.coorXLight[i]);
 			trafficLights[i].setCoorY(info.coorYLight[i]);
 		}
@@ -494,6 +524,7 @@ void CGame::loadGame(const string& name)
 
 		
 	}
+	
 
 }
 
@@ -875,7 +906,7 @@ void CGame::deadPopUp()
 }
 
 string CGame::loadPopUp() {
-	CConsole::clearScreen(White);
+	//CConsole::clearScreen(White);
 	CConsole::drawHorLine(68 + 20, 93 + 20, 21 - 15, topBlock, 4, 15);
 	CConsole::drawChar(67 + 20, 21 - 15, botBlock, 4, 15);
 	CConsole::drawChar(94 + 20, 21 - 15, botBlock, 4, 15);
@@ -957,7 +988,7 @@ string CGame::loadPopUp() {
 					std::cout << "  " << fn.names[i] << std::endl << std::endl << std::endl << "                                                                                               ";
 				}
 			}
-			userInput = _getch();  // Using _getch() for non-blocking key input
+			userInput = _getch();  
 			switch (userInput) {
 			case 's':
 				if (currChoice < fn.names.size())
@@ -974,9 +1005,11 @@ string CGame::loadPopUp() {
 				}
 				break;
 			}
-		} while (userInput != 'q');
+		} while (userInput != 13);
+		fileM.closeFile();
 		return fn.names[currChoice - 1];
 	}
+	return "";
 }
 
 string CGame::savePopUp() {

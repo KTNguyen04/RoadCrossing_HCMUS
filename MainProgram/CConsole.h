@@ -26,13 +26,13 @@ enum {
 	White,		//15
 };
 
-const int background = Gray;
+const int background = White;
 class CConsole
 {
 public:
 	CConsole();
 	//~CConsole();
-	
+	static void setFont();
 	static void fixConsoleWindow();
 	static void removeScrollBar();
 	static void setConsole();

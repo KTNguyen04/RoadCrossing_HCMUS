@@ -9,7 +9,6 @@ ostream& operator<<(ostream& outDev, const saveInfo& info) {
 	outDev << '\n';
 	outDev << info.peopleX;
 	outDev << '\n';
-	outDev << '\n';
 	outDev << info.peopleY;
 	outDev << '\n';
 	outDev << info.people_isDead;
@@ -27,7 +26,6 @@ ostream& operator<<(ostream& outDev, const saveInfo& info) {
 		outDev << i;
 		outDev << '\n';
 	}
-	outDev << '\n';
 	for (auto& i : info.coorYBridge) {
 		outDev << i;
 		outDev << '\n';
@@ -38,6 +36,16 @@ ostream& operator<<(ostream& outDev, const saveInfo& info) {
 	outDev << '\n';
 
 	for (auto& i : info.stateLight) {
+		outDev << i;
+		outDev << '\n';
+
+	}
+	for (auto& i : info.redTime) {
+		outDev << i;
+		outDev << '\n';
+
+	}
+	for (auto& i : info.greenTime) {
 		outDev << i;
 		outDev << '\n';
 
@@ -65,7 +73,11 @@ ostream& operator<<(ostream& outDev, const saveInfo& info) {
 		outDev << '\n';
 
 	}
+	for (auto& i : info.truckSpeed) {
+		outDev << i;
+		outDev << '\n';
 
+	}
 	outDev << info.numTruck2;
 	outDev << '\n';
 
@@ -75,6 +87,11 @@ ostream& operator<<(ostream& outDev, const saveInfo& info) {
 
 	}
 	for (auto& i : info.coorYTruck2) {
+		outDev << i;
+		outDev << '\n';
+
+	}
+	for (auto& i : info.truck2Speed) {
 		outDev << i;
 		outDev << '\n';
 
@@ -93,6 +110,11 @@ ostream& operator<<(ostream& outDev, const saveInfo& info) {
 		outDev << '\n';
 
 	}
+	for (auto& i : info.carSpeed) {
+		outDev << i;
+		outDev << '\n';
+
+	}
 	return outDev;
 
 }
@@ -106,7 +128,6 @@ istream& operator>>(istream& inDev, saveInfo& info) {
 	inDev >> info.peopleX;
 	inDev >> info.peopleY;
 	inDev >> info.people_isDead;
-
 	inDev >> info.numLane;
 	info.coorYLane.resize(info.numLane);
 	for (int i = 0; i < info.numLane; i++)
@@ -125,6 +146,12 @@ istream& operator>>(istream& inDev, saveInfo& info) {
 	info.stateLight.resize(info.numLight);
 	for (int i = 0; i < info.numLight; i++)
 		inDev >> info.stateLight[i];
+	info.redTime.resize(info.numLight);
+	for (int i = 0; i < info.numLight; i++)
+		inDev >> info.redTime[i];
+	info.greenTime.resize(info.numLight);
+	for (int i = 0; i < info.numLight; i++)
+		inDev >> info.greenTime[i];
 	info.coorXLight.resize(info.numLight);
 	for (int i = 0; i < info.numLight; i++)
 		inDev >> info.coorXLight[i];
@@ -140,6 +167,9 @@ istream& operator>>(istream& inDev, saveInfo& info) {
 	info.coorYTruck.resize(info.numTruck);
 	for (int i = 0; i < info.numTruck; i++)
 		inDev >> info.coorYTruck[i];
+	info.truckSpeed.resize(info.numTruck);
+	for (int i = 0; i < info.numTruck; i++)
+		inDev >> info.truckSpeed[i];
 
 	inDev >> info.numTruck2;
 	info.coorXTruck2.resize(info.numTruck2);
@@ -147,14 +177,21 @@ istream& operator>>(istream& inDev, saveInfo& info) {
 		inDev >> info.coorXTruck2[i];
 	info.coorYTruck2.resize(info.numTruck2);
 	for (int i = 0; i < info.numTruck2; i++)
+		inDev >> info.coorYTruck2[i];
+	info.truck2Speed.resize(info.numTruck2);
+	for (int i = 0; i < info.numTruck; i++)
+		inDev >> info.truck2Speed[i];
 
-		inDev >> info.numCar;
+	inDev >> info.numCar;
 	info.coorXCar.resize(info.numCar);
 	for (int i = 0; i < info.numTruck; i++)
 		inDev >> info.coorXCar[i];
 	info.coorYCar.resize(info.numCar);
 	for (int i = 0; i < info.numCar; i++)
 		inDev >> info.coorYCar[i];
+	info.carSpeed.resize(info.numCar);
+	for (int i = 0; i < info.numCar; i++)
+		inDev >> info.carSpeed[i];
 	return inDev;
 
 }
@@ -170,7 +207,7 @@ ostream& operator<<(ostream& outDev, const fileNames& fn) {
 istream& operator>>(istream& inDev, fileNames& fn) {
 	decltype(fn.names)::value_type temp;
 
-	while (inDev>>temp) {
+	while (inDev >> temp) {
 		fn.names.push_back(temp);
 	}
 	return inDev;

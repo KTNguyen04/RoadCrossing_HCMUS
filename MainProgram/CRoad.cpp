@@ -56,7 +56,7 @@ void CRoad::setCoorX(int x)
 void CRoad::drawMap()
 {
 	
-	setUpRoad();
+	//setUpRoad();
 	drawWinLane();
 	drawRoad(sepLane[0],laneColor);
 	drawRoad(sepLane[1],laneColor);

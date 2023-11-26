@@ -21,17 +21,24 @@ struct saveInfo {
 
 	int numLight;
 	vector<string> stateLight;
+	vector<int> redTime;
+	vector<int> greenTime;
 	vector<int> coorXLight;
 	vector<int> coorYLight;
 	int numTruck;
 	vector<int> coorXTruck;
 	vector<int> coorYTruck;
+	vector<int> truckSpeed;
 	int numTruck2;
 	vector<int> coorXTruck2;
 	vector<int> coorYTruck2;
+	vector<int> truck2Speed;
+
 	int numCar;
 	vector<int> coorXCar;
 	vector<int> coorYCar;
+	vector<int> carSpeed;
+
 
 };
 ostream& operator<<(ostream& outDev, const saveInfo& info);

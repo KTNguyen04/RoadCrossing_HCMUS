@@ -8,7 +8,7 @@ public:
     void drawTitle(bool isForRemove, int color);
 	void showMenu();
 	void start();
-	void loadgame();
+	//void loadgame();
 	void options();
 	void about();
 	void help();

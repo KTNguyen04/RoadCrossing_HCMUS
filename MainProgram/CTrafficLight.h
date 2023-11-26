@@ -19,7 +19,9 @@ public:
 	void setRedTime(const int& r);
 	void setGreenTime(const int& g);
 	void lightUp();
-	int getTime();
+	int getGreenTime() const;
+	int getRedTime() const;
+	int getTime() const;
 	string getState() const;
 	int getCoorX() const;
 	int getCoorY() const;

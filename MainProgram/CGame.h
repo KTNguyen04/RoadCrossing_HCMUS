@@ -31,7 +31,7 @@ const string victorySound = "Victory";
 const string gameOverSound = "GameOver";
 const string hitSound = "Hit";
 
-const string savedFilePath = "save_game";
+const string savedFilePath = "save_game.bin";
 
 class CGame
 {
@@ -54,6 +54,7 @@ class CGame
 
 public:
 	CGame();
+	void initGame();
 	static void drawFrame();
 	static void drawRoad();
 	//	static void drawBackGround();
@@ -94,8 +95,9 @@ public:
 	
 	void increDifficulty();
 	static vector<int> sepBridges;
+	void tlLightUp();
+	void drawBridge();
 
-	
 	bool saveGame(const string& name);
 	void loadGame(const string& name);
 

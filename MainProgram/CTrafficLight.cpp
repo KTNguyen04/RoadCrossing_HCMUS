@@ -61,10 +61,15 @@ void CTrafficLight::lightUp()
 	}
 }
 
-int CTrafficLight::getTime()
+int CTrafficLight::getRedTime() const
 {
-	if (lightState == "green") return greenTime;
+	
 	return redTime;
+}
+int CTrafficLight::getGreenTime() const
+{
+	
+	return greenTime;
 }
 
 string CTrafficLight::getState() const
@@ -75,6 +80,12 @@ string CTrafficLight::getState() const
 int CTrafficLight::getCoorX() const
 {
 	return coorX;
+}
+int CTrafficLight::getTime() const
+{
+	if (lightState == "green") return greenTime;
+	return redTime;
+	return 0;
 }
 int CTrafficLight::getCoorY() const
 {

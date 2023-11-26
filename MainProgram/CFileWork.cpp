@@ -48,13 +48,13 @@ bool CFileWork::isEmpty()
 
 template<class T>
 void CFileWork::saving(const T& data) {
-	file.seekp(ios::beg);
+	file.seekp(0);
 
 	file << data;
 }
 template<class T>
 T CFileWork::loading() {
-	file.seekg(ios::beg);
+	//file.seekg(0);
 	T data;
 	file >> data;
 	return data;
