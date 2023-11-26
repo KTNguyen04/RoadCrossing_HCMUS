@@ -290,6 +290,8 @@ void CGame::levelUp()
 {
 
 	level += 1;
+	score +=  100/timer.timeLapse();
+	showScore();
 
 	deleteShadow(trucks);
 	deleteShadow(truck2s);
@@ -950,25 +952,6 @@ string CGame::loadPopUp() {
 		fileNames fn = fileM.loading<fileNames>();
 
 
-		//string currentString;
-
-		////// Đọc từng ký tự từ tệp nhị phân
-		//char currentChar;
-		//char prevChar;
-		//while (file.read(&currentChar, sizeof(char))) {
-		//	// Nếu gặp ký tự null, lưu chuỗi hiện tại vào vector và reset chuỗi
-		//	if (currentChar == '0' && prevChar == '\\') {
-		//		fn.names.push_back(currentString);
-		//		currentString.clear();
-		//	}
-		//	else {
-		//		if (currentChar != '\\')
-		//			currentString += currentChar;
-		//	}
-		//	prevChar = currentChar;
-		//}
-		//file.close();
-
 		int startIndex = 0;
 		int currChoice = 1; // i = choice - 1, tuc choice = 1 thi index trong mang la 0
 
@@ -1004,6 +987,10 @@ string CGame::loadPopUp() {
 					startIndex -= 5;
 				}
 				break;
+			}
+			if (tolower(userInput) == 'r') {
+				fileM.closeFile();
+				return "";
 			}
 		} while (userInput != 13);
 		fileM.closeFile();
@@ -1050,4 +1037,13 @@ string CGame::savePopUp() {
 		}
 	} while (!isAvail(file_name) || file_name.find(".bin") == std::string::npos);
 	return file_name;
+}
+
+void CGame:: showScore() {
+	//
+}
+
+int CGame::getScore()
+{
+	return score;
 }

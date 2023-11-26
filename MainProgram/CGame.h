@@ -105,5 +105,7 @@ public:
 	string loadPopUp(); //dung trong option load
 	string savePopUp(); //dung de nhap ten file muon save
 	friend bool isAvail(string input); //kiem tra ten file nhap vao ko bi trung vs cac file da save
+	void showScore();
+	int getScore();
 };
 

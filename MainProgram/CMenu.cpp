@@ -1,8 +1,7 @@
 #include"CMenu.h"
 #include "CAudio.h"
 void CMenu::showMenu() {
-	Audio au;
-	// au.mainMenuAudio();
+	
 	int selectedOption = 0;
 	CConsole::clearScreen(Blue);
 	while (true) {
@@ -50,17 +49,19 @@ void CMenu::showMenu() {
 				g.startGame();
 			}
 			else if (selectedOption == 1) {
-				CGame g;
 				CConsole::clearScreen(White);
+
+				CGame g;
 				string path = g.loadPopUp();
-				CRoad::setUpRoad();
-
-				CRoad::drawMap();
-				g.initGame();
-
-				g.loadGame(path);
-
-				g.startGame();
+				if (path != "") {
+					CRoad::setUpRoad();
+					CConsole::clearScreen(White);
+					CRoad::drawMap();
+					g.initGame();
+					g.loadGame(path);
+					g.startGame();
+				}
+				else showMenu();
 			}
 			else if (selectedOption == 2)
 			{
