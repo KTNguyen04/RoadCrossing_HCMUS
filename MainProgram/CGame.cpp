@@ -173,7 +173,7 @@ void CGame::startGame()
 			}
 			pp.peopleMoving(key);
 			audio.playSound(moveSound);
-
+			
 
 		}
 
@@ -291,7 +291,7 @@ void CGame::levelUp()
 
 	level += 1;
 	score +=  100/timer.timeLapse();
-	showScore();
+	showScore(score,138);
 
 	deleteShadow(trucks);
 	deleteShadow(truck2s);
@@ -1039,8 +1039,136 @@ string CGame::savePopUp() {
 	return file_name;
 }
 
-void CGame:: showScore() {
-	//
+void CGame::showScore(int score, int x) {
+	CMenu g;
+	x = 138;
+	g.clearScoreBoard(true, Blue);
+	// Draw each digit at appropriate positions
+	if (score > 0 && score < 10)
+	{
+		switch (score) {
+		case 0:
+			g.drawNumber0(false, Black, x);
+			break;
+		case 1:
+			g.drawNumber1(false, Black, x);
+			break;
+		case 2:
+			g.drawNumber2(false, Black, x);
+			break;
+		case 3:
+			g.drawNumber3(false, Black, x);
+			break;
+		case 4:
+			g.drawNumber4(false, Black, x);
+			break;
+		case 5:
+			g.drawNumber5(false, Black, x);
+			break;
+		case 6:
+			g.drawNumber6(false, Black, x);
+			break;
+		case 7:
+			g.drawNumber7(false, Black, x);
+			break;
+		case 8:
+			g.drawNumber8(false, Black, x);
+			break;
+		case 9:
+			g.drawNumber9(false, Black, x);
+			break;
+		}
+	}
+	else if (score >= 10 && score < 100)
+	{
+		x -= 3;
+		std::vector<int> digits;
+		while (score > 0) {
+			digits.push_back(score % 10);
+			score /= 10;
+		}
+			for (int i = digits.size() - 1; i >= 0; --i) {
+				switch (digits[i]) {
+				case 0:
+					g.drawNumber0(false, Black, x );
+					break;
+				case 1:
+					g.drawNumber1(false, Black, x );
+					break;
+				case 2:
+					g.drawNumber2(false, Black, x );
+					break;
+				case 3:
+					g.drawNumber3(false, Black, x );
+					break;
+				case 4:
+					g.drawNumber4(false, Black, x );
+					break;
+				case 5:
+					g.drawNumber5(false, Black, x );
+					break;
+				case 6:
+					g.drawNumber6(false, Black, x );
+					break;
+				case 7:
+					g.drawNumber7(false, Black, x );
+					break;
+				case 8:
+					g.drawNumber8(false, Black, x );
+					break;
+				case 9:
+					g.drawNumber9(false, Black, x );
+					break;
+				}
+				// Move to the next digit position
+				x += 5; // Adjust this value based on the spacing between digits
+				}
+	}
+	else if(score>=100 &&score <1000)
+	{
+		x -= 5;
+		std::vector<int> digits;
+		while (score > 0) {
+			digits.push_back(score % 10);
+			score /= 10;
+		}
+		for (int i = digits.size() - 1; i >= 0; --i) {
+			switch (digits[i]) {
+			case 0:
+				g.drawNumber0(false, Black, x);
+				break;
+			case 1:
+				g.drawNumber1(false, Black, x);
+				break;
+			case 2:
+				g.drawNumber2(false, Black, x);
+				break;
+			case 3:
+				g.drawNumber3(false, Black, x);
+				break;
+			case 4:
+				g.drawNumber4(false, Black, x);
+				break;
+			case 5:
+				g.drawNumber5(false, Black, x);
+				break;
+			case 6:
+				g.drawNumber6(false, Black, x);
+				break;
+			case 7:
+				g.drawNumber7(false, Black, x);
+				break;
+			case 8:
+				g.drawNumber8(false, Black, x);
+				break;
+			case 9:
+				g.drawNumber9(false, Black, x);
+				break;
+			}
+			// Move to the next digit position
+			x += 5; // Adjust this value based on the spacing between digits
+		}
+	}
 }
 
 int CGame::getScore()

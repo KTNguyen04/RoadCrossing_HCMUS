@@ -34,6 +34,7 @@ public:
 	void drawNumber7(bool isForRemove, int color, int x);
 	void drawNumber8(bool isForRemove, int color, int x);
 	void drawNumber9(bool isForRemove, int color, int x);
+    void clearScoreBoard(bool isForRemove,int color);
 
 private:
 	

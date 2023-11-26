@@ -41,12 +41,14 @@ void CMenu::showMenu() {
 		else if (userInput == 13) {  // Enter key
 			if (selectedOption == 0) {
 				CConsole::clearScreen(White);
+				
 				subMenu();
 				CGame g;
 				CRoad::setUpRoad();
 				CRoad::drawMap();
 				g.initGame();
 				g.startGame();
+
 			}
 			else if (selectedOption == 1) {
 				CConsole::clearScreen(White);
@@ -538,8 +540,7 @@ void CMenu::exitGame() {
 void CMenu::subMenu()
 {
 	drawSubMenu(false, Black);
-	int x = 138;
-	drawNumber9(false, Black, x);
+	drawNumber0(false,Black, 138);
 }
 
 
@@ -1174,8 +1175,7 @@ void CMenu::drawSubMenu(bool isForRemove, int color)
 			CConsole::drawChar(i, j, block, Color1);
 		}
 
-	}
-	//Draw SCORE
+	}	//Draw SCORE
 	if (!isForRemove)
 	{
 
@@ -1214,17 +1214,16 @@ void CMenu::drawSubMenu(bool isForRemove, int color)
 		CConsole::drawHorLine(149, 150, 4, topBlock, color, Color1);
 		CConsole::drawHorLine(149, 150, 5, topBlock, color, Color1);
 	}
-
 	//Draw Khung Huong Dan
 	int Color2 = Green;
-	CConsole::drawVerLine(20, 46, 122, block, color, 15);
-	CConsole::drawVerLine(20, 46, 157, block, color, 15);
+	CConsole::drawVerLine(20, 50, 122, block, color, 15);
+	CConsole::drawVerLine(20, 50, 157, block, color, 15);
 	CConsole::drawHorLine(123, 156, 20, topBlock, color, Color2);
-	CConsole::drawHorLine(123, 156, 46, botBlock, color, Color2);
+	CConsole::drawHorLine(123, 156, 50, botBlock, color, Color2);
 	//To mau
 	for (int i = 123; i < 157; i++)
 	{
-		for (int j = 21; j < 46; j++)
+		for (int j = 21; j < 50; j++)
 		{
 			CConsole::drawChar(i, j, block, Color2);
 		}
@@ -1280,16 +1279,15 @@ void CMenu::drawSubMenu(bool isForRemove, int color)
 		CConsole::drawVerLine(22, 23, 154, block, color, Color2);
 		CConsole::drawChar(154, 24, topBlock, color, Color2);
 	}
-	//Draw T: SAVE
+	//Draw L: SAVE
 	if (!isForRemove)
 	{
 
 
-		//Draw T
-		CConsole::drawChar(124, 26, topBlock, color, Color2);
-		CConsole::drawChar(126, 26, topBlock, color, Color2);
-		CConsole::drawVerLine(26, 27, 125, block, color, Color2);
-		CConsole::drawChar(125, 28, topBlock, color, Color2);
+		//draw L
+		CConsole::drawVerLine(26, 27, 124, block, color, Color2);
+		CConsole::drawChar(124, 28, topBlock, color, Color2);
+		CConsole::drawHorLine(124, 126, 28, topBlock, color, Color2);
 		//draw :
 		CConsole::drawChar(128, 27, topBlock, color, Color2);
 		CConsole::drawChar(128, 28, topBlock, color, Color2);
@@ -1323,149 +1321,188 @@ void CMenu::drawSubMenu(bool isForRemove, int color)
 		CConsole::drawHorLine(148, 149, 27, topBlock, color, Color2);
 		CConsole::drawHorLine(148, 149, 28, topBlock, color, Color2);
 	}
+	//Draw T: LOAD
+	if (!isForRemove)
+	{
+		//Draw T
+		CConsole::drawChar(124, 30, topBlock, color, Color2);
+		CConsole::drawChar(126, 30, topBlock, color, Color2);
+		CConsole::drawVerLine(30, 31, 125, block, color, Color2);
+		CConsole::drawChar(125, 32, topBlock, color, Color2);
+		//draw :
+		CConsole::drawChar(128, 31, topBlock, color, Color2);
+		CConsole::drawChar(128, 32, topBlock, color, Color2);
+		//draw L
+		CConsole::drawVerLine(30, 31, 131, block, color, Color2);
+		CConsole::drawChar(131, 32, topBlock, color, Color2);
+		CConsole::drawHorLine(131, 133, 32, topBlock, color, Color2);
+		//draw O
+		CConsole::drawHorLine(136, 137, 30, topBlock, color, Color2);
+		CConsole::drawHorLine(136, 137, 32, topBlock, color, Color2);
+		CConsole::drawChar(135, 31, block, color, Color2);
+		CConsole::drawChar(138, 31, block, color, Color2);
+		CConsole::drawChar(135, 30, botBlock, color, Color2);
+		CConsole::drawChar(138, 30, botBlock, color, Color2);
+		//Draw A       
+		CConsole::drawHorLine(141, 142, 30, topBlock, color, Color2);
+		CConsole::drawChar(140, 30, botBlock, color, Color2);
+		CConsole::drawChar(143, 30, botBlock, color, Color2);
+		CConsole::drawChar(140, 31, block, color, Color2);
+		CConsole::drawChar(143, 31, block, color, Color2);
+		CConsole::drawChar(140, 32, topBlock, color, Color2);
+		CConsole::drawChar(143, 32, topBlock, color, Color2);
+		CConsole::drawHorLine(141, 142, 31, topBlock, color, Color2);
+		//draw D
+		CConsole::drawVerLine(30, 31, 145, block, color, Color2);
+		CConsole::drawChar(145, 32, topBlock, color, Color2);
+		CConsole::drawHorLine(146, 147, 30, topBlock, color, Color2);
+		CConsole::drawHorLine(146, 147, 32, topBlock, color, Color2);
+		CConsole::drawChar(148, 31, block, color, Color2);
+		CConsole::drawChar(148, 30, botBlock, color, Color2);
+	}
 	//draw W: UP
 	if (!isForRemove)
 	{
 		//Draw W
-		CConsole::drawVerLine(30, 31, 124, block, color, Color2);
-		CConsole::drawVerLine(30, 31, 128, block, color, Color2);
-		CConsole::drawChar(125, 32, topBlock, color, Color2);
-		CConsole::drawChar(127, 32, topBlock, color, Color2);
-		CConsole::drawChar(126, 31, botBlock, color, Color2);
+		CConsole::drawVerLine(34, 35, 124, block, color, Color2);
+		CConsole::drawVerLine(34, 35, 128, block, color, Color2);
+		CConsole::drawChar(125, 36, topBlock, color, Color2);
+		CConsole::drawChar(127, 36, topBlock, color, Color2);
+		CConsole::drawChar(126, 35, botBlock, color, Color2);
 		//draw :
-		CConsole::drawChar(130, 31, topBlock, color, Color2);
-		CConsole::drawChar(130, 32, topBlock, color, Color2);
+		CConsole::drawChar(130, 35, topBlock, color, Color2);
+		CConsole::drawChar(130, 36, topBlock, color, Color2);
 		//draw U
-		CConsole::drawVerLine(30, 31, 133, block, color, Color2);
-		CConsole::drawVerLine(30, 31, 136, block, color, Color2);
-		CConsole::drawHorLine(134, 135, 32, topBlock, color, Color2);
+		CConsole::drawVerLine(34, 35, 133, block, color, Color2);
+		CConsole::drawVerLine(34, 35, 136, block, color, Color2);
+		CConsole::drawHorLine(134, 135, 36, topBlock, color, Color2);
 		//draw P
-		CConsole::drawVerLine(30, 31, 138, block, color, Color2);
-		CConsole::drawChar(138, 32, topBlock, color, Color2);
-		CConsole::drawHorLine(139, 140, 30, topBlock, color, Color2);
-		CConsole::drawHorLine(139, 140, 31, topBlock, color, Color2);
-		CConsole::drawChar(141, 30, botBlock, color, Color2);
+		CConsole::drawVerLine(34, 35, 138, block, color, Color2);
+		CConsole::drawChar(138, 36, topBlock, color, Color2);
+		CConsole::drawHorLine(139, 140, 34, topBlock, color, Color2);
+		CConsole::drawHorLine(139, 140, 35, topBlock, color, Color2);
+		CConsole::drawChar(141, 34, botBlock, color, Color2);
 	}
 	//draw S: DOWN
 	if (!isForRemove)
 	{
 		//draw S
-		CConsole::drawHorLine(125, 127, 34, topBlock, color, Color2);
-		CConsole::drawChar(124, 34, botBlock, color, Color2);
-		CConsole::drawHorLine(125, 126, 35, topBlock, color, Color2);
-		CConsole::drawChar(127, 35, botBlock, color, Color2);
-		CConsole::drawHorLine(124, 126, 36, topBlock, color, Color2);
+		CConsole::drawHorLine(125, 127, 38, topBlock, color, Color2);
+		CConsole::drawChar(124, 38, botBlock, color, Color2);
+		CConsole::drawHorLine(125, 126, 39, topBlock, color, Color2);
+		CConsole::drawChar(127, 39, botBlock, color, Color2);
+		CConsole::drawHorLine(124, 126, 40, topBlock, color, Color2);
 		//draw :
-		CConsole::drawChar(129, 35, topBlock, color, Color2);
-		CConsole::drawChar(129, 36, topBlock, color, Color2);
+		CConsole::drawChar(129, 39, topBlock, color, Color2);
+		CConsole::drawChar(129, 40, topBlock, color, Color2);
 		//draw D
-		CConsole::drawVerLine(34, 35, 132, block, color, Color2);
-		CConsole::drawChar(132, 36, topBlock, color, Color2);
-		CConsole::drawHorLine(133, 134, 34, topBlock, color, Color2);
-		CConsole::drawHorLine(133, 134, 36, topBlock, color, Color2);
-		CConsole::drawChar(135, 35, block, color, Color2);
-		CConsole::drawChar(135, 34, botBlock, color, Color2);
+		CConsole::drawVerLine(38, 39, 132, block, color, Color2);
+		CConsole::drawChar(132, 40, topBlock, color, Color2);
+		CConsole::drawHorLine(133, 134, 38, topBlock, color, Color2);
+		CConsole::drawHorLine(133, 134, 40, topBlock, color, Color2);
+		CConsole::drawChar(135, 39, block, color, Color2);
+		CConsole::drawChar(135, 38, botBlock, color, Color2);
 		//draw O
-		CConsole::drawHorLine(138, 139, 34, topBlock, color, Color2);
-		CConsole::drawHorLine(138, 139, 36, topBlock, color, Color2);
-		CConsole::drawChar(137, 35, block, color, Color2);
-		CConsole::drawChar(140, 35, block, color, Color2);
-		CConsole::drawChar(137, 34, botBlock, color, Color2);
-		CConsole::drawChar(140, 34, botBlock, color, Color2);
+		CConsole::drawHorLine(138, 139, 38, topBlock, color, Color2);
+		CConsole::drawHorLine(138, 139, 40, topBlock, color, Color2);
+		CConsole::drawChar(137, 39, block, color, Color2);
+		CConsole::drawChar(140, 39, block, color, Color2);
+		CConsole::drawChar(137, 38, botBlock, color, Color2);
+		CConsole::drawChar(140, 38, botBlock, color, Color2);
 		//draw W
-		CConsole::drawVerLine(34, 35, 142, block, color, Color2);
-		CConsole::drawVerLine(34, 35, 146, block, color, Color2);
-		CConsole::drawChar(143, 36, topBlock, color, Color2);
-		CConsole::drawChar(145, 36, topBlock, color, Color2);
-		CConsole::drawChar(144, 35, botBlock, color, Color2);
+		CConsole::drawVerLine(38, 39, 142, block, color, Color2);
+		CConsole::drawVerLine(38, 39, 146, block, color, Color2);
+		CConsole::drawChar(143, 40, topBlock, color, Color2);
+		CConsole::drawChar(145, 40, topBlock, color, Color2);
+		CConsole::drawChar(144, 39, botBlock, color, Color2);
 		//draw N
-		CConsole::drawVerLine(34, 35, 148, block, color, Color2);
-		CConsole::drawChar(148, 36, topBlock, color, Color2);
-		CConsole::drawVerLine(34, 35, 152, block, color, Color2);
-		CConsole::drawChar(152, 36, topBlock, color, Color2);
-		CConsole::drawChar(149, 34, botBlock, color, Color2);
-		CConsole::drawChar(150, 35, topBlock, color, Color2);
-		CConsole::drawChar(151, 35, botBlock, color, Color2);
+		CConsole::drawVerLine(38, 39, 148, block, color, Color2);
+		CConsole::drawChar(148, 40, topBlock, color, Color2);
+		CConsole::drawVerLine(38, 39, 152, block, color, Color2);
+		CConsole::drawChar(152, 40, topBlock, color, Color2);
+		CConsole::drawChar(149, 38, botBlock, color, Color2);
+		CConsole::drawChar(150, 39, topBlock, color, Color2);
+		CConsole::drawChar(151, 39, botBlock, color, Color2);
 	}
 	//draw A: LEFT
 	if (!isForRemove)
 	{
 		//draw A
-		CConsole::drawHorLine(125, 126, 38, topBlock, color, Color2);
-		CConsole::drawChar(124, 38, botBlock, color, Color2);
-		CConsole::drawChar(127, 38, botBlock, color, Color2);
-		CConsole::drawChar(124, 39, block, color, Color2);
-		CConsole::drawChar(127, 39, block, color, Color2);
-		CConsole::drawChar(124, 40, topBlock, color, Color2);
-		CConsole::drawChar(127, 40, topBlock, color, Color2);
-		CConsole::drawHorLine(125, 126, 39, topBlock, color, Color2);
+		CConsole::drawHorLine(125, 126, 42, topBlock, color, Color2);
+		CConsole::drawChar(124, 42, botBlock, color, Color2);
+		CConsole::drawChar(127, 42, botBlock, color, Color2);
+		CConsole::drawChar(124, 43, block, color, Color2);
+		CConsole::drawChar(127, 43, block, color, Color2);
+		CConsole::drawChar(124, 44, topBlock, color, Color2);
+		CConsole::drawChar(127, 44, topBlock, color, Color2);
+		CConsole::drawHorLine(125, 126, 43, topBlock, color, Color2);
 		//draw :
-		CConsole::drawChar(129, 39, topBlock, color, Color2);
-		CConsole::drawChar(129, 40, topBlock, color, Color2);
+		CConsole::drawChar(129, 43, topBlock, color, Color2);
+		CConsole::drawChar(129, 44, topBlock, color, Color2);
 		//draw L
-		CConsole::drawVerLine(38, 39, 132, block, color, Color2);
-		CConsole::drawChar(132, 40, topBlock, color, Color2);
-		CConsole::drawHorLine(133, 134, 40, topBlock, color, Color2);
+		CConsole::drawVerLine(42, 43, 132, block, color, Color2);
+		CConsole::drawChar(132, 44, topBlock, color, Color2);
+		CConsole::drawHorLine(133, 134, 44, topBlock, color, Color2);
 		//draw E
-		CConsole::drawVerLine(38, 39, 136, block, color, Color2);
-		CConsole::drawChar(136, 40, topBlock, color, Color2);
-		CConsole::drawHorLine(137, 138, 38, topBlock, color, Color2);
-		CConsole::drawHorLine(137, 138, 39, topBlock, color, Color2);
-		CConsole::drawHorLine(137, 138, 40, topBlock, color, Color2);
+		CConsole::drawVerLine(42, 43, 136, block, color, Color2);
+		CConsole::drawChar(136, 44, topBlock, color, Color2);
+		CConsole::drawHorLine(137, 138, 42, topBlock, color, Color2);
+		CConsole::drawHorLine(137, 138, 43, topBlock, color, Color2);
+		CConsole::drawHorLine(137, 138, 44, topBlock, color, Color2);
 		//draw F
-		CConsole::drawVerLine(38, 39, 140, block, color, Color2);
-		CConsole::drawChar(140, 40, topBlock, color, Color2);
-		CConsole::drawHorLine(141, 142, 38, topBlock, color, Color2);
-		CConsole::drawHorLine(141, 142, 39, topBlock, color, Color2);
+		CConsole::drawVerLine(42, 43, 140, block, color, Color2);
+		CConsole::drawChar(140, 44, topBlock, color, Color2);
+		CConsole::drawHorLine(141, 142, 42, topBlock, color, Color2);
+		CConsole::drawHorLine(141, 142, 43, topBlock, color, Color2);
 		//draw T
-		CConsole::drawChar(144, 38, topBlock, color, Color2);
-		CConsole::drawChar(146, 38, topBlock, color, Color2);
-		CConsole::drawVerLine(38, 39, 145, block, color, Color2);
-		CConsole::drawChar(145, 40, topBlock, color, Color2);
+		CConsole::drawChar(144, 42, topBlock, color, Color2);
+		CConsole::drawChar(146, 42, topBlock, color, Color2);
+		CConsole::drawVerLine(42, 43, 145, block, color, Color2);
+		CConsole::drawChar(145, 44, topBlock, color, Color2);
 	}
 	//Draw D: RIGHT
 	if (!isForRemove)
 	{
 		//draw D
-		CConsole::drawVerLine(42, 43, 124, block, color, Color2);
-		CConsole::drawChar(124, 44, topBlock, color, Color2);
-		CConsole::drawHorLine(125, 126, 42, topBlock, color, Color2);
-		CConsole::drawHorLine(125, 126, 44, topBlock, color, Color2);
-		CConsole::drawChar(127, 43, block, color, Color2);
-		CConsole::drawChar(127, 42, botBlock, color, Color2);
+		CConsole::drawVerLine(46, 47, 124, block, color, Color2);
+		CConsole::drawChar(124, 48, topBlock, color, Color2);
+		CConsole::drawHorLine(125, 126, 46, topBlock, color, Color2);
+		CConsole::drawHorLine(125, 126, 48, topBlock, color, Color2);
+		CConsole::drawChar(127, 47, block, color, Color2);
+		CConsole::drawChar(127, 46, botBlock, color, Color2);
 		//draw :
-		CConsole::drawChar(129, 43, topBlock, color, Color2);
-		CConsole::drawChar(129, 44, topBlock, color, Color2);
+		CConsole::drawChar(129, 47, topBlock, color, Color2);
+		CConsole::drawChar(129, 48, topBlock, color, Color2);
 		//draw R
-		CConsole::drawVerLine(42, 43, 132, block, color, Color2);
-		CConsole::drawChar(132, 44, topBlock, color, Color2);
-		CConsole::drawHorLine(133, 134, 43, topBlock, color, Color2);
-		CConsole::drawHorLine(133, 134, 42, topBlock, color, Color2);
-		CConsole::drawHorLine(135, 42, botBlock, color, Color2);
-		CConsole::drawChar(135, 43, botBlock, color, Color2);
-		CConsole::drawChar(135, 44, topBlock, color, Color2);
-		CConsole::drawChar(135, 42, botBlock, color, Color2);
+		CConsole::drawVerLine(46, 47, 132, block, color, Color2);
+		CConsole::drawChar(132, 48, topBlock, color, Color2);
+		CConsole::drawHorLine(133, 134, 47, topBlock, color, Color2);
+		CConsole::drawHorLine(133, 134, 46, topBlock, color, Color2);
+		CConsole::drawHorLine(135, 46, botBlock, color, Color2);
+		CConsole::drawChar(135, 47, botBlock, color, Color2);
+		CConsole::drawChar(135, 48, topBlock, color, Color2);
+		CConsole::drawChar(135, 46, botBlock, color, Color2);
 		//draw I
-		CConsole::drawVerLine(42, 43, 137, block, color, Color2);
-		CConsole::drawChar(137, 44, topBlock, color, Color2);
+		CConsole::drawVerLine(46, 47, 137, block, color, Color2);
+		CConsole::drawChar(137, 48, topBlock, color, Color2);
 		//draw G
-		CConsole::drawHorLine(140, 142, 42, topBlock, color, Color2);
-		CConsole::drawHorLine(140, 141, 44, topBlock, color, Color2);
-		CConsole::drawChar(139, 42, botBlock, color, Color2);
-		CConsole::drawChar(139, 43, block, color, Color2);
-		CConsole::drawChar(142, 43, block, color, Color2);
-		CConsole::drawChar(141, 43, topBlock, color, Color2);
+		CConsole::drawHorLine(140, 142, 46, topBlock, color, Color2);
+		CConsole::drawHorLine(140, 141, 48, topBlock, color, Color2);
+		CConsole::drawChar(139, 46, botBlock, color, Color2);
+		CConsole::drawChar(139, 47, block, color, Color2);
+		CConsole::drawChar(142, 47, block, color, Color2);
+		CConsole::drawChar(141, 47, topBlock, color, Color2);
 		//draw H
-		CConsole::drawVerLine(42, 43, 144, block, color, Color2);
-		CConsole::drawChar(144, 44, topBlock, color, Color2);
-		CConsole::drawChar(145, 43, topBlock, color, Color2);
-		CConsole::drawVerLine(42, 43, 146, block, color, Color2);
-		CConsole::drawChar(146, 44, topBlock, color, Color2);
+		CConsole::drawVerLine(46, 47, 144, block, color, Color2);
+		CConsole::drawChar(144, 48, topBlock, color, Color2);
+		CConsole::drawChar(145, 47, topBlock, color, Color2);
+		CConsole::drawVerLine(46, 47, 146, block, color, Color2);
+		CConsole::drawChar(146, 48, topBlock, color, Color2);
 		//draw T
-		CConsole::drawChar(148, 42, topBlock, color, Color2);
-		CConsole::drawChar(150, 42, topBlock, color, Color2);
-		CConsole::drawVerLine(42, 43, 149, block, color, Color2);
-		CConsole::drawChar(149, 44, topBlock, color, Color2);
+		CConsole::drawChar(148, 46, topBlock, color, Color2);
+		CConsole::drawChar(150, 46, topBlock, color, Color2);
+		CConsole::drawVerLine(46, 47, 149, block, color, Color2);
+		CConsole::drawChar(149, 48, topBlock, color, Color2);
 	}
 }
 void CMenu::drawNumber0(bool isForRemove, int color, int x)
@@ -1603,3 +1640,18 @@ void CMenu::drawNumber9(bool isForRemove, int color, int x)
 		CConsole::drawHorLine(x, x + 3, 10, topBlock, color, Color1);
 	}
 }
+void CMenu::clearScoreBoard(bool isForRemove,int color)
+{
+	int Color1 = color;
+	for (int i = 123; i < 157; i++)
+	{
+		for (int j = 7; j < 13; j++)
+		{
+			CConsole::drawChar(i, j, block, color);
+		}
+
+	}
+	
+	
+}
+
