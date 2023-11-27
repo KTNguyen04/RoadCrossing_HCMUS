@@ -66,7 +66,7 @@ public:
 	static void fillRect(int x, int y, int hei, int wid, wchar_t c, int color);         //topLeft coor
 	void setGame();
 
-	void startGame();
+	char startGame();
 	template<class obstacle>
 	bool isAbleToCreate(obstacle& O1, obstacle& O2);
 	void initTrafficLights();
@@ -102,7 +102,7 @@ public:
 	bool saveGame(const string& name);
 	void loadGame(const string& name);
 
-	void deadPopUp();
+	char deadPopUp();
 	string loadPopUp(); //dung trong option load
 	string savePopUp(); //dung de nhap ten file muon save
 	bool isAvail(string input); //kiem tra ten file nhap vao ko bi trung vs cac file da save

@@ -3,7 +3,7 @@
 #include "CGame.h"
 
 void CMenu::showMenu() {
-
+	CConsole::setUpConsole();
 	Audio::playSound(menuSound);
 	int selectedOption = 0;
 	CConsole::clearScreen(Blue);
@@ -44,13 +44,45 @@ void CMenu::showMenu() {
 		else if (userInput == 13) {  // Enter key
 			if (selectedOption == 0) {
 				CConsole::clearScreen(White);
-				
+
 				subMenu();
 				CGame g;
 				CRoad::setUpRoad();
 				CRoad::drawMap();
 				g.initGame();
-				g.startGame();
+				char c = g.startGame();
+				if (c == 'r') {
+					CConsole::clearScreen(White);
+					showMenu();
+
+				}
+				else if (c == 'n') {
+					CConsole::clearScreen(White);
+					subMenu();
+					CGame g;
+					CRoad::setUpRoad();
+					CRoad::drawMap();
+					g.initGame();
+					c = g.startGame();
+				}
+				else if (c == 'l') {
+					string sPath = g.savePopUp();
+					if (sPath != "" && sPath != "newgame") {
+						g.saveGame(sPath);
+					}
+					else if (sPath == "") {
+						showMenu();
+					}
+					else {
+						CConsole::clearScreen(White);
+						subMenu();
+						CGame g;
+						CRoad::setUpRoad();
+						CRoad::drawMap();
+						g.initGame();
+						c = g.startGame();
+					}
+				}
 
 			}
 			else if (selectedOption == 1) {
@@ -194,7 +226,7 @@ void CMenu::options()
 	Color = Black;
 	while (true)
 	{
-		
+
 		//Draw Mute
 		drawMute(false, Color, selectedOption == 1);
 		//Draw UnMute
@@ -211,12 +243,12 @@ void CMenu::options()
 		}
 		else if (userInput == 13) {  // Enter key
 			if (selectedOption == 1) {
-				 Audio au;
-				 au.stopSound();
+				Audio au;
+				au.stopSound();
 			}
 			else if (selectedOption == 0) {
-				 Audio au;
-				 au.playSound(menuSound);
+				Audio au;
+				au.playSound(menuSound);
 			}
 		}
 		else if (userInput == 'r') {
@@ -509,7 +541,7 @@ void CMenu::exitGame() {
 void CMenu::subMenu()
 {
 	drawSubMenu(false, Black);
-	drawNumber0(false,Black, 138);
+	drawNumber0(false, Black, 138);
 }
 
 
@@ -1610,7 +1642,7 @@ void CMenu::drawNumber9(bool isForRemove, int color, int x)
 	}
 }
 
-void CMenu::clearScoreBoard(bool isForRemove,int color)
+void CMenu::clearScoreBoard(bool isForRemove, int color)
 {
 	int Color1 = color;
 	for (int i = 123; i < 157; i++)
@@ -1621,7 +1653,7 @@ void CMenu::clearScoreBoard(bool isForRemove,int color)
 		}
 
 	}
-	
-	
+
+
 }
 

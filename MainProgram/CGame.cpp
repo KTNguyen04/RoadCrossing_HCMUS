@@ -1,6 +1,8 @@
 ﻿#include "CGame.h"
 #include "CRoad.h"
 #include <cmath>
+#include <locale>
+#include <codecvt>
 #include <condition_variable>
 int CGame::coorTopLeftX = 2;
 int CGame::coorTopLeftY = 0;
@@ -154,7 +156,7 @@ void CGame::fillRect(int x, int y, int hei, int wid, wchar_t c, int color)
 //}
 
 
-void CGame::startGame()
+char CGame::startGame()
 {
 	bool canmove = true, ready = false;
 	pp.drawPeople();
@@ -162,35 +164,32 @@ void CGame::startGame()
 	drawBridge();
 	thread t1(&CGame::subThread, this, std::ref(canmove), std::ref(ready));
 	while (1) {
+		if (pp.IS_DEAD()) {
+			t1.join();
+			return key;
+		}
 		//unique_lock<mutex> lock(m);
 		//cv2.wait(lock, [] {return finish_move; });
 		if (canmove) {
+
 			ready = true;
+
 			key = CConsole::getInput();
-			if (tolower(key) == 'l') {
-				ready = false;
-				CConsole::clearScreen(White);
-				string sPath = savePopUp();
-				if (sPath != "") {
-					saveGame(sPath);
-				}
-				ready = true;
-			}
+			//if (tolower(key) == 'l') {
+			//	ready = false;
+			//	//CConsole::clearScreen(White);
+			//	string sPath = savePopUp();
+			//	if (sPath != "") {
+			//		saveGame(sPath);
+			//	}
+			//	ready = true;
+			//}
 			pp.peopleMoving(key);
-			audio.playSound(moveSound);
-			
-
+			Audio::playSound(moveSound);
 		}
-
-
-
-		//this_thread::sleep_for(chrono::microseconds(100));
-
 
 	}
 
-
-	t1.join();
 	////t2.join();
 	//t3.join();
 	//
@@ -295,8 +294,8 @@ void CGame::levelUp()
 {
 
 	level += 1;
-	score +=  100/timer.timeLapse();
-	showScore(score,138);
+	score += 100 / timer.timeLapse();
+	showScore(score, 138);
 
 	deleteShadow(trucks);
 	deleteShadow(truck2s);
@@ -611,44 +610,57 @@ void CGame::setObssSpeed(vector<obs>& obss)
 void CGame::subThread(bool& canmove, bool& rd)
 {
 	bool isDrowned = true;
-	while (isRunning) {
+	while (!pp.IS_DEAD()) {
 		if (rd) {
-			if (!pp.IS_DEAD()) {
-				/*pp.peopleMoving(key);*/
-					//pp.drawPeople(true);
-				mutex mt, mt2;
+
+			if (tolower(key) == 'l') {
 				canmove = false;
-
-				if (pp.isNeedDraw()) {
-					//	m.unlock();
-
-
-					pp.drawPeople(true);
-					pp.drawPeople(false);
-
-					pp.setOldx(pp.getX());
-					pp.setOldy(pp.getY());
+				string sPath = savePopUp();
+				if (sPath != "") {
+					saveGame(sPath);
 				}
-				if (pp.levelComplete()) {
-					//system("cls");
-					//setGame();
-
-					//this_thread::sleep_for(chrono::microseconds(50));
-
-					levelUp();
-					pp.drawPeople(true);
-
-					pp.drawPeople();
-					pp.resetPos();
-
-					//this_thread::sleep_for(chrono::microseconds(100));
-
+				else {
+					canmove = true;
 				}
-				//	cv2.notify_one();
 
-				//lock_guard<mutex> lg(mt);
 
 			}
+
+			/*pp.peopleMoving(key);*/
+				//pp.drawPeople(true);
+			mutex mt, mt2;
+			canmove = false;
+
+			if (pp.isNeedDraw()) {
+				//	m.unlock();
+
+
+				pp.drawPeople(true);
+				pp.drawPeople(false);
+
+				pp.setOldx(pp.getX());
+				pp.setOldy(pp.getY());
+			}
+			if (pp.levelComplete()) {
+				//system("cls");
+				//setGame();
+
+				//this_thread::sleep_for(chrono::microseconds(50));
+
+				levelUp();
+				pp.drawPeople(true);
+
+				pp.drawPeople();
+				pp.resetPos();
+
+				//this_thread::sleep_for(chrono::microseconds(100));
+
+			}
+			//	cv2.notify_one();
+
+			//lock_guard<mutex> lg(mt);
+
+
 			isDrowned = true;
 
 			sort(bridges.begin(), bridges.end(), [](const CBridge& a, const CBridge& b) {
@@ -669,11 +681,15 @@ void CGame::subThread(bool& canmove, bool& rd)
 			}
 
 			if (isDrowned) {
-
+				pp.dead(true);
 				pp.drawPeople(true);
 				//this_thread::sleep_for(chrono::microseconds(50));
 				pp.drawPeople();
-				deadPopUp();
+				key = deadPopUp();
+				canmove = true;
+
+				continue;
+
 				//exit(0);
 			}
 
@@ -700,11 +716,18 @@ void CGame::subThread(bool& canmove, bool& rd)
 					e.drawObject();
 				}
 				if (pp.isCollide(e)) {
+					pp.dead(true);
+
 					audio.playSound(hitSound);
 					pp.drawPeople(true);
 					//this_thread::sleep_for(chrono::microseconds(50));
 					pp.drawPeople();
-					deadPopUp();
+					key = deadPopUp();
+					canmove = true;
+
+					continue;
+
+
 
 					//system("pause");
 				}
@@ -721,11 +744,17 @@ void CGame::subThread(bool& canmove, bool& rd)
 				}
 
 				if (pp.isCollide(e)) {
+					pp.dead(true);
+
 					audio.playSound(hitSound);
 					pp.drawPeople(true);
 					//this_thread::sleep_for(chrono::microseconds(50));
 					pp.drawPeople();
-					deadPopUp();
+
+					key = deadPopUp();
+					canmove = true;
+
+					continue;
 
 					//system("pause");
 
@@ -742,11 +771,17 @@ void CGame::subThread(bool& canmove, bool& rd)
 					e.drawObject();
 				}
 				if (pp.isCollide(e)) {
+					pp.dead(true);
+
 					audio.playSound(hitSound);
 					pp.drawPeople(true);
 					//this_thread::sleep_for(chrono::microseconds(50));
 					pp.drawPeople();
-					deadPopUp();
+					key = deadPopUp();
+					canmove = true;
+
+					continue;
+
 
 					//system("pause");
 
@@ -760,6 +795,7 @@ void CGame::subThread(bool& canmove, bool& rd)
 		//subsub.join();
 		}
 	}
+	return;
 }
 
 
@@ -771,13 +807,13 @@ bool CGame::isAvail(string input)
 	fileM.setPath(savedFilePath, rootP);
 	if (fileM.openFile()) {
 		fileNames fn = fileM.loading<fileNames>();
-
+		fileM.closeFile();
 		return find(fn.names.begin(), fn.names.end(), input) == fn.names.end();
 	}
 	return false;
 }
 
-void CGame::deadPopUp()
+char CGame::deadPopUp()
 {
 	//clean khung;
 	for (int i = 1; i <= 102; i++) {
@@ -874,27 +910,17 @@ void CGame::deadPopUp()
 	CConsole::gotoXY(7, 20);
 	cout << "               Press: ";
 	CConsole::gotoXY(30, 22);
-	cout << "               S To SAVE";
+	cout << "               L To SAVE";
 	CConsole::gotoXY(30, 24);
-	cout << "               B To BACK";
+	cout << "               R To BACK";
 	CConsole::gotoXY(30, 26);
-	cout << "               T To CONTINUE";
+	cout << "               N to New Game";
 
 	char choice;
 	do {
-		choice = _getch();
-		choice = tolower(choice);
-	} while (choice != 's' && choice != 'b' && choice != 't');
-	switch (choice)
-	{
-	case 'l':
-		//savePopUp();
-		break;
-	case 't':
-		break;
-	//case ':
-	//	break;
-	}
+		choice = CConsole::getInput();
+	} while (choice != 'l' && choice != 'r' && choice != 'n');
+	return choice;
 }
 
 string CGame::loadPopUp() {
@@ -990,60 +1016,62 @@ string CGame::loadPopUp() {
 }
 
 string CGame::savePopUp() {
-	CConsole::drawHorLine(68 + 20, 93 + 20, 21 - 15, topBlock, 4, 15);
-	CConsole::drawChar(67 + 20, 21 - 15, botBlock, 4, 15);
-	CConsole::drawChar(94 + 20, 21 - 15, botBlock, 4, 15);
-	CConsole::drawVerLine(22 - 15, 23 - 15, 66 + 20, block, 4, 15);
-	CConsole::drawVerLine(22 - 15, 23 - 15, 95 + 20, block, 4, 15);
-	CConsole::drawChar(66 + 20, 24 - 15, topBlock, 4, 15);
-	CConsole::drawChar(95 + 20, 24 - 15, topBlock, 4, 15);
-	CConsole::drawChar(67 + 20, 24 - 15, botBlock, 4, 15);
-	CConsole::drawChar(94 + 20, 24 - 15, botBlock, 4, 15);
-	CConsole::drawHorLine(68 + 20, 93 + 20, 25 - 15, topBlock, 4, 15);
-	//Draw L
-	CConsole::drawVerLine(22 - 15, 23 - 15, 71 + 20 + 1, block, 4, 15);
-	CConsole::drawChar(71 + 20 + 1, 24 - 15, topBlock, 4, 15);
-	CConsole::drawHorLine(72 + 20 + 1, 73 + 20 + 1, 24 - 15, topBlock, 4, 15);
-	//Draw O 
-	CConsole::drawHorLine(76 + 20 + 1, 77 + 20 + 1, 22 - 15, topBlock, 4, 15);
-	CConsole::drawHorLine(76 + 20 + 1, 77 + 20 + 1, 24 - 15, topBlock, 4, 15);
-	CConsole::drawChar(75 + 20 + 1, 23 - 15, block, 4, 15);
-	CConsole::drawChar(78 + 20 + 1, 23 - 15, block, 4, 15);
-	CConsole::drawChar(75 + 20 + 1, 22 - 15, botBlock, 4, 15);
-	CConsole::drawChar(78 + 20 + 1, 22 - 15, botBlock, 4, 15);
-	//Draw A
-	CConsole::drawHorLine(81 + 20 + 1, 82 + 20 + 1, 22 - 15, topBlock, 4, 15);
-	CConsole::drawChar(80 + 20 + 1, 22 - 15, botBlock, 4, 15);
-	CConsole::drawChar(83 + 20 + 1, 22 - 15, botBlock, 4, 15);
-	CConsole::drawChar(80 + 20 + 1, 23 - 15, block, 4, 15);
-	CConsole::drawChar(83 + 20 + 1, 23 - 15, block, 4, 15);
-	CConsole::drawChar(80 + 20 + 1, 24 - 15, topBlock, 4, 15);
-	CConsole::drawChar(83 + 20 + 1, 24 - 15, topBlock, 4, 15);
-	CConsole::drawHorLine(81 + 20 + 1, 82 + 20 + 1, 23 - 15, topBlock, 4, 15);
-	//Draw D
-	CConsole::drawVerLine(22 - 15, 23 - 15, 85 + 20 + 1, block, 4, 15);
-	CConsole::drawChar(85 + 20 + 1, 24 - 15, topBlock, 4, 15);
-	CConsole::drawHorLine(86 + 20 + 1, 87 + 20 + 1, 22 - 15, topBlock, 4, 15);
-	CConsole::drawHorLine(86 + 20 + 1, 87 + 20 + 1, 24 - 15, topBlock, 4, 15);
-	CConsole::drawChar(88 + 20 + 1, 23 - 15, block, 4, 15);
-	CConsole::drawChar(88 + 20 + 1, 22 - 15, botBlock, 4, 15);
+	CConsole::showConsoleCursor(true);
+
+	//ve khung
+	CConsole::drawHorLine(2, 101, 43, topBlock, 0, 15);
+	CConsole::drawVerLine(43, 53, 2, block, 0, 15);
+	CConsole::drawVerLine(43, 53, 101, block, 0, 15);
+	CConsole::drawHorLine(2, 101, 53, botBlock, 15, 0);
+
+
+
 	string file_name;
 
+
+
+	string s = "Enter filename you would like to save as: ";
+	CConsole::drawString(15, 45, s, Black);
+	CConsole::gotoXY(75, 45);
+	cin >> file_name;
+	file_name += ".bin";
 	do {
-		CConsole::gotoXY(15, 21);
-		cout << "Enter filename you would like to save as: ";
-		CConsole::gotoXY(75, 21);
-		cin >> file_name;
-		if (!isAvail(file_name)) {
-			CConsole::gotoXY(15, 23);
-			cout << "This name is already exist ! Try again    ";
-			CConsole::gotoXY(75, 21);
-			cout << "               ";
+
+		if (!isAvail(file_name) || file_name == ".bin") {
+			string s = "This name is not valid! Try again: ";
+			CConsole::drawString(15, 46, s, Black);
+			/*		s = "                ";
+					CConsole::drawString(75, 45, s, Black);*/
+			CConsole::gotoXY(75, 46);
+			cin >> file_name;
+			file_name += ".bin";
 		}
 		else {
-			return file_name + ".bin";
+
+			string s = "Save as: " + file_name;
+			CConsole::drawString(15, 47, s, Black);
+			s = "Are you sure ? R to back, Y to accept, N to enter again ";
+			CConsole::drawString(15, 48, s, Black);
+			char c = CConsole::getInput();
+			if (c == 'r') break;
+			else if (c == 'n') {
+				file_name = ".bin";
+				continue;
+			}
+			else if(c=='y'){
+				s = "Saved successfully, N to new game or R to back";
+				CConsole::drawString(15, 49, s, Black);
+				do {
+					char c = CConsole::getInput();
+					if (c == 'r')
+						return "";
+					else if (c == 'n')
+						return "newgame";
+				} while (1);
+			}
 		}
-	} while (!isAvail(file_name));
+
+	} while (1);
 	return "";
 }
 
