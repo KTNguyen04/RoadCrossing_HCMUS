@@ -883,16 +883,17 @@ void CGame::deadPopUp()
 	char choice;
 	do {
 		choice = _getch();
+		choice = tolower(choice);
 	} while (choice != 's' && choice != 'b' && choice != 't');
 	switch (choice)
 	{
-	case 's':
+	case 'l':
 		//savePopUp();
-		break;
-	case 'b':
 		break;
 	case 't':
 		break;
+	//case ':
+	//	break;
 	}
 }
 
@@ -989,15 +990,43 @@ string CGame::loadPopUp() {
 }
 
 string CGame::savePopUp() {
-	/*CConsole::gotoXY(6, 20);
-	cout << "                               ";
-	CConsole::gotoXY(30 - 1, 22);
-	cout << "                                   ";
-	CConsole::gotoXY(30 - 1, 24);
-	cout << "                                   ";
-	CConsole::gotoXY(30 - 1, 26);
-	cout << "                                    ";*/
-
+	CConsole::drawHorLine(68 + 20, 93 + 20, 21 - 15, topBlock, 4, 15);
+	CConsole::drawChar(67 + 20, 21 - 15, botBlock, 4, 15);
+	CConsole::drawChar(94 + 20, 21 - 15, botBlock, 4, 15);
+	CConsole::drawVerLine(22 - 15, 23 - 15, 66 + 20, block, 4, 15);
+	CConsole::drawVerLine(22 - 15, 23 - 15, 95 + 20, block, 4, 15);
+	CConsole::drawChar(66 + 20, 24 - 15, topBlock, 4, 15);
+	CConsole::drawChar(95 + 20, 24 - 15, topBlock, 4, 15);
+	CConsole::drawChar(67 + 20, 24 - 15, botBlock, 4, 15);
+	CConsole::drawChar(94 + 20, 24 - 15, botBlock, 4, 15);
+	CConsole::drawHorLine(68 + 20, 93 + 20, 25 - 15, topBlock, 4, 15);
+	//Draw L
+	CConsole::drawVerLine(22 - 15, 23 - 15, 71 + 20 + 1, block, 4, 15);
+	CConsole::drawChar(71 + 20 + 1, 24 - 15, topBlock, 4, 15);
+	CConsole::drawHorLine(72 + 20 + 1, 73 + 20 + 1, 24 - 15, topBlock, 4, 15);
+	//Draw O 
+	CConsole::drawHorLine(76 + 20 + 1, 77 + 20 + 1, 22 - 15, topBlock, 4, 15);
+	CConsole::drawHorLine(76 + 20 + 1, 77 + 20 + 1, 24 - 15, topBlock, 4, 15);
+	CConsole::drawChar(75 + 20 + 1, 23 - 15, block, 4, 15);
+	CConsole::drawChar(78 + 20 + 1, 23 - 15, block, 4, 15);
+	CConsole::drawChar(75 + 20 + 1, 22 - 15, botBlock, 4, 15);
+	CConsole::drawChar(78 + 20 + 1, 22 - 15, botBlock, 4, 15);
+	//Draw A
+	CConsole::drawHorLine(81 + 20 + 1, 82 + 20 + 1, 22 - 15, topBlock, 4, 15);
+	CConsole::drawChar(80 + 20 + 1, 22 - 15, botBlock, 4, 15);
+	CConsole::drawChar(83 + 20 + 1, 22 - 15, botBlock, 4, 15);
+	CConsole::drawChar(80 + 20 + 1, 23 - 15, block, 4, 15);
+	CConsole::drawChar(83 + 20 + 1, 23 - 15, block, 4, 15);
+	CConsole::drawChar(80 + 20 + 1, 24 - 15, topBlock, 4, 15);
+	CConsole::drawChar(83 + 20 + 1, 24 - 15, topBlock, 4, 15);
+	CConsole::drawHorLine(81 + 20 + 1, 82 + 20 + 1, 23 - 15, topBlock, 4, 15);
+	//Draw D
+	CConsole::drawVerLine(22 - 15, 23 - 15, 85 + 20 + 1, block, 4, 15);
+	CConsole::drawChar(85 + 20 + 1, 24 - 15, topBlock, 4, 15);
+	CConsole::drawHorLine(86 + 20 + 1, 87 + 20 + 1, 22 - 15, topBlock, 4, 15);
+	CConsole::drawHorLine(86 + 20 + 1, 87 + 20 + 1, 24 - 15, topBlock, 4, 15);
+	CConsole::drawChar(88 + 20 + 1, 23 - 15, block, 4, 15);
+	CConsole::drawChar(88 + 20 + 1, 22 - 15, botBlock, 4, 15);
 	string file_name;
 
 	do {
@@ -1018,10 +1047,137 @@ string CGame::savePopUp() {
 	return "";
 }
 
-void CGame:: showScore() {
-	//
+void CGame::showScore(int score, int x) {
+	CMenu g;
+	x = 138;
+	g.clearScoreBoard(true, Blue);
+	// Draw each digit at appropriate positions
+	if (score > 0 && score < 10)
+	{
+		switch (score) {
+		case 0:
+			g.drawNumber0(false, Black, x);
+			break;
+		case 1:
+			g.drawNumber1(false, Black, x);
+			break;
+		case 2:
+			g.drawNumber2(false, Black, x);
+			break;
+		case 3:
+			g.drawNumber3(false, Black, x);
+			break;
+		case 4:
+			g.drawNumber4(false, Black, x);
+			break;
+		case 5:
+			g.drawNumber5(false, Black, x);
+			break;
+		case 6:
+			g.drawNumber6(false, Black, x);
+			break;
+		case 7:
+			g.drawNumber7(false, Black, x);
+			break;
+		case 8:
+			g.drawNumber8(false, Black, x);
+			break;
+		case 9:
+			g.drawNumber9(false, Black, x);
+			break;
+		}
+	}
+	else if (score >= 10 && score < 100)
+	{
+		x -= 3;
+		std::vector<int> digits;
+		while (score > 0) {
+			digits.push_back(score % 10);
+			score /= 10;
+		}
+		for (int i = digits.size() - 1; i >= 0; --i) {
+			switch (digits[i]) {
+			case 0:
+				g.drawNumber0(false, Black, x);
+				break;
+			case 1:
+				g.drawNumber1(false, Black, x);
+				break;
+			case 2:
+				g.drawNumber2(false, Black, x);
+				break;
+			case 3:
+				g.drawNumber3(false, Black, x);
+				break;
+			case 4:
+				g.drawNumber4(false, Black, x);
+				break;
+			case 5:
+				g.drawNumber5(false, Black, x);
+				break;
+			case 6:
+				g.drawNumber6(false, Black, x);
+				break;
+			case 7:
+				g.drawNumber7(false, Black, x);
+				break;
+			case 8:
+				g.drawNumber8(false, Black, x);
+				break;
+			case 9:
+				g.drawNumber9(false, Black, x);
+				break;
+			}
+			// Move to the next digit position
+			x += 5; // Adjust this value based on the spacing between digits
+		}
+	}
+	else if (score >= 100 && score < 1000)
+	{
+		x -= 5;
+		std::vector<int> digits;
+		while (score > 0) {
+			digits.push_back(score % 10);
+			score /= 10;
+		}
+		for (int i = digits.size() - 1; i >= 0; --i) {
+			switch (digits[i]) {
+			case 0:
+				g.drawNumber0(false, Black, x);
+				break;
+			case 1:
+				g.drawNumber1(false, Black, x);
+				break;
+			case 2:
+				g.drawNumber2(false, Black, x);
+				break;
+			case 3:
+				g.drawNumber3(false, Black, x);
+				break;
+			case 4:
+				g.drawNumber4(false, Black, x);
+				break;
+			case 5:
+				g.drawNumber5(false, Black, x);
+				break;
+			case 6:
+				g.drawNumber6(false, Black, x);
+				break;
+			case 7:
+				g.drawNumber7(false, Black, x);
+				break;
+			case 8:
+				g.drawNumber8(false, Black, x);
+				break;
+			case 9:
+				g.drawNumber9(false, Black, x);
+				break;
+			}
+			// Move to the next digit position
+			x += 5; // Adjust this value based on the spacing between digits
+		}
+	}
 }
-
 int CGame::getScore()
 {
 	return score;

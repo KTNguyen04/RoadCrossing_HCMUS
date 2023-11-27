@@ -11,13 +11,12 @@ std::mutex m1;
 using namespace std;
 int main()
 {
-	/*srand(time(NULL));
+	srand(time(NULL));
 	int choice = 0;
 	CMenu m;
 	CConsole c;
-	m.showMenu();*/
-	CGame g;
-	g.savePopUp();
+	m.showMenu();
+
 	/*CGame g;
 
 	g.startGame();*/

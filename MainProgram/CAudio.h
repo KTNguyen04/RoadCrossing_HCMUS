@@ -1,6 +1,6 @@
 #pragma once
+#include <string>
 using namespace std;
-
 class Audio {
 	static string path;
 public:

@@ -1,8 +1,10 @@
-#include"CMenu.h"
+#include "CMenu.h"
 #include "CAudio.h"
+#include "CGame.h"
+
 void CMenu::showMenu() {
-	Audio au;
-	au.playSound(menuSound);
+
+	Audio::playSound(menuSound);
 	int selectedOption = 0;
 	CConsole::clearScreen(Blue);
 	while (true) {
