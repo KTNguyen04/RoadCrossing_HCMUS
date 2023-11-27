@@ -1753,6 +1753,7 @@ void CMenu::clearLevelBoard(bool isForRemove, int color)
 		}
 
 	}
+}
 void CMenu::setOption(const int& c)
 {
 	selectedOption = c;
