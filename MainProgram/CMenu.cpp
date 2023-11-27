@@ -6,7 +6,7 @@ void CMenu::showMenu() {
 	CConsole::setUpConsole();
 	Sleep(1);
 	Audio::playSound(menuSound);
-	int selectedOption = 0;
+	selectedOption = 0;
 	CConsole::clearScreen(Blue);
 	while (true) {
 		drawTitle(false, Red);
@@ -17,7 +17,7 @@ void CMenu::showMenu() {
 		drawHelpOption(false, Black, selectedOption == 4);
 		drawExitOption(false, Black, selectedOption == 5);
 
-		int userInput = displayMenuOptions();
+		userInput = displayMenuOptions();
 		if (userInput == 'w') {
 			if (selectedOption >= 0)
 			{
@@ -43,93 +43,106 @@ void CMenu::showMenu() {
 		}
 
 		else if (userInput == 13) {  // Enter key
-			CGame g;
 			char c;
+			CGame* g = new CGame;
+			
+
 			if (selectedOption == 0) {
 				CConsole::clearScreen(White);
-
 				subMenu();
 				CRoad::setUpRoad();
 				CRoad::drawMap();
-				g.initGame();
-				c = g.startGame();
+				g->initGame();
+				g->showScore(g->getScore(), 138);
+				c = g->startGame();
 				if (c == 'r') {
 					CConsole::clearScreen(White);
 					showMenu();
 
 				}
-				else if (c == 'n') {
-					CConsole::clearScreen(White);
-					subMenu();
-					CGame g2;
-					CRoad::setUpRoad();
-					CRoad::drawMap();
-					g.initGame();
-					c = g.startGame();
-				}
+				//else if (c == 'n') {
+				//	//delete g;
+				//	CConsole::clearScreen(White);
+				//	showMenu();
+				//	setUserInput(13);
+				//	setOption(0);
+				//	subMenu();
+				//	delete g;
+
+				//	/*/g->initGame();
+				//	c = g->startGame();*/
+				//}
 				else if (c == 'l') {
-					string sPath = g.savePopUp();
+					string sPath = g->savePopUp();
 					if (sPath != "" && sPath != "newgame") {
-						g.saveGame(sPath);
+						g->saveGame(sPath);
 					}
 					else if (sPath == "") {
 						showMenu();
 					}
-					else {
+					/*else {
 						CConsole::clearScreen(White);
+						showMenu();
+						setUserInput(13);
+						setOption(0);
 						subMenu();
-						CGame g;
-						CRoad::setUpRoad();
-						CRoad::drawMap();
-						g.initGame();
-						c = g.startGame();
-					}
+						delete g;
+
+
+					}*/
 				}
 
 			}
 			else if (selectedOption == 1) {
+			
 				CConsole::clearScreen(White);
-				string path = g.loadPopUp();
+				string path = g->loadPopUp();
 				if (path != "") {
 					CRoad::setUpRoad();
 					CConsole::clearScreen(White);
 					CRoad::drawMap();
 					subMenu();
-					g.initGame();
-					g.loadGame(path);
-					c = g.startGame();
+					g->initGame();
+					g->loadGame(path);
+					g->showScore(g->getScore(), 138);
+					c = g->startGame();
 					if (c == 'r') {
 						CConsole::clearScreen(White);
 						showMenu();
 
 					}
-					else if (c == 'n') {
-						CConsole::clearScreen(White);
-						subMenu();
-						CGame g2;
-						CRoad::setUpRoad();
-						CRoad::drawMap();
-						g.initGame();
-						c = g.startGame();
-					}
+					//else if (c == 'n') {
+					//	//delete g;
+					//	CConsole::clearScreen(White);
+					//	showMenu();
+					//	setUserInput(13);
+					//	setOption(0);
+					//	subMenu();
+					//	delete g;
+
+					//	/*/g->initGame();
+					//	c = g->startGame();*/
+					//}
 					else if (c == 'l') {
-						string sPath = g.savePopUp();
+						string sPath = g->savePopUp();
 						if (sPath != "" && sPath != "newgame") {
-							g.saveGame(sPath);
+							g->saveGame(sPath);
 						}
 						else if (sPath == "") {
 							showMenu();
 						}
-						else {
+						/*else {
 							CConsole::clearScreen(White);
+							showMenu();
+							setUserInput(13);
+							setOption(0);
 							subMenu();
-							CGame g;
-							CRoad::setUpRoad();
-							CRoad::drawMap();
-							g.initGame();
-							c = g.startGame();
-						}
+							delete g;
+
+
+						}*/
 					}
+
 				}
 				else showMenu();
 				break;
@@ -159,6 +172,7 @@ void CMenu::showMenu() {
 				exitGame();
 				break;
 			}
+			delete g;
 		}
 	}
 }
@@ -577,6 +591,7 @@ void CMenu::subMenu()
 	drawSubMenu(false, Black);
 	drawNumber0(false, Black,Blue, 138);
 	drawNumber1(false, Black, Yellow, 176);
+	
 }
 
 
@@ -1738,6 +1753,13 @@ void CMenu::clearLevelBoard(bool isForRemove, int color)
 		}
 
 	}
+void CMenu::setOption(const int& c)
+{
+	selectedOption = c;
+}
 
+void CMenu::setUserInput(const int& c)
+{
+	userInput = c;
 }
 

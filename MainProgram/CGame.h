@@ -64,7 +64,7 @@ public:
 	static int getCoorTopLeftX();
 	static int getCoorTopLeftY();
 	static void fillRect(int x, int y, int hei, int wid, wchar_t c, int color);         //topLeft coor
-	void setGame();
+
 
 	char startGame();
 	template<class obstacle>
@@ -92,6 +92,7 @@ public:
 	void resetPosObs(vector<obs>& obss, const int& l);   //0123
 	void resetPosBridge();   //0123
 	void resetPosTrafficLight();
+	void resetPosPp();
 	//void changeLight(CTrafficLight& tf);
 	
 	void increDifficulty();
