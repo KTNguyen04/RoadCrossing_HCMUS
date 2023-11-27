@@ -14,6 +14,7 @@ vector<int> CGame::sepBridges;
 CGame::CGame()
 {
 	key = 0;
+	score = 0;
 	//CRoad::setUpRoad();
 	//sepBridges.resize(bridges.size());
 
@@ -25,7 +26,8 @@ void CGame::initGame() {
 	//drawFrame();
 	//drawRoad();
 
-
+	score = 0;
+	
 	//CRoad::drawMap();
 	initTrafficLights();
 	bool flag = false;
@@ -168,6 +170,15 @@ char CGame::startGame()
 		if (pp.IS_DEAD()) {
 			t1.join();
 			if (key == 0) return deadPopUp();
+			if (key == 'n') {
+				CGame* g = new CGame;
+				//CConsole::clearScreen(White);
+				CRoad::setUpRoad();
+				CRoad::drawMap();
+				g->initGame();
+				g->showScore(g->getScore(), 138);
+				return g->startGame();
+			}
 			return key;
 		}
 		//unique_lock<mutex> lock(m);
@@ -212,11 +223,12 @@ void CGame::initTrafficLights()
 
 void CGame::initBridges()
 {
-
+	bridges.resize(2);
+	sepBridges.resize(2);
 	for (int i = 0; i < 2; i++) {
 		CBridge brid(rand() % (frameWidth - bridgeWidth) + coorTopLeftX + 1, CRoad::sepLane[3] + lane - 1);
-		bridges.push_back(brid);
-		sepBridges.push_back(bridges[i].getCoorX());
+		bridges[i] = (brid);
+		sepBridges[i] = (bridges[i].getCoorX());
 	}
 }
 
@@ -327,6 +339,7 @@ void CGame::levelUp()
 	for (auto& e : bridges) {
 		e.drawObject();
 	}
+	resetPosPp();
 }
 
 void CGame::tlLightUp() {
@@ -344,7 +357,10 @@ void CGame::resetPosBridge()
 		sepBridges[i] = bridges[i].getCoorX();
 	}
 }
-
+void CGame::resetPosPp()
+{
+	pp.resetPos();
+}
 void CGame::increDifficulty()
 {
 	if (level <= 22) {
@@ -649,7 +665,7 @@ void CGame::subThread(bool& canmove, bool& rd)
 				pp.drawPeople(true);
 
 				pp.drawPeople();
-				pp.resetPos();
+
 
 				//this_thread::sleep_for(chrono::microseconds(100));
 
@@ -684,7 +700,7 @@ void CGame::subThread(bool& canmove, bool& rd)
 				//this_thread::sleep_for(chrono::microseconds(50));
 				pp.drawPeople();
 				key = deadPopUp();
-				
+
 
 				continue;
 
@@ -748,7 +764,7 @@ void CGame::subThread(bool& canmove, bool& rd)
 					pp.drawPeople();
 
 					key = deadPopUp();
-				
+
 
 					continue;
 
@@ -774,7 +790,7 @@ void CGame::subThread(bool& canmove, bool& rd)
 					//this_thread::sleep_for(chrono::microseconds(50));
 					pp.drawPeople();
 					key = deadPopUp();
-					
+
 
 					continue;
 
@@ -959,7 +975,7 @@ string CGame::loadPopUp() {
 	CConsole::drawChar(88 + 20 + 1, 23 - 15, block, 4, 15);
 	CConsole::drawChar(88 + 20 + 1, 22 - 15, botBlock, 4, 15);
 	string s = "Press R to back";
-	CConsole::drawString(CConsole::getConsoleWid() / 2, CConsole::getConsoleHei()-10,s, DarkRed);
+	CConsole::drawString(CConsole::getConsoleWid() / 2, CConsole::getConsoleHei() - 10, s, DarkRed);
 	fileM.setPath(savedFilePath, rootP);
 	if (fileM.openFile()) {
 		fileNames fn = fileM.loading<fileNames>();
@@ -1055,7 +1071,7 @@ string CGame::savePopUp() {
 				file_name = ".bin";
 				continue;
 			}
-			else if(c=='y'){
+			else if (c == 'y') {
 				s = "Saved successfully, N to new game or R to back";
 				CConsole::drawString(15, 49, s, Black);
 				do {
@@ -1077,7 +1093,7 @@ void CGame::showScore(int score, int x) {
 	x = 138;
 	g.clearScoreBoard(true, Blue);
 	// Draw each digit at appropriate positions
-	if (score > 0 && score < 10)
+	if (score >= 0 && score < 10)
 	{
 		switch (score) {
 		case 0:

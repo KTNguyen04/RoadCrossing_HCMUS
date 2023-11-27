@@ -245,7 +245,8 @@ bool CPeople::isNeedDraw()
 
 bool CPeople::levelComplete()
 {
-	return (coorY <= CRoad::saveLane[0] - 1);
+	//cout << coorY;
+	return (coorY <= CRoad::saveLane[0]/2 - 1);
 }
 
 void CPeople::resetPos()
