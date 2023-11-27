@@ -85,7 +85,7 @@ public:
 	void setObssSpeed(vector<obs>& obss);
 	template< class obs>
 	void addObs(vector<obs>& obss);
-	void subThread(bool &canmove);
+	void subThread(bool &canmove,bool& rd);
 	void initObstacle();
 	template< class obs>
 	void resetPosObs(vector<obs>& obss, const int& l);   //0123
@@ -104,7 +104,7 @@ public:
 	void deadPopUp();
 	string loadPopUp(); //dung trong option load
 	string savePopUp(); //dung de nhap ten file muon save
-	friend bool isAvail(string input); //kiem tra ten file nhap vao ko bi trung vs cac file da save
+	bool isAvail(string input); //kiem tra ten file nhap vao ko bi trung vs cac file da save
 	void showScore();
 	int getScore();
 };
