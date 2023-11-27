@@ -179,12 +179,12 @@ istream& operator>>(istream& inDev, saveInfo& info) {
 	for (int i = 0; i < info.numTruck2; i++)
 		inDev >> info.coorYTruck2[i];
 	info.truck2Speed.resize(info.numTruck2);
-	for (int i = 0; i < info.numTruck; i++)
+	for (int i = 0; i < info.numTruck2; i++)
 		inDev >> info.truck2Speed[i];
 
 	inDev >> info.numCar;
 	info.coorXCar.resize(info.numCar);
-	for (int i = 0; i < info.numTruck; i++)
+	for (int i = 0; i < info.numCar; i++)
 		inDev >> info.coorXCar[i];
 	info.coorYCar.resize(info.numCar);
 	for (int i = 0; i < info.numCar; i++)

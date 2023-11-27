@@ -30,9 +30,9 @@ const int background = White;
 class CConsole
 {
 public:
-	CConsole();
+	CConsole() {};
 	//~CConsole();
-	static void setFont();
+	static void setUpConsole();
 	static void fixConsoleWindow();
 	static void removeScrollBar();
 	static void setConsole();
@@ -40,6 +40,7 @@ public:
 	static int getConsoleWid();
 	static int getConsoleHei();
 	static void drawChar(int x, int y, wchar_t c, int color, int backGround=background,bool isAscii = false);
+	static void drawString(int x, int y, string s, int color, int backGround = background);
 	static void setColor(int color);
 	static void drawHorLine(int fromX, int toX, int y, wchar_t c, int color,int backColor=15);         //kẻ ngang
 	static void drawVerLine(int fromY, int toY, int x, wchar_t c, int color,int backColor=15);

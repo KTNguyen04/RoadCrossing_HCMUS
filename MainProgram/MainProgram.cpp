@@ -14,8 +14,9 @@ int main()
 	srand(time(NULL));
 	int choice = 0;
 	CMenu m;
-	CConsole c;
+
 	m.showMenu();
+
 	/*CGame g;
 
 	g.startGame();*/

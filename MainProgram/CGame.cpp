@@ -1,6 +1,8 @@
 ﻿#include "CGame.h"
 #include "CRoad.h"
 #include <cmath>
+#include <locale>
+#include <codecvt>
 #include <condition_variable>
 int CGame::coorTopLeftX = 2;
 int CGame::coorTopLeftY = 0;
@@ -11,6 +13,7 @@ vector<int> CGame::sepBridges;
 
 CGame::CGame()
 {
+	key = 0;
 	//CRoad::setUpRoad();
 	//sepBridges.resize(bridges.size());
 
@@ -154,38 +157,41 @@ void CGame::fillRect(int x, int y, int hei, int wid, wchar_t c, int color)
 //}
 
 
-void CGame::startGame()
+char CGame::startGame()
 {
-	bool canmove = true;
+	bool canmove = true, ready = false;
 	pp.drawPeople();
 	tlLightUp();
 	drawBridge();
-	thread t1(&CGame::subThread, this, std::ref(canmove));
+	thread t1(&CGame::subThread, this, std::ref(canmove), std::ref(ready));
 	while (1) {
+		if (pp.IS_DEAD()) {
+			t1.join();
+			if (key == 0) return deadPopUp();
+			return key;
+		}
 		//unique_lock<mutex> lock(m);
 		//cv2.wait(lock, [] {return finish_move; });
 		if (canmove) {
+
+			ready = true;
+
 			key = CConsole::getInput();
-			if (key == 'q') {
-				saveGame("saving9.bin");
-				//loadGame("mytest.bin");
-				system("pause");
-			}
+			//if (tolower(key) == 'l') {
+			//	ready = false;
+			//	//CConsole::clearScreen(White);
+			//	string sPath = savePopUp();
+			//	if (sPath != "") {
+			//		saveGame(sPath);
+			//	}
+			//	ready = true;
+			//}
 			pp.peopleMoving(key);
-			audio.playSound(moveSound);
-			
-
+			Audio::playSound(moveSound);
 		}
-
-
-
-		//this_thread::sleep_for(chrono::microseconds(100));
-
 
 	}
 
-
-	t1.join();
 	////t2.join();
 	//t3.join();
 	//
@@ -193,7 +199,7 @@ void CGame::startGame()
 
 void CGame::initTrafficLights()
 {
-	
+
 	for (int i = 0; i < 3; i++) {
 		CTrafficLight tf(coorTopLeftX + frameWidth, CRoad::sepLane[i]);
 		trafficLights.push_back(tf);
@@ -290,8 +296,8 @@ void CGame::levelUp()
 {
 
 	level += 1;
-	score +=  100/timer.timeLapse();
-	showScore(score,138);
+	score += 100 / timer.timeLapse();
+	showScore(score, 138);
 
 	deleteShadow(trucks);
 	deleteShadow(truck2s);
@@ -476,7 +482,7 @@ void CGame::loadGame(const string& name)
 	fileM.setPath(name, rootP);
 	if (fileM.openFile()) {
 		//system("cls");
-		saveInfo info =  fileM.loading<saveInfo>();
+		saveInfo info = fileM.loading<saveInfo>();
 		level = info.level;
 		score = info.score;
 		pp.setX(info.peopleX);
@@ -484,7 +490,7 @@ void CGame::loadGame(const string& name)
 		pp.dead(info.people_isDead);
 
 		CRoad::sepLane.resize(info.numLane);
-		for (int i = 0; i < info.numLane;i++) {
+		for (int i = 0; i < info.numLane; i++) {
 			CRoad::sepLane[i] = info.coorYLane[i];
 		}
 
@@ -513,20 +519,20 @@ void CGame::loadGame(const string& name)
 		}
 
 		truck2s.resize(info.numTruck2);
-		for (int i = 0; i < info.numTruck; i++) {
+		for (int i = 0; i < info.numTruck2; i++) {
 			truck2s[i].setCoorX(info.coorXTruck2[i]);
 			truck2s[i].setCoorY(info.coorYTruck2[i]);
 		}
 		cars.resize(info.numCar);
-		for (int i = 0; i < info.numTruck; i++) {
+		for (int i = 0; i < info.numCar; i++) {
 			cars[i].setCoorX(info.coorXCar[i]);
 			cars[i].setCoorY(info.coorYCar[i]);
 		}
 		fileM.closeFile();
 
-		
+
 	}
-	
+
 
 }
 
@@ -603,14 +609,24 @@ void CGame::setObssSpeed(vector<obs>& obss)
 	}
 }
 
-void CGame::subThread(bool& canmove)
+void CGame::subThread(bool& canmove, bool& rd)
 {
 	bool isDrowned = true;
-	while (isRunning) {
-		if (!pp.IS_DEAD()) {
-			/*pp.peopleMoving(key);*/
-				//pp.drawPeople(true);
-			mutex mt, mt2;
+	while (!pp.IS_DEAD()) {
+		if (rd) {
+
+			if (tolower(key) == 'l') {
+				canmove = false;
+				string sPath = savePopUp();
+				if (sPath != "") {
+					saveGame(sPath);
+				}
+				else {
+					canmove = true;
+				}
+
+
+			}
 			canmove = false;
 
 			if (pp.isNeedDraw()) {
@@ -642,153 +658,158 @@ void CGame::subThread(bool& canmove)
 
 			//lock_guard<mutex> lg(mt);
 
-		}
-		isDrowned = true;
 
-		sort(bridges.begin(), bridges.end(), [](const CBridge& a, const CBridge& b) {
-			return a.getCoorX() <= b.getCoorX();
-			});
-		for (int i = 0; i < bridges.size(); i++) {
-			isDrowned = isDrowned && pp.isDrown(bridges[i]);
-			for (int j = i + 1; j < bridges.size(); j++) {
-				if (bridges[i].getCoorX() + bridges[i].getWidth() >= bridges[j].getCoorX()) {
+			isDrowned = true;
 
-					CBridge temp(bridges[i].getCoorX(), bridges[i].getCoorY());
-					temp.setWidth(2 * bridges[i].getWidth() - (bridges[i].getCoorX() + bridges[i].getWidth() - bridges[j].getCoorX()));
-					if (pp.isDrown(temp)) isDrowned = true;
-					else isDrowned = false;
+			sort(bridges.begin(), bridges.end(), [](const CBridge& a, const CBridge& b) {
+				return a.getCoorX() <= b.getCoorX();
+				});
+			for (int i = 0; i < bridges.size(); i++) {
+				isDrowned = isDrowned && pp.isDrown(bridges[i]);
+				for (int j = i + 1; j < bridges.size(); j++) {
+					if (bridges[i].getCoorX() + bridges[i].getWidth() >= bridges[j].getCoorX()) {
+
+						CBridge temp(bridges[i].getCoorX(), bridges[i].getCoorY());
+						temp.setWidth(2 * bridges[i].getWidth() - (bridges[i].getCoorX() + bridges[i].getWidth() - bridges[j].getCoorX()));
+						if (pp.isDrown(temp)) isDrowned = true;
+						else isDrowned = false;
+					}
 				}
+
 			}
 
-		}
-
-		if (isDrowned) {
-
-			pp.drawPeople(true);
-			//this_thread::sleep_for(chrono::microseconds(50));
-			pp.drawPeople();
-			exit(0);
-		}
-
-
-
-		int maxx = 4;
-		for (int i = 0; i < trafficLights.size(); i++) {
-
-			maxx = trafficLights[i].getTime();
-			if (trafficLights[i].getTime() > maxx) maxx = trafficLights[i].getTime();
-			if (timer.countDown(trafficLights[i].getTime())) {
-				trafficLights[i].changeLight();
-			}
-
-		}
-		if (timer.countDown(maxx)) timer.setStone();
-		Sleep(1);
-		for (auto& e : cars) {
-
-
-			if (trafficLights[1].getState() == "green") {
-				e.drawObject(true);
-				e.move();
-				e.drawObject();
-			}
-			if (pp.isCollide(e)) {
-				audio.playSound(hitSound);
+			if (isDrowned) {
+				pp.dead(true);
 				pp.drawPeople(true);
 				//this_thread::sleep_for(chrono::microseconds(50));
 				pp.drawPeople();
-				system("pause");
+				key = deadPopUp();
+				
+
+				continue;
+
+				//exit(0);
 			}
 
+			int maxx = 4;
+			for (int i = 0; i < trafficLights.size(); i++) {
+
+				maxx = trafficLights[i].getTime();
+				if (trafficLights[i].getTime() > maxx) maxx = trafficLights[i].getTime();
+				if (timer.countDown(trafficLights[i].getTime())) {
+					trafficLights[i].changeLight();
+				}
+
+			}
+			if (timer.countDown(maxx)) timer.setStone();
+			Sleep(1);
+			for (auto& e : cars) {
+
+
+				if (trafficLights[1].getState() == "green") {
+					e.drawObject(true);
+					e.move();
+					e.drawObject();
+				}
+				if (pp.isCollide(e)) {
+					pp.dead(true);
+
+					audio.playSound(hitSound);
+					pp.drawPeople(true);
+					//this_thread::sleep_for(chrono::microseconds(50));
+					pp.drawPeople();
+					key = deadPopUp();
+					canmove = true;
+
+					continue;
+
+
+
+					//system("pause");
+				}
+
+			}
+			for (auto& e : trucks) {
+				//	this_thread::sleep_for(chrono::microseconds(200 / e.getSpeed()));
+
+
+				if (trafficLights[0].getState() == "green") {
+					e.drawObject(true);
+					e.move();
+					e.drawObject();
+				}
+
+				if (pp.isCollide(e)) {
+					pp.dead(true);
+
+					audio.playSound(hitSound);
+					pp.drawPeople(true);
+					//this_thread::sleep_for(chrono::microseconds(50));
+					pp.drawPeople();
+
+					key = deadPopUp();
+				
+
+					continue;
+
+					//system("pause");
+
+				}
+
+			}
+			for (auto& e : truck2s) {
+				//	this_thread::sleep_for(chrono::microseconds(200 / e.getSpeed()));
+
+
+				if (trafficLights[2].getState() == "green") {
+					e.drawObject(true);
+					e.move();
+					e.drawObject();
+				}
+				if (pp.isCollide(e)) {
+					pp.dead(true);
+
+					audio.playSound(hitSound);
+					pp.drawPeople(true);
+					//this_thread::sleep_for(chrono::microseconds(50));
+					pp.drawPeople();
+					key = deadPopUp();
+					
+
+					continue;
+
+
+					//system("pause");
+
+				}
+
+			}
+			canmove = true;
+
+			//Sleep(1);
+
+		//subsub.join();
 		}
-		for (auto& e : trucks) {
-			//	this_thread::sleep_for(chrono::microseconds(200 / e.getSpeed()));
-
-
-			if (trafficLights[0].getState() == "green") {
-				e.drawObject(true);
-				e.move();
-				e.drawObject();
-			}
-
-			if (pp.isCollide(e)) {
-				audio.playSound(hitSound);
-				pp.drawPeople(true);
-				//this_thread::sleep_for(chrono::microseconds(50));
-				pp.drawPeople();
-
-				system("pause");
-
-			}
-
-		}
-		for (auto& e : truck2s) {
-			//	this_thread::sleep_for(chrono::microseconds(200 / e.getSpeed()));
-
-
-			if (trafficLights[2].getState() == "green") {
-				e.drawObject(true);
-				e.move();
-				e.drawObject();
-			}
-			if (pp.isCollide(e)) {
-				audio.playSound(hitSound);
-				pp.drawPeople(true);
-				//this_thread::sleep_for(chrono::microseconds(50));
-				pp.drawPeople();
-
-				system("pause");
-
-			}
-
-		}
-		canmove = true;
-
-		//Sleep(1);
-
-	//subsub.join();
 	}
+	return;
 }
 
 
 
 
-bool isAvail(string input)
+bool CGame::isAvail(string input)
 {
-	vector<string> strings;
-	ifstream file("savedfile.bin", ios::binary);
 
-	if (!file.is_open()) {
-		cerr << "Error opening file\n";
+	fileM.setPath(savedFilePath, rootP);
+	if (fileM.openFile()) {
+		fileNames fn = fileM.loading<fileNames>();
+		fileM.closeFile();
+		return find(fn.names.begin(), fn.names.end(), input) == fn.names.end();
 	}
-
-	string currentString;
-
-	// Đọc từng ký tự từ tệp nhị phân
-	char currentChar;
-	char prevChar;
-	while (file.read(&currentChar, sizeof(char))) {
-		// Nếu gặp ký tự null, lưu chuỗi hiện tại vào vector và reset chuỗi
-		if (currentChar == '0' && prevChar == '\\') {
-			strings.push_back(currentString);
-			currentString.clear();
-		}
-		else {
-			if (currentChar != '\\')
-				currentString += currentChar;
-		}
-		prevChar = currentChar;
-	}
-
-	file.close();
-	for (int i = 0; i < strings.size(); i++) {
-		if (input == strings[i])
-			return false;
-	}
-	return true;
+	return false;
 }
 
-void CGame::deadPopUp()
+char CGame::deadPopUp()
 {
 	//clean khung;
 	for (int i = 1; i <= 102; i++) {
@@ -885,26 +906,17 @@ void CGame::deadPopUp()
 	CConsole::gotoXY(7, 20);
 	cout << "               Press: ";
 	CConsole::gotoXY(30, 22);
-	cout << "               S To SAVE";
+	cout << "               L To SAVE";
 	CConsole::gotoXY(30, 24);
-	cout << "               B To BACK";
+	cout << "               R To BACK";
 	CConsole::gotoXY(30, 26);
-	cout << "               T To CONTINUE";
-
+	cout << "               N to New Game";
+	cin.clear();
 	char choice;
 	do {
-		choice = _getch();
-	} while (choice != 's' && choice != 'b' && choice != 't');
-	switch (choice)
-	{
-	case 's':
-		//savePopUp();
-		break;
-	case 'b':
-		break;
-	case 't':
-		break;
-	}
+		choice = CConsole::getInput();
+	} while (choice != 'l' && choice != 'r' && choice != 'n');
+	return choice;
 }
 
 string CGame::loadPopUp() {
@@ -946,7 +958,8 @@ string CGame::loadPopUp() {
 	CConsole::drawHorLine(86 + 20 + 1, 87 + 20 + 1, 24 - 15, topBlock, 4, 15);
 	CConsole::drawChar(88 + 20 + 1, 23 - 15, block, 4, 15);
 	CConsole::drawChar(88 + 20 + 1, 22 - 15, botBlock, 4, 15);
-
+	string s = "Press R to back";
+	CConsole::drawString(CConsole::getConsoleWid() / 2, CConsole::getConsoleHei()-10,s, DarkRed);
 	fileM.setPath(savedFilePath, rootP);
 	if (fileM.openFile()) {
 		fileNames fn = fileM.loading<fileNames>();
@@ -971,7 +984,7 @@ string CGame::loadPopUp() {
 					std::cout << "  " << fn.names[i] << std::endl << std::endl << std::endl << "                                                                                               ";
 				}
 			}
-			userInput = _getch();  
+			userInput = _getch();
 			switch (userInput) {
 			case 's':
 				if (currChoice < fn.names.size())
@@ -1000,43 +1013,63 @@ string CGame::loadPopUp() {
 }
 
 string CGame::savePopUp() {
-	CConsole::gotoXY(6, 20);
-	cout << "                               ";
-	CConsole::gotoXY(30 - 1, 22);
-	cout << "                                   ";
-	CConsole::gotoXY(30 - 1, 24);
-	cout << "                                   ";
-	CConsole::gotoXY(30 - 1, 26);
-	cout << "                                    ";
+	CConsole::showConsoleCursor(true);
+
+	//ve khung
+	CConsole::drawHorLine(2, 101, 43, topBlock, 0, 15);
+	CConsole::drawVerLine(43, 53, 2, block, 0, 15);
+	CConsole::drawVerLine(43, 53, 101, block, 0, 15);
+	CConsole::drawHorLine(2, 101, 53, botBlock, 15, 0);
+
+
 
 	string file_name;
 
+
+
+	string s = "Enter filename you would like to save as: ";
+	CConsole::drawString(15, 45, s, Black);
+	CConsole::gotoXY(75, 45);
+	cin >> file_name;
+	file_name += ".bin";
 	do {
-		CConsole::gotoXY(15, 21);
-		cout << "Enter filename you would like to save as (required .bin): ";
-		CConsole::gotoXY(75, 21);
-		cin >> file_name;
-		if (file_name.find(".bin") == std::string::npos) {
-			CConsole::gotoXY(15, 23);
-			cout << "File name required .bin ! Try again        ";
-			CConsole::gotoXY(75, 21);
-			cout << "               ";
-		}
-		else if (!isAvail(file_name)) {
-			CConsole::gotoXY(15, 23);
-			cout << "This name is already exist ! Try again    ";
-			CConsole::gotoXY(75, 21);
-			cout << "               ";
+
+		if (!isAvail(file_name) || file_name == ".bin") {
+			string s = "This name is not valid! Try again: ";
+			CConsole::drawString(15, 46, s, Black);
+			/*		s = "                ";
+					CConsole::drawString(75, 45, s, Black);*/
+			CConsole::gotoXY(75, 46);
+			cin >> file_name;
+			file_name += ".bin";
 		}
 		else {
-			CConsole::gotoXY(59, 22);
-			cout << "                   " << endl;
-			CConsole::gotoXY(14, 23);
-			cout << " Save successfully !!                              ";
-			return file_name;
+
+			string s = "Save as: " + file_name;
+			CConsole::drawString(15, 47, s, Black);
+			s = "Are you sure ? R to back, Y to accept, N to enter again ";
+			CConsole::drawString(15, 48, s, Black);
+			char c = CConsole::getInput();
+			if (c == 'r') break;
+			else if (c == 'n') {
+				file_name = ".bin";
+				continue;
+			}
+			else if(c=='y'){
+				s = "Saved successfully, N to new game or R to back";
+				CConsole::drawString(15, 49, s, Black);
+				do {
+					char c = CConsole::getInput();
+					if (c == 'r')
+						return file_name;
+					else if (c == 'n')
+						return "newgame";
+				} while (1);
+			}
 		}
-	} while (!isAvail(file_name) || file_name.find(".bin") == std::string::npos);
-	return file_name;
+
+	} while (1);
+	return "";
 }
 
 void CGame::showScore(int score, int x) {
@@ -1087,44 +1120,44 @@ void CGame::showScore(int score, int x) {
 			digits.push_back(score % 10);
 			score /= 10;
 		}
-			for (int i = digits.size() - 1; i >= 0; --i) {
-				switch (digits[i]) {
-				case 0:
-					g.drawNumber0(false, Black, x );
-					break;
-				case 1:
-					g.drawNumber1(false, Black, x );
-					break;
-				case 2:
-					g.drawNumber2(false, Black, x );
-					break;
-				case 3:
-					g.drawNumber3(false, Black, x );
-					break;
-				case 4:
-					g.drawNumber4(false, Black, x );
-					break;
-				case 5:
-					g.drawNumber5(false, Black, x );
-					break;
-				case 6:
-					g.drawNumber6(false, Black, x );
-					break;
-				case 7:
-					g.drawNumber7(false, Black, x );
-					break;
-				case 8:
-					g.drawNumber8(false, Black, x );
-					break;
-				case 9:
-					g.drawNumber9(false, Black, x );
-					break;
-				}
-				// Move to the next digit position
-				x += 5; // Adjust this value based on the spacing between digits
-				}
+		for (int i = digits.size() - 1; i >= 0; --i) {
+			switch (digits[i]) {
+			case 0:
+				g.drawNumber0(false, Black, x);
+				break;
+			case 1:
+				g.drawNumber1(false, Black, x);
+				break;
+			case 2:
+				g.drawNumber2(false, Black, x);
+				break;
+			case 3:
+				g.drawNumber3(false, Black, x);
+				break;
+			case 4:
+				g.drawNumber4(false, Black, x);
+				break;
+			case 5:
+				g.drawNumber5(false, Black, x);
+				break;
+			case 6:
+				g.drawNumber6(false, Black, x);
+				break;
+			case 7:
+				g.drawNumber7(false, Black, x);
+				break;
+			case 8:
+				g.drawNumber8(false, Black, x);
+				break;
+			case 9:
+				g.drawNumber9(false, Black, x);
+				break;
+			}
+			// Move to the next digit position
+			x += 5; // Adjust this value based on the spacing between digits
+		}
 	}
-	else if(score>=100 &&score <1000)
+	else if (score >= 100 && score < 1000)
 	{
 		x -= 5;
 		std::vector<int> digits;
@@ -1170,7 +1203,6 @@ void CGame::showScore(int score, int x) {
 		}
 	}
 }
-
 int CGame::getScore()
 {
 	return score;

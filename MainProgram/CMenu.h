@@ -1,8 +1,10 @@
 #pragma once
-#include "CGame.h"
-#include "CRoad.h"
+//#include "CGame.h"
+
+
 class CMenu 
 {
+	
 public:
 	CMenu() : currentOption(0) {}
     void drawTitle(bool isForRemove, int color);

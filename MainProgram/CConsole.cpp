@@ -1,18 +1,17 @@
 ﻿#include "CConsole.h"
-CConsole::CConsole()
-{
 
+
+
+
+void CConsole::setUpConsole()
+{
 	system("color 80");
 	fixConsoleWindow();
 	removeScrollBar();
 	disableClick();
 	showConsoleCursor(false);
 	setConsole();
-
 }
-
-
-
 
 void CConsole::fixConsoleWindow() {
 	HWND consoleWindow = GetConsoleWindow();
@@ -96,6 +95,19 @@ void CConsole::drawChar(int x, int y, wchar_t c, int color, int backGround, bool
 	}
 
 }
+void CConsole::drawString(int x, int y, string s, int color, int backGround)
+{
+	
+
+		gotoXY(x, y);
+		color += backGround * 16;
+		setColor(color);
+		cout << s;
+		color = Black + backGround * 16;
+		setColor(color);
+	
+	
+}
 void CConsole::setColor(int color)
 {
 	HANDLE consoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -132,7 +144,7 @@ char CConsole::getInput()
 
 	while (true)
 	{
-		Sleep(20);
+		//Sleep(20);
 
 		input = _getch();
 		if (input == 0 || input == 224) // Check for special keys
@@ -160,6 +172,7 @@ void CConsole::HideCursor() {
 	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &cursor_info);
 }
 void CConsole::clearScreen(int color) {
+	system("cls");
 	COORD topLeft = { 0, 0 };
 	DWORD written;
 	CONSOLE_SCREEN_BUFFER_INFO csbi;
@@ -177,4 +190,5 @@ void CConsole::clearScreen(int color) {
 
 	// Đặt lại con trỏ về vị trí ban đầu
 	SetConsoleCursorPosition(console, topLeft);
+	
 }
