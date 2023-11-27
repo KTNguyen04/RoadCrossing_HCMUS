@@ -7,7 +7,6 @@ public:
 	CMenu() : currentOption(0) {}
     void drawTitle(bool isForRemove, int color);
 	void showMenu();
-	void start();
 	//void loadgame();
 	void options();
 	void about();
@@ -34,6 +33,7 @@ public:
 	void drawNumber7(bool isForRemove, int color, int x);
 	void drawNumber8(bool isForRemove, int color, int x);
 	void drawNumber9(bool isForRemove, int color, int x);
+    void clearScoreBoard(bool isForRemove,int color);
 
 private:
 	
@@ -41,4 +41,3 @@ private:
 	int displayMenuOptions();
 	int controlOptions();
 };
-

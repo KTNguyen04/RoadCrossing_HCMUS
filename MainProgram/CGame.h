@@ -12,6 +12,7 @@
 #include "CTrafficLight.h"
 #include "CTruck.h"
 #include "CAudio.h"
+#include"CMenu.h"
 #include "CFileWork.h"
 
 #define ThangDung 179
@@ -38,7 +39,7 @@ class CGame
 	static int coorTopLeftX, coorTopLeftY;
 	static int frameWidth, frameHeight;
 	int level;
-	int score;
+	int score=0;
 	bool isRunning;
 	vector<CTruck> trucks;
 	vector<CTruck> truck2s;

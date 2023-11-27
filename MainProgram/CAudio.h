@@ -6,5 +6,5 @@ class Audio {
 public:
 	Audio();
 	static void playSound(string type);
-	
+	static void stopSound();
 };

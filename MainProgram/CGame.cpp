@@ -178,7 +178,7 @@ void CGame::startGame()
 			}
 			pp.peopleMoving(key);
 			audio.playSound(moveSound);
-
+			
 
 		}
 
@@ -295,8 +295,8 @@ void CGame::levelUp()
 {
 
 	level += 1;
-	score += 100 / timer.timeLapse();
-	showScore();
+	score +=  100/timer.timeLapse();
+	showScore(score,138);
 
 	deleteShadow(trucks);
 	deleteShadow(truck2s);
@@ -1018,7 +1018,7 @@ string CGame::savePopUp() {
 	return "";
 }
 
-void CGame::showScore() {
+void CGame:: showScore() {
 	//
 }
 
