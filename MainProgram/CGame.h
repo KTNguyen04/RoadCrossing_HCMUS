@@ -38,7 +38,7 @@ class CGame
 {
 	static int coorTopLeftX, coorTopLeftY;
 	static int frameWidth, frameHeight;
-	int level;
+	int level=1;
 	int score=0;
 	bool isRunning;
 	vector<CTruck> trucks;
@@ -106,6 +106,7 @@ public:
 	string loadPopUp(); //dung trong option load
 	string savePopUp(); //dung de nhap ten file muon save
 	bool isAvail(string input); //kiem tra ten file nhap vao ko bi trung vs cac file da save
+	void showLevel(int level, int x);
 	void showScore(int score, int x);
 	int getScore();
 };

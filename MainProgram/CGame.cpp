@@ -297,8 +297,9 @@ void CGame::levelUp()
 
 	level += 1;
 	score += 100 / timer.timeLapse();
+	showLevel(level, 176);
 	showScore(score, 138);
-
+	
 	deleteShadow(trucks);
 	deleteShadow(truck2s);
 	deleteShadow(cars);
@@ -1081,34 +1082,34 @@ void CGame::showScore(int score, int x) {
 	{
 		switch (score) {
 		case 0:
-			g.drawNumber0(false, Black, x);
+			g.drawNumber0(false, Black, Blue, x);
 			break;
 		case 1:
-			g.drawNumber1(false, Black, x);
+			g.drawNumber1(false, Black, Blue, x);
 			break;
 		case 2:
-			g.drawNumber2(false, Black, x);
+			g.drawNumber2(false, Black, Blue, x);
 			break;
 		case 3:
-			g.drawNumber3(false, Black, x);
+			g.drawNumber3(false, Black, Blue, x);
 			break;
 		case 4:
-			g.drawNumber4(false, Black, x);
+			g.drawNumber4(false, Black, Blue, x);
 			break;
 		case 5:
-			g.drawNumber5(false, Black, x);
+			g.drawNumber5(false, Black, Blue, x);
 			break;
 		case 6:
-			g.drawNumber6(false, Black, x);
+			g.drawNumber6(false, Black, Blue, x);
 			break;
 		case 7:
-			g.drawNumber7(false, Black, x);
+			g.drawNumber7(false, Black, Blue, x);
 			break;
 		case 8:
-			g.drawNumber8(false, Black, x);
+			g.drawNumber8(false, Black, Blue, x);
 			break;
 		case 9:
-			g.drawNumber9(false, Black, x);
+			g.drawNumber9(false, Black, Blue, x);
 			break;
 		}
 	}
@@ -1123,34 +1124,34 @@ void CGame::showScore(int score, int x) {
 		for (int i = digits.size() - 1; i >= 0; --i) {
 			switch (digits[i]) {
 			case 0:
-				g.drawNumber0(false, Black, x);
+				g.drawNumber0(false, Black, Blue, x);
 				break;
 			case 1:
-				g.drawNumber1(false, Black, x);
+				g.drawNumber1(false, Black, Blue, x);
 				break;
 			case 2:
-				g.drawNumber2(false, Black, x);
+				g.drawNumber2(false, Black, Blue, x);
 				break;
 			case 3:
-				g.drawNumber3(false, Black, x);
+				g.drawNumber3(false, Black, Blue, x);
 				break;
 			case 4:
-				g.drawNumber4(false, Black, x);
+				g.drawNumber4(false, Black, Blue, x);
 				break;
 			case 5:
-				g.drawNumber5(false, Black, x);
+				g.drawNumber5(false, Black, Blue, x);
 				break;
 			case 6:
-				g.drawNumber6(false, Black, x);
+				g.drawNumber6(false, Black, Blue, x);
 				break;
 			case 7:
-				g.drawNumber7(false, Black, x);
+				g.drawNumber7(false, Black, Blue, x);
 				break;
 			case 8:
-				g.drawNumber8(false, Black, x);
+				g.drawNumber8(false, Black, Blue, x);
 				break;
 			case 9:
-				g.drawNumber9(false, Black, x);
+				g.drawNumber9(false, Black, Blue, x);
 				break;
 			}
 			// Move to the next digit position
@@ -1168,36 +1169,125 @@ void CGame::showScore(int score, int x) {
 		for (int i = digits.size() - 1; i >= 0; --i) {
 			switch (digits[i]) {
 			case 0:
-				g.drawNumber0(false, Black, x);
+				g.drawNumber0(false, Black, Blue, x);
 				break;
 			case 1:
-				g.drawNumber1(false, Black, x);
+				g.drawNumber1(false, Black, Blue, x);
 				break;
 			case 2:
-				g.drawNumber2(false, Black, x);
+				g.drawNumber2(false, Black, Blue, x);
 				break;
 			case 3:
-				g.drawNumber3(false, Black, x);
+				g.drawNumber3(false, Black, Blue, x);
 				break;
 			case 4:
-				g.drawNumber4(false, Black, x);
+				g.drawNumber4(false, Black, Blue, x);
 				break;
 			case 5:
-				g.drawNumber5(false, Black, x);
+				g.drawNumber5(false, Black, Blue, x);
 				break;
 			case 6:
-				g.drawNumber6(false, Black, x);
+				g.drawNumber6(false, Black, Blue, x);
 				break;
 			case 7:
-				g.drawNumber7(false, Black, x);
+				g.drawNumber7(false, Black, Blue, x);
 				break;
 			case 8:
-				g.drawNumber8(false, Black, x);
+				g.drawNumber8(false, Black, Blue, x);
 				break;
 			case 9:
-				g.drawNumber9(false, Black, x);
+				g.drawNumber9(false, Black, Blue, x);
+				break;
+
+			}
+			// Move to the next digit position
+			x += 5; // Adjust this value based on the spacing between digits
+		}
+	}
+}
+void CGame::showLevel(int level, int x)
+{
+	CMenu g;
+	x = 176;
+	g.clearLevelBoard(true, Yellow);
+	// Draw each digit at appropriate positions
+	if (level > 0 && level < 10)
+	{
+		switch (level) {
+		case 0:
+			g.drawNumber0(false, Black, Yellow, x);
+			break;
+		case 1:
+			g.drawNumber1(false, Black, Yellow, x);
+			break;
+		case 2:
+			g.drawNumber2(false, Black, Yellow, x);
+			break;
+		case 3:
+			g.drawNumber3(false, Black, Yellow, x);
+			break;
+		case 4:
+			g.drawNumber4(false, Black, Yellow, x);
+			break;
+		case 5:
+			g.drawNumber5(false, Black, Yellow, x);
+			break;
+		case 6:
+			g.drawNumber6(false, Black, Yellow, x);
+			break;
+		case 7:
+			g.drawNumber7(false, Black, Yellow, x);
+			break;
+		case 8:
+			g.drawNumber8(false, Black, Yellow, x);
+			break;
+		case 9:
+			g.drawNumber9(false, Black, Yellow, x);
+			break;
+		}
+	}
+	else if (level >= 10 && level < 100)
+	{
+		x -= 3;
+		std::vector<int> digits;
+		while (level > 0) {
+			digits.push_back(level % 10);
+			level /= 10;
+		}
+		for (int i = digits.size() - 1; i >= 0; --i) {
+			switch (digits[i]) {
+			case 0:
+				g.drawNumber0(false, Black, Yellow, x);
+				break;
+			case 1:
+				g.drawNumber1(false, Black, Yellow, x);
+				break;
+			case 2:
+				g.drawNumber2(false, Black, Yellow, x);
+				break;
+			case 3:
+				g.drawNumber3(false, Black, Yellow, x);
+				break;
+			case 4:
+				g.drawNumber4(false, Black, Yellow, x);
+				break;
+			case 5:
+				g.drawNumber5(false, Black, Yellow, x);
+				break;
+			case 6:
+				g.drawNumber6(false, Black, Yellow, x);
+				break;
+			case 7:
+				g.drawNumber7(false, Black, Yellow, x);
+				break;
+			case 8:
+				g.drawNumber8(false, Black, Yellow, x);
+				break;
+			case 9:
+				g.drawNumber9(false, Black, Yellow, x);
 				break;
 			}
+
 			// Move to the next digit position
 			x += 5; // Adjust this value based on the spacing between digits
 		}

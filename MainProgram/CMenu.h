@@ -1,5 +1,5 @@
 #pragma once
-//#include "CGame.h"
+#include "CGame.h"
 
 
 class CMenu 
@@ -25,16 +25,17 @@ public:
 	void drawUnmute(bool isForRemove, int color, bool isSelected);
 	void drawSubMenu(bool isForRemove, int color);
 
-	void drawNumber0(bool isForRemove, int color, int x);
-	void drawNumber1(bool isForRemove, int color,int x);
-	void drawNumber2(bool isForRemove, int color, int x);
-	void drawNumber3(bool isForRemove, int color, int x);
-	void drawNumber4(bool isForRemove, int color, int x);
-	void drawNumber5(bool isForRemove, int color, int x);
-	void drawNumber6(bool isForRemove, int color, int x);
-	void drawNumber7(bool isForRemove, int color, int x);
-	void drawNumber8(bool isForRemove, int color, int x);
-	void drawNumber9(bool isForRemove, int color, int x);
+	void drawNumber0(bool isForRemove, int color,int backColor, int x);
+	void drawNumber1(bool isForRemove, int color, int backColor, int x);
+	void drawNumber2(bool isForRemove, int color, int backColor, int x);
+	void drawNumber3(bool isForRemove, int color, int backColor, int x);
+	void drawNumber4(bool isForRemove, int color, int backColor, int x);
+	void drawNumber5(bool isForRemove, int color, int backColor, int x);
+	void drawNumber6(bool isForRemove, int color, int backColor, int x);
+	void drawNumber7(bool isForRemove, int color, int backColor, int x);
+	void drawNumber8(bool isForRemove, int color, int backColor, int x);
+	void drawNumber9(bool isForRemove, int color, int backColor, int x);
+	void clearLevelBoard(bool isForRemove, int color);
     void clearScoreBoard(bool isForRemove,int color);
 
 private:
