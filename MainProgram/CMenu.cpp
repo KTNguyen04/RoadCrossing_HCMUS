@@ -1607,7 +1607,6 @@ void CMenu::drawNumber9(bool isForRemove, int color, int x)
 		CConsole::drawHorLine(x, x + 3, 10, topBlock, color, Color1);
 	}
 }
-}
 void CMenu::clearScoreBoard(bool isForRemove,int color)
 {
 	int Color1 = color;
