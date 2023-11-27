@@ -13,6 +13,7 @@ vector<int> CGame::sepBridges;
 
 CGame::CGame()
 {
+	key = 0;
 	//CRoad::setUpRoad();
 	//sepBridges.resize(bridges.size());
 
@@ -166,6 +167,7 @@ char CGame::startGame()
 	while (1) {
 		if (pp.IS_DEAD()) {
 			t1.join();
+			if (key == 0) return deadPopUp();
 			return key;
 		}
 		//unique_lock<mutex> lock(m);
@@ -517,12 +519,12 @@ void CGame::loadGame(const string& name)
 		}
 
 		truck2s.resize(info.numTruck2);
-		for (int i = 0; i < info.numTruck; i++) {
+		for (int i = 0; i < info.numTruck2; i++) {
 			truck2s[i].setCoorX(info.coorXTruck2[i]);
 			truck2s[i].setCoorY(info.coorYTruck2[i]);
 		}
 		cars.resize(info.numCar);
-		for (int i = 0; i < info.numTruck; i++) {
+		for (int i = 0; i < info.numCar; i++) {
 			cars[i].setCoorX(info.coorXCar[i]);
 			cars[i].setCoorY(info.coorYCar[i]);
 		}
@@ -625,10 +627,6 @@ void CGame::subThread(bool& canmove, bool& rd)
 
 
 			}
-
-			/*pp.peopleMoving(key);*/
-				//pp.drawPeople(true);
-			mutex mt, mt2;
 			canmove = false;
 
 			if (pp.isNeedDraw()) {
@@ -686,14 +684,12 @@ void CGame::subThread(bool& canmove, bool& rd)
 				//this_thread::sleep_for(chrono::microseconds(50));
 				pp.drawPeople();
 				key = deadPopUp();
-				canmove = true;
+				
 
 				continue;
 
 				//exit(0);
 			}
-
-
 
 			int maxx = 4;
 			for (int i = 0; i < trafficLights.size(); i++) {
@@ -752,7 +748,7 @@ void CGame::subThread(bool& canmove, bool& rd)
 					pp.drawPeople();
 
 					key = deadPopUp();
-					canmove = true;
+				
 
 					continue;
 
@@ -778,7 +774,7 @@ void CGame::subThread(bool& canmove, bool& rd)
 					//this_thread::sleep_for(chrono::microseconds(50));
 					pp.drawPeople();
 					key = deadPopUp();
-					canmove = true;
+					
 
 					continue;
 
@@ -915,7 +911,7 @@ char CGame::deadPopUp()
 	cout << "               R To BACK";
 	CConsole::gotoXY(30, 26);
 	cout << "               N to New Game";
-
+	cin.clear();
 	char choice;
 	do {
 		choice = CConsole::getInput();
@@ -962,7 +958,8 @@ string CGame::loadPopUp() {
 	CConsole::drawHorLine(86 + 20 + 1, 87 + 20 + 1, 24 - 15, topBlock, 4, 15);
 	CConsole::drawChar(88 + 20 + 1, 23 - 15, block, 4, 15);
 	CConsole::drawChar(88 + 20 + 1, 22 - 15, botBlock, 4, 15);
-
+	string s = "Press R to back";
+	CConsole::drawString(CConsole::getConsoleWid() / 2, CConsole::getConsoleHei()-10,s, DarkRed);
 	fileM.setPath(savedFilePath, rootP);
 	if (fileM.openFile()) {
 		fileNames fn = fileM.loading<fileNames>();
@@ -1064,7 +1061,7 @@ string CGame::savePopUp() {
 				do {
 					char c = CConsole::getInput();
 					if (c == 'r')
-						return "";
+						return file_name;
 					else if (c == 'n')
 						return "newgame";
 				} while (1);

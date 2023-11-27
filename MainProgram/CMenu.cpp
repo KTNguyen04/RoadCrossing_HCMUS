@@ -4,6 +4,7 @@
 
 void CMenu::showMenu() {
 	CConsole::setUpConsole();
+	Sleep(1);
 	Audio::playSound(menuSound);
 	int selectedOption = 0;
 	CConsole::clearScreen(Blue);
@@ -42,15 +43,16 @@ void CMenu::showMenu() {
 		}
 
 		else if (userInput == 13) {  // Enter key
+			CGame g;
+			char c;
 			if (selectedOption == 0) {
 				CConsole::clearScreen(White);
 
 				subMenu();
-				CGame g;
 				CRoad::setUpRoad();
 				CRoad::drawMap();
 				g.initGame();
-				char c = g.startGame();
+				c = g.startGame();
 				if (c == 'r') {
 					CConsole::clearScreen(White);
 					showMenu();
@@ -59,7 +61,7 @@ void CMenu::showMenu() {
 				else if (c == 'n') {
 					CConsole::clearScreen(White);
 					subMenu();
-					CGame g;
+					CGame g2;
 					CRoad::setUpRoad();
 					CRoad::drawMap();
 					g.initGame();
@@ -87,18 +89,50 @@ void CMenu::showMenu() {
 			}
 			else if (selectedOption == 1) {
 				CConsole::clearScreen(White);
-
-				CGame g;
 				string path = g.loadPopUp();
 				if (path != "") {
 					CRoad::setUpRoad();
 					CConsole::clearScreen(White);
 					CRoad::drawMap();
+					subMenu();
 					g.initGame();
 					g.loadGame(path);
-					g.startGame();
+					c = g.startGame();
+					if (c == 'r') {
+						CConsole::clearScreen(White);
+						showMenu();
+
+					}
+					else if (c == 'n') {
+						CConsole::clearScreen(White);
+						subMenu();
+						CGame g2;
+						CRoad::setUpRoad();
+						CRoad::drawMap();
+						g.initGame();
+						c = g.startGame();
+					}
+					else if (c == 'l') {
+						string sPath = g.savePopUp();
+						if (sPath != "" && sPath != "newgame") {
+							g.saveGame(sPath);
+						}
+						else if (sPath == "") {
+							showMenu();
+						}
+						else {
+							CConsole::clearScreen(White);
+							subMenu();
+							CGame g;
+							CRoad::setUpRoad();
+							CRoad::drawMap();
+							g.initGame();
+							c = g.startGame();
+						}
+					}
 				}
 				else showMenu();
+				break;
 			}
 			else if (selectedOption == 2)
 			{
