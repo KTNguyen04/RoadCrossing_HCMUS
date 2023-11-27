@@ -11,6 +11,7 @@ std::mutex m1;
 using namespace std;
 int main()
 {
+	system("pause");
 	srand(time(NULL));
 	int choice = 0;
 	CMenu m;
