@@ -107,6 +107,7 @@ public:
 	void loadGame(const string& name);
 
 	char deadPopUp();
+	char victoryPopUp();
 	string loadPopUp(); //dung trong option load
 	string savePopUp(bool isForRemove = false);
 	bool isAvail(string input); //kiem tra ten file nhap vao ko bi trung vs cac file da save

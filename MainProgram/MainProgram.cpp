@@ -15,7 +15,6 @@ int main()
 	CConsole c;
 	CConsole::setUpConsole();
 	CMenu m;
-
 	m.showMenu();
 
 	/*CGame g;
