@@ -309,7 +309,7 @@ void CGame::levelUp()
 
 	level += 1;
 	score += 100 / timer.timeLapse();
-	showLevel(level, 176);
+	showLevel(level, 171);
 	showScore(score, 138);
 	
 	deleteShadow(trucks);
@@ -1239,7 +1239,6 @@ void CGame::showScore(int score, int x) {
 void CGame::showLevel(int level, int x)
 {
 	CMenu g;
-	x = 176;
 	g.clearLevelBoard(true, Yellow);
 	// Draw each digit at appropriate positions
 	if (level > 0 && level < 10)
