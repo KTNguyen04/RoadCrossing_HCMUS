@@ -13,6 +13,7 @@ int main()
 {
 	srand(time(NULL));
 	int choice = 0;
+	CConsole c;
 	CMenu m;
 
 	m.showMenu();

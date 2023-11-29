@@ -31,7 +31,6 @@ const string vehicleSound = "CarHorn";
 const string victorySound = "Victory";
 const string gameOverSound = "GameOver";
 const string hitSound = "Hit";
-
 const string savedFilePath = "save_game.bin";
 
 class CGame

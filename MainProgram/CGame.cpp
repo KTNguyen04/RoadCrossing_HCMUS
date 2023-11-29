@@ -700,6 +700,7 @@ void CGame::subThread(bool& canmove, bool& rd)
 				pp.drawPeople(true);
 				//this_thread::sleep_for(chrono::microseconds(50));
 				pp.drawPeople();
+				audio.playSound(gameOverSound);
 				key = deadPopUp();
 
 
@@ -732,9 +733,13 @@ void CGame::subThread(bool& canmove, bool& rd)
 					pp.dead(true);
 
 					audio.playSound(hitSound);
+					Sleep(1);
+
 					pp.drawPeople(true);
 					//this_thread::sleep_for(chrono::microseconds(50));
 					pp.drawPeople();
+					//audio.playSound(gameOverSound);
+
 					key = deadPopUp();
 					canmove = true;
 
@@ -760,9 +765,13 @@ void CGame::subThread(bool& canmove, bool& rd)
 					pp.dead(true);
 
 					audio.playSound(hitSound);
+					Sleep(1);
+
 					pp.drawPeople(true);
 					//this_thread::sleep_for(chrono::microseconds(50));
 					pp.drawPeople();
+			
+
 
 					key = deadPopUp();
 
@@ -787,9 +796,13 @@ void CGame::subThread(bool& canmove, bool& rd)
 					pp.dead(true);
 
 					audio.playSound(hitSound);
+				
+
 					pp.drawPeople(true);
 					//this_thread::sleep_for(chrono::microseconds(50));
 					pp.drawPeople();
+					
+
 					key = deadPopUp();
 
 
@@ -828,6 +841,8 @@ bool CGame::isAvail(string input)
 
 char CGame::deadPopUp()
 {
+	Sleep(400);
+	Audio::playSound(gameOverSound);
 	//clean khung;
 	for (int i = 1; i <= 102; i++) {
 		for (int j = 8; j <= 32; j++) {

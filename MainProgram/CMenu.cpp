@@ -4,6 +4,7 @@
 
 void CMenu::showMenu() {
 	CConsole::setUpConsole();
+	CGame* g = new CGame;
 	Sleep(1);
 	Audio::playSound(menuSound);
 	selectedOption = 0;
@@ -44,7 +45,7 @@ void CMenu::showMenu() {
 
 		else if (userInput == 13) {  // Enter key
 			char c;
-			CGame* g = new CGame;
+			
 			
 
 			if (selectedOption == 0) {
@@ -169,12 +170,14 @@ void CMenu::showMenu() {
 			}
 			else if (selectedOption == 5) {
 				CConsole::clearScreen(White);
+				delete g;
 				exitGame();
 				break;
 			}
 			delete g;
 		}
 	}
+	
 }
 
 int CMenu::displayMenuOptions() {
