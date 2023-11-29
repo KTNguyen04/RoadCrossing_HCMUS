@@ -31,6 +31,10 @@ const string vehicleSound = "CarHorn";
 const string victorySound = "Victory";
 const string gameOverSound = "GameOver";
 const string hitSound = "Hit";
+const string hitSound2 = "Hit2";
+const string levelUpSound = "LevelUp";
+const string diveSound = "Dive";
+
 const string savedFilePath = "save_game.bin";
 
 class CGame
@@ -85,7 +89,7 @@ public:
 	void setObssSpeed(vector<obs>& obss);
 	template< class obs>
 	void addObs(vector<obs>& obss);
-	void subThread(bool &canmove,bool& rd);
+	void subThread(bool &canmove,bool& rd,bool & isRun);
 	void initObstacle();
 	template< class obs>
 	void resetPosObs(vector<obs>& obss, const int& l);   //0123
@@ -104,10 +108,11 @@ public:
 
 	char deadPopUp();
 	string loadPopUp(); //dung trong option load
-	string savePopUp(); //dung de nhap ten file muon save
+	string savePopUp(bool isForRemove = false);
 	bool isAvail(string input); //kiem tra ten file nhap vao ko bi trung vs cac file da save
 	void showLevel(int level, int x);
 	void showScore(int score, int x);
 	int getScore();
+	int getLevel();
 };
 

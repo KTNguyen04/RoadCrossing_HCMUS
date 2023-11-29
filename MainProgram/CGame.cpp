@@ -27,7 +27,7 @@ void CGame::initGame() {
 	//drawRoad();
 
 	score = 0;
-	
+
 	//CRoad::drawMap();
 	initTrafficLights();
 	bool flag = false;
@@ -124,50 +124,16 @@ void CGame::fillRect(int x, int y, int hei, int wid, wchar_t c, int color)
 	}
 }
 
-//void CGame::setGame()  // just demo
-//{
-//	/*vector<CCar> carList;
-//	vector<CTruck> truckL;*/
-//
-//
-//
-//	CRoad virtualRoad;
-//	CLane l1, l2, l3;
-//	CRiver rv;
-//	virtualRoad.drawWinLane();
-//	virtualRoad.setUpRoad();
-//	CRoad::makeRandomLane();
-//	l1.setCoorY(CRoad::sepLane[0]);
-//	virtualRoad.specifyRoad[virtualRoad.sepLane[0]] = "lane";
-//
-//	l2.setCoorY(CRoad::sepLane[1]);
-//	virtualRoad.specifyRoad[virtualRoad.sepLane[1]] = "lane";
-//
-//	l3.setCoorY(CRoad::sepLane[2]);
-//	virtualRoad.specifyRoad[virtualRoad.sepLane[2]] = "lane";
-//
-//
-//	rv.setCoorY(CRoad::sepLane[3]);
-//	virtualRoad.specifyRoad[virtualRoad.sepLane[3]] = "river";
-//
-//	l1.drawRoad();
-//	l2.drawRoad();
-//	l3.drawRoad();
-//	rv.drawRoad();
-//	virtualRoad.drawPavement();
-//
-//}
-
 
 char CGame::startGame()
 {
-	bool canmove = true, ready = false;
+	bool canmove = true, ready = false,is_running = true;
 	pp.drawPeople();
 	tlLightUp();
 	drawBridge();
-	thread t1(&CGame::subThread, this, std::ref(canmove), std::ref(ready));
+	thread t1(&CGame::subThread, this, std::ref(canmove), std::ref(ready),ref(is_running));
 	while (1) {
-		if (pp.IS_DEAD()) {
+		if (pp.IS_DEAD()||!is_running) {
 			t1.join();
 			if (key == 0) return deadPopUp();
 			if (key == 'n') {
@@ -177,6 +143,7 @@ char CGame::startGame()
 				CRoad::drawMap();
 				g->initGame();
 				g->showScore(g->getScore(), 138);
+				g->showLevel(g->getLevel(), 176);
 				return g->startGame();
 			}
 			return key;
@@ -311,7 +278,7 @@ void CGame::levelUp()
 	score += 100 / timer.timeLapse();
 	showLevel(level, 171);
 	showScore(score, 138);
-	
+
 	deleteShadow(trucks);
 	deleteShadow(truck2s);
 	deleteShadow(cars);
@@ -364,7 +331,7 @@ void CGame::resetPosPp()
 }
 void CGame::increDifficulty()
 {
-	if (level <= 22) {
+	if (level <= 19) {
 		if (level % 6 == 2) {
 
 			addObs(trucks);
@@ -626,21 +593,28 @@ void CGame::setObssSpeed(vector<obs>& obss)
 	}
 }
 
-void CGame::subThread(bool& canmove, bool& rd)
+void CGame::subThread(bool& canmove, bool& rd, bool& isRun)
 {
 	bool isDrowned = true;
 	while (!pp.IS_DEAD()) {
 		if (rd) {
-
+			if (tolower(key )== 'r') {
+				isRun = false;
+				return;
+			}
 			if (tolower(key) == 'l') {
 				canmove = false;
-				string sPath = savePopUp();
-				if (sPath != "") {
-					saveGame(sPath);
+				string s = savePopUp();
+				if (s == "newgame") {
+					key = 'n';
+					isRun = false;
+					return;
 				}
-				else {
-					canmove = true;
-				}
+
+				key = 0;
+				canmove = true;
+				savePopUp(true);
+
 
 
 			}
@@ -659,10 +633,14 @@ void CGame::subThread(bool& canmove, bool& rd)
 			if (pp.levelComplete()) {
 				//system("cls");
 				//setGame();
-
+				Audio::playSound(levelUpSound);
 				//this_thread::sleep_for(chrono::microseconds(50));
 
 				levelUp();
+				/*if (level > 19) {
+					isRun = false;
+					return;
+				}*/
 				pp.drawPeople(true);
 
 				pp.drawPeople();
@@ -696,14 +674,19 @@ void CGame::subThread(bool& canmove, bool& rd)
 			}
 
 			if (isDrowned) {
+				audio.playSound(diveSound);
 				pp.dead(true);
+				Sleep(1);
+
 				pp.drawPeople(true);
 				//this_thread::sleep_for(chrono::microseconds(50));
 				pp.drawPeople();
-				audio.playSound(gameOverSound);
+				
 				key = deadPopUp();
 
+				canmove = true;
 
+			
 				continue;
 
 				//exit(0);
@@ -770,7 +753,7 @@ void CGame::subThread(bool& canmove, bool& rd)
 					pp.drawPeople(true);
 					//this_thread::sleep_for(chrono::microseconds(50));
 					pp.drawPeople();
-			
+
 
 
 					key = deadPopUp();
@@ -796,12 +779,12 @@ void CGame::subThread(bool& canmove, bool& rd)
 					pp.dead(true);
 
 					audio.playSound(hitSound);
-				
+
 
 					pp.drawPeople(true);
 					//this_thread::sleep_for(chrono::microseconds(50));
 					pp.drawPeople();
-					
+
 
 					key = deadPopUp();
 
@@ -841,7 +824,7 @@ bool CGame::isAvail(string input)
 
 char CGame::deadPopUp()
 {
-	Sleep(400);
+	Sleep(1000);
 	Audio::playSound(gameOverSound);
 	//clean khung;
 	for (int i = 1; i <= 102; i++) {
@@ -1044,64 +1027,74 @@ string CGame::loadPopUp() {
 	return "";
 }
 
-string CGame::savePopUp() {
-	CConsole::showConsoleCursor(true);
-
-	//ve khung
-	CConsole::drawHorLine(2, 101, 43, topBlock, 0, 15);
-	CConsole::drawVerLine(43, 53, 2, block, 0, 15);
-	CConsole::drawVerLine(43, 53, 101, block, 0, 15);
-	CConsole::drawHorLine(2, 101, 53, botBlock, 15, 0);
+string CGame::savePopUp(bool isForRemove) {
+	if (!isForRemove) {
+		CConsole::showConsoleCursor(true);
 
 
-
-	string file_name;
+		CConsole::drawHorLine(2, 101, 43, topBlock, 0, 15);
+		CConsole::drawVerLine(43, 53, 2, block, 0, 15);
+		CConsole::drawVerLine(43, 53, 101, block, 0, 15);
+		CConsole::drawHorLine(2, 101, 53, botBlock, 15, 0);
 
 
 
-	string s = "Enter filename you would like to save as: ";
-	CConsole::drawString(15, 45, s, Black);
-	CConsole::gotoXY(75, 45);
-	cin >> file_name;
-	file_name += ".bin";
-	do {
+		string file_name;
 
-		if (!isAvail(file_name) || file_name == ".bin") {
-			string s = "This name is not valid! Try again: ";
-			CConsole::drawString(15, 46, s, Black);
-			/*		s = "                ";
-					CConsole::drawString(75, 45, s, Black);*/
-			CConsole::gotoXY(75, 46);
-			cin >> file_name;
-			file_name += ".bin";
-		}
-		else {
 
-			string s = "Save as: " + file_name;
-			CConsole::drawString(15, 47, s, Black);
-			s = "Are you sure ? R to back, Y to accept, N to enter again ";
-			CConsole::drawString(15, 48, s, Black);
-			char c = CConsole::getInput();
-			if (c == 'r') break;
-			else if (c == 'n') {
-				file_name = ".bin";
-				continue;
+
+		string s = "Enter filename you would like to save as: ";
+		CConsole::drawString(15, 45, s, Black);
+		CConsole::gotoXY(75, 45);
+		cin >> file_name;
+		cin.ignore();
+		file_name += ".bin";
+		do {
+
+			if (!isAvail(file_name) || file_name == ".bin") {
+				string s = "This name is not valid! Try again: ";
+				CConsole::drawString(15, 46, s, Black);
+				/*		s = "                ";
+						CConsole::drawString(75, 45, s, Black);*/
+				CConsole::gotoXY(75, 46);
+				cin >> file_name;
+				cin.ignore();
+				file_name += ".bin";
 			}
-			else if (c == 'y') {
-				s = "Saved successfully, N to new game or R to back";
-				CConsole::drawString(15, 49, s, Black);
-				do {
-					char c = CConsole::getInput();
-					if (c == 'r')
-						return file_name;
-					else if (c == 'n')
-						return "newgame";
-				} while (1);
-			}
-		}
+			else {
 
-	} while (1);
-	return "";
+				string s = "Save as: " + file_name;
+				CConsole::drawString(15, 47, s, Black);
+				s = "Are you sure ? R to back, Y to accept, N to enter again ";
+				CConsole::drawString(15, 48, s, Black);
+				char c = CConsole::getInput();
+				if (c == 'r') return "";
+				else if (c == 'n') {
+					file_name = ".bin";
+					continue;
+				}
+				else if (c == 'y') {
+					if (saveGame(file_name))
+						s = "Saved successfully, N to new game or R to back";
+					else s = "Failed, try again";
+					CConsole::drawString(15, 49, s, Black);
+					do {
+						char c = CConsole::getInput();
+						if (c == 'r')
+							return "";
+						else if (c == 'n')
+							return "newgame";
+					} while (1);
+				}
+			}
+
+		} while (1);
+		return "";
+	}
+	else {
+		fillRect(2, 43, 10, 100, block, background);
+		return "";
+	}
 }
 
 void CGame::showScore(int score, int x) {
@@ -1326,4 +1319,8 @@ void CGame::showLevel(int level, int x)
 int CGame::getScore()
 {
 	return score;
+}
+int CGame::getLevel()
+{
+	return level;
 }

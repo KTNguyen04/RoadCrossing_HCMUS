@@ -3,10 +3,9 @@
 #include "CGame.h"
 
 void CMenu::showMenu() {
-	CConsole::setUpConsole();
+	CConsole::showConsoleCursor(false);
 	CGame* g = new CGame;
 	Sleep(1);
-	Audio::playSound(menuSound);
 	selectedOption = 0;
 	CConsole::clearScreen(Blue);
 	while (true) {
@@ -19,6 +18,8 @@ void CMenu::showMenu() {
 		drawExitOption(false, Black, selectedOption == 5);
 
 		userInput = displayMenuOptions();
+		Audio::playSound(tapSound);
+
 		if (userInput == 'w') {
 			if (selectedOption >= 0)
 			{
@@ -172,7 +173,8 @@ void CMenu::showMenu() {
 				CConsole::clearScreen(White);
 				delete g;
 				exitGame();
-				break;
+				return;
+
 			}
 			delete g;
 		}
@@ -189,6 +191,7 @@ int CMenu::displayMenuOptions() {
 		// Check for arrow key inputs
 		if (userInput == 0xE0) {
 			userInput = CConsole::getInput();
+
 			if (userInput == 'H') {  // Up arrow key
 				return 'w';
 			}
@@ -294,12 +297,14 @@ void CMenu::options()
 		}
 		else if (userInput == 13) {  // Enter key
 			if (selectedOption == 1) {
-				Audio au;
-				au.stopSound();
+			
+				Audio::playSound2(menuSound, false);
+
 			}
 			else if (selectedOption == 0) {
-				Audio au;
-				au.playSound(menuSound);
+			
+				Audio::playSound2(menuSound);
+
 			}
 		}
 		else if (userInput == 'r') {

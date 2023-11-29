@@ -6,7 +6,6 @@
 #include "CAudio.h"
 #include<mutex>
 #include <future>
-std::mutex m1;
 
 using namespace std;
 int main()
@@ -14,6 +13,7 @@ int main()
 	srand(time(NULL));
 	int choice = 0;
 	CConsole c;
+	CConsole::setUpConsole();
 	CMenu m;
 
 	m.showMenu();
