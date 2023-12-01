@@ -136,16 +136,9 @@ char CGame::startGame()
 		if (pp.IS_DEAD()||!is_running) {
 			t1.join();
 			if (key == 0) return deadPopUp();
-			if (key == 'n') {
-				CGame* g = new CGame;
-				//CConsole::clearScreen(White);
-				CRoad::setUpRoad();
-				CRoad::drawMap();
-				g->initGame();
-				g->showScore(g->getScore(), 138);
-				g->showLevel(g->getLevel(), 176);
-				return g->startGame();
-			}
+			/*if (key == 'n') {
+				
+			}*/
 			return key;
 		}
 		//unique_lock<mutex> lock(m);
@@ -633,6 +626,7 @@ void CGame::subThread(bool& canmove, bool& rd, bool& isRun)
 			if (pp.levelComplete()) {
 				//system("cls");
 				//setGame();
+				canmove = false;
 				Audio::playSound(levelUpSound);
 				//this_thread::sleep_for(chrono::microseconds(50));
 
@@ -641,12 +635,12 @@ void CGame::subThread(bool& canmove, bool& rd, bool& isRun)
 					isRun = false;
 					return;
 				}*/
+
 				pp.drawPeople(true);
 
 				pp.drawPeople();
-
-
-				//this_thread::sleep_for(chrono::microseconds(100));
+				canmove = true;
+//this_thread::sleep_for(chrono::microseconds(100));
 
 			}
 			//	cv2.notify_one();

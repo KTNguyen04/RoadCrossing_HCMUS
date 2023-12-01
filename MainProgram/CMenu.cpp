@@ -46,8 +46,8 @@ void CMenu::showMenu() {
 
 		else if (userInput == 13) {  // Enter key
 			char c;
-			
-			
+
+
 
 			if (selectedOption == 0) {
 				CConsole::clearScreen(White);
@@ -62,18 +62,6 @@ void CMenu::showMenu() {
 					showMenu();
 
 				}
-				//else if (c == 'n') {
-				//	//delete g;
-				//	CConsole::clearScreen(White);
-				//	showMenu();
-				//	setUserInput(13);
-				//	setOption(0);
-				//	subMenu();
-				//	delete g;
-
-				//	/*/g->initGame();
-				//	c = g->startGame();*/
-				//}
 				else if (c == 'l') {
 					string sPath = g->savePopUp();
 					if (sPath != "" && sPath != "newgame") {
@@ -82,21 +70,23 @@ void CMenu::showMenu() {
 					else if (sPath == "") {
 						showMenu();
 					}
-					/*else {
-						CConsole::clearScreen(White);
-						showMenu();
-						setUserInput(13);
-						setOption(0);
-						subMenu();
-						delete g;
 
-
-					}*/
+				}
+				else if (c == 'n') {
+					delete g;
+					g = new CGame;
+					//CConsole::clearScreen(White);
+					CRoad::setUpRoad();
+					CRoad::drawMap();
+					g->initGame();
+					g->showScore(g->getScore(), 138);
+					g->showLevel(g->getLevel(), 176);
+					g->startGame();
 				}
 
 			}
 			else if (selectedOption == 1) {
-			
+
 				CConsole::clearScreen(White);
 				string path = g->loadPopUp();
 				if (path != "") {
@@ -144,6 +134,17 @@ void CMenu::showMenu() {
 
 						}*/
 					}
+					else if (c == 'n') {
+						delete g;
+						g = new CGame;
+						//CConsole::clearScreen(White);
+						CRoad::setUpRoad();
+						CRoad::drawMap();
+						g->initGame();
+						g->showScore(g->getScore(), 138);
+						g->showLevel(g->getLevel(), 176);
+						g->startGame();
+					}
 
 				}
 				else showMenu();
@@ -176,10 +177,11 @@ void CMenu::showMenu() {
 				return;
 
 			}
-			delete g;
+			if (g != NULL)
+				delete g;
 		}
 	}
-	
+
 }
 
 int CMenu::displayMenuOptions() {
@@ -297,12 +299,12 @@ void CMenu::options()
 		}
 		else if (userInput == 13) {  // Enter key
 			if (selectedOption == 1) {
-			
+
 				Audio::playSound2(menuSound, false);
 
 			}
 			else if (selectedOption == 0) {
-			
+
 				Audio::playSound2(menuSound);
 
 			}
@@ -597,9 +599,9 @@ void CMenu::exitGame() {
 void CMenu::subMenu()
 {
 	drawSubMenu(false, Black);
-	drawNumber0(false, Black,Blue, 138);
+	drawNumber0(false, Black, Blue, 138);
 	drawNumber1(false, Black, Yellow, 171);
-	
+
 }
 
 
@@ -1234,7 +1236,7 @@ void CMenu::drawSubMenu(bool isForRemove, int color)
 			CConsole::drawChar(i, j, block, Color1);
 		}
 
-	}	
+	}
 	//Draw SCORE
 	if (!isForRemove)
 	{
