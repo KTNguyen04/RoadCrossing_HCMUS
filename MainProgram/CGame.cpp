@@ -928,6 +928,103 @@ char CGame::deadPopUp()
 	return choice;
 }
 
+char CGame::victoryPopUp()
+{
+	Sleep(1000);
+	Audio::playSound(victorySound);
+	//clean khung;
+	for (int i = 1; i <= 102; i++) {
+		for (int j = 8; j <= 32; j++) {
+			CConsole::drawChar(i, j, block, 15, 0, false);
+		}
+	}
+
+	//ve khung
+	CConsole::drawHorLine(2, 101, 9, topBlock, 0, 15);
+	CConsole::drawVerLine(9, 31, 2, block, 0, 15);
+	CConsole::drawVerLine(9, 31, 101, block, 0, 15);
+	CConsole::drawHorLine(2, 101, 31, botBlock, 15, 0);
+
+	//ve khung phu
+	CConsole::drawHorLine(4, 12, 10, topBlock, 0, 15);
+	CConsole::drawVerLine(10, 16, 4, block, 0, 15);
+	CConsole::drawVerLine(23, 29, 99, block, 0, 15);
+	CConsole::drawHorLine(91, 99, 30, botBlock, 15, 0);
+
+	//ve cham trang tri;
+	CConsole::drawChar(99, 10, block, 0, 15, false);
+	CConsole::drawChar(98, 10, block, 0, 15, false);
+
+	CConsole::drawHorLine(4, 5, 30, topBlock, 0, 15);
+	CConsole::drawHorLine(4, 5, 29, botBlock, 0, 15);
+
+	//Draw VICTORY
+	//Draw V
+	CConsole::drawVerLine(11, 13, 20, block, Red,White);
+	CConsole::drawVerLine(11, 13, 21, block,Red, White);
+	CConsole::drawHorLine(22, 23, 14, block, Red, White);
+	CConsole::drawHorLine(26, 27, 14, block, Red, White);
+	CConsole::drawHorLine(24, 25, 15, block, Red, White);
+	CConsole::drawVerLine(11, 13, 28, block, Red, White);
+	CConsole::drawVerLine(11, 13, 29, block, Red, White);
+	//Draw I
+	CConsole::drawHorLine(31, 32, 11, block, Red, White);
+	CConsole::drawHorLine(35, 36, 11, block, Red, White);
+	CConsole::drawHorLine(31, 32, 15, block, Red, White);
+	CConsole::drawHorLine(35, 36, 15, block, Red, White);
+	CConsole::drawVerLine(11, 15, 33, block, Red, White);
+	CConsole::drawVerLine(11, 15, 34, block, Red, White);
+	//Draw C
+	CConsole::drawHorLine(40, 43, 11, block, Red, White);
+	CConsole::drawVerLine(12, 14, 38, block, Red, White);
+	CConsole::drawVerLine(12, 14, 39, block, Red, White);
+	CConsole::drawHorLine(44, 45, 12, block, Red, White);
+	CConsole::drawHorLine(44, 45, 14, block, Red, White);
+	CConsole::drawHorLine(40, 43, 15, block, Red, White);
+	//Draw T
+	CConsole::drawVerLine(11, 15, 50, block, Red, White);
+	CConsole::drawVerLine(11, 15, 51, block, Red, White);
+	CConsole::drawHorLine(47, 49, 11, block, Red, White);
+	CConsole::drawHorLine(52, 54, 11, block, Red, White);
+	//Draw O
+	CConsole::drawHorLine(58, 61, 11, block, Red, White);
+	CConsole::drawHorLine(58, 61, 15, block, Red, White);
+	CConsole::drawVerLine(12, 14, 56, block, Red, White);
+	CConsole::drawVerLine(12, 14, 57, block, Red, White);
+	CConsole::drawVerLine(12, 14, 62, block, Red, White);
+	CConsole::drawVerLine(12, 14, 63, block, Red, White);
+	//Draw R
+	CConsole::drawVerLine(11, 15, 65, block, Red, White);
+	CConsole::drawVerLine(11, 15, 66, block, Red, White);
+	CConsole::drawHorLine(67, 70, 11, block, Red, White);
+	CConsole::drawHorLine(67, 70, 13, block, Red, White);
+	CConsole::drawHorLine(69, 70, 14, block, Red, White);
+	CConsole::drawHorLine(71, 72, 12, block, Red, White);
+	CConsole::drawHorLine(71, 72, 15, block, Red, White);
+	//Draw Y
+	CConsole::drawVerLine(11, 13, 74, block, Red, White);
+	CConsole::drawVerLine(11, 13, 75, block, Red, White);
+	CConsole::drawVerLine(11, 13, 78, block, Red, White);
+	CConsole::drawVerLine(11, 13, 79, block, Red, White);
+	CConsole::drawVerLine(13, 15, 76, block, Red, White);
+	CConsole::drawVerLine(13, 15, 77, block, Red, White);
+
+	CConsole::gotoXY(21, 20);
+	cout << "               You have won all the levels";
+	CConsole::gotoXY(30, 22);
+	cout << "               Press: ";
+	CConsole::gotoXY(30, 24);
+	cout << "               L To SAVE";
+	CConsole::gotoXY(30, 26);
+	cout << "               R To BACK";
+	cin.clear();
+	char choice;
+	do {
+		choice = CConsole::getInput();
+	} while (choice != 'l' && choice != 'r');
+	return choice;
+}
+
 string CGame::loadPopUp() {
 	//CConsole::clearScreen(White);
 	CConsole::drawHorLine(68 + 20, 93 + 20, 21 - 15, topBlock, 4, 15);
