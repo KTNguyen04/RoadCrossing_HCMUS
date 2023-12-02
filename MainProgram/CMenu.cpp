@@ -7,7 +7,6 @@ void CMenu::showMenu() {
 	Sleep(1);
 	CConsole::showConsoleCursor(false);
 	CGame* g = new CGame;
-	
 	selectedOption = 0;
 	while (true) {
 		drawTitle(false, Red);
@@ -20,7 +19,6 @@ void CMenu::showMenu() {
 
 		userInput = displayMenuOptions();
 		Audio::playSound(tapSound);
-
 		if (userInput == 'w') {
 			if (selectedOption >= 0)
 			{
@@ -503,9 +501,11 @@ void CMenu::exitGame() {
 		//Draw H
 		CConsole::drawVerLine(15, 19, 71, block, Color, backColor);
 		CConsole::drawVerLine(15, 19, 72, block, Color, backColor);
-		CConsole::drawVerLine(15, 19, 77, block, Color, backColor);
-		CConsole::drawVerLine(15, 19, 78, block, Color, backColor);
-		CConsole::drawHorLine(73, 76, 17, block, Color, backColor);
+		CConsole::drawHorLine(73, 74, 17, block, Color, backColor);
+		CConsole::drawHorLine(75, 76, 16, block, Color, backColor);
+		CConsole::drawHorLine(75, 76, 18, block, Color, backColor);
+		CConsole::drawHorLine(77, 78, 15, block, Color, backColor);
+		CConsole::drawHorLine(77, 78, 19, block, Color, backColor);
 		//Draw Y
 		CConsole::drawVerLine(15, 17, 84, block, Color, backColor);
 		CConsole::drawVerLine(15, 17, 85, block, Color, backColor);
