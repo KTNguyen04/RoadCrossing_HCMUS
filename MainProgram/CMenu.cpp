@@ -3,11 +3,12 @@
 #include "CGame.h"
 
 void CMenu::showMenu() {
+	CConsole::clearScreen(Blue);
+	Sleep(1);
 	CConsole::showConsoleCursor(false);
 	CGame* g = new CGame;
-	Sleep(1);
+	
 	selectedOption = 0;
-	CConsole::clearScreen(Blue);
 	while (true) {
 		drawTitle(false, Red);
 		drawStartOption(false, Black, selectedOption == 0);

@@ -635,7 +635,16 @@ void CGame::subThread(bool& canmove, bool& rd, bool& isRun)
 					isRun = false;
 					return;
 				}*/
+				if (level >= 2) {
+					canmove = false;
+					Sleep(1);
 
+					key = victoryPopUp();
+					if (key == 'l') continue;
+
+					isRun = false;
+					return;
+				}
 				pp.drawPeople(true);
 
 				pp.drawPeople();
@@ -643,6 +652,7 @@ void CGame::subThread(bool& canmove, bool& rd, bool& isRun)
 //this_thread::sleep_for(chrono::microseconds(100));
 
 			}
+			
 			//	cv2.notify_one();
 
 			//lock_guard<mutex> lg(mt);
@@ -675,11 +685,12 @@ void CGame::subThread(bool& canmove, bool& rd, bool& isRun)
 				pp.drawPeople(true);
 				//this_thread::sleep_for(chrono::microseconds(50));
 				pp.drawPeople();
-				
+				Sleep(1);
+
 				key = deadPopUp();
 
 				canmove = true;
-
+				
 			
 				continue;
 
@@ -716,6 +727,7 @@ void CGame::subThread(bool& canmove, bool& rd, bool& isRun)
 					//this_thread::sleep_for(chrono::microseconds(50));
 					pp.drawPeople();
 					//audio.playSound(gameOverSound);
+					Sleep(1);
 
 					key = deadPopUp();
 					canmove = true;
@@ -749,6 +761,7 @@ void CGame::subThread(bool& canmove, bool& rd, bool& isRun)
 					pp.drawPeople();
 
 
+					Sleep(1);
 
 					key = deadPopUp();
 
@@ -779,6 +792,7 @@ void CGame::subThread(bool& canmove, bool& rd, bool& isRun)
 					//this_thread::sleep_for(chrono::microseconds(50));
 					pp.drawPeople();
 
+					Sleep(1);
 
 					key = deadPopUp();
 
@@ -930,7 +944,7 @@ char CGame::deadPopUp()
 
 char CGame::victoryPopUp()
 {
-	Sleep(1000);
+	Sleep(500);
 	Audio::playSound(victorySound);
 	//clean khung;
 	for (int i = 1; i <= 102; i++) {
@@ -1017,11 +1031,14 @@ char CGame::victoryPopUp()
 	cout << "               L To SAVE";
 	CConsole::gotoXY(30, 26);
 	cout << "               R To BACK";
+	CConsole::gotoXY(30, 28);
+	cout << "               N to New Game";
+	
 	cin.clear();
 	char choice;
 	do {
 		choice = CConsole::getInput();
-	} while (choice != 'l' && choice != 'r');
+	} while (choice != 'l' && choice != 'r'&&choice!='n');
 	return choice;
 }
 
