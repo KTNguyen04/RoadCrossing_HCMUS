@@ -635,7 +635,7 @@ void CGame::subThread(bool& canmove, bool& rd, bool& isRun)
 					isRun = false;
 					return;
 				}*/
-				if (level >= 2) {
+				if (level >= 20) {
 					canmove = false;
 					Sleep(1);
 
