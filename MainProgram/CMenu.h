@@ -8,11 +8,12 @@ class CMenu
 public:
 	CMenu() : selectedOption(0) {}
 	void drawTitle(bool isForRemove, int color);
-	void showMenu();
-	//void loadgame();
-	void options();
-	void about();
-	void help();
+	void run();
+
+	char showMenu();
+	char options();
+	char about();
+	char help();
 	void exitGame();
 	void subMenu();
 	void drawStartOption(bool isForRemove, int color, bool isSelected);

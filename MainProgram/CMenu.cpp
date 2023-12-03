@@ -2,12 +2,121 @@
 #include "CAudio.h"
 #include "CGame.h"
 
-void CMenu::showMenu() {
+
+void CMenu::run() {
+	char c = 0;
+	while (1) {
+		if (selectedOption == 0) {
+			CGame g;
+			CConsole::clearScreen(White);
+			subMenu();
+			CRoad::setUpRoad();
+			CRoad::drawMap();
+			g.initGame();
+			g.showScore(g.getScore(), 138);
+			c = g.startGame();
+			if (c == 'r') {
+				/*delete g;
+				CConsole::clearScreen(White);
+				showMenu();*/
+				return;
+
+			}
+			else if (c == 'l') {
+				string sPath = g.savePopUp();
+				if (sPath != "" && sPath != "newgame") {
+					g.saveGame(sPath);
+				}
+				else if (sPath == "") {
+					return;
+				}
+
+			}
+			else if (c == 'n') {
+				continue;
+
+			}
+
+		}
+		else if (selectedOption == 1) {
+			CGame g;
+			CConsole::clearScreen(White);
+			string path = g.loadPopUp();
+			if (path != "") {
+
+				CRoad::setUpRoad();
+				CConsole::clearScreen(White);
+				CRoad::drawMap();
+				subMenu();
+				g.initGame();
+				g.loadGame(path);
+				g.showScore(g.getScore(), 138);
+				c = g.startGame();
+				if (c == 'r') {
+
+					return;
+
+				}
+				else if (c == 'l') {
+					string sPath = g.savePopUp();
+					if (sPath != "" && sPath != "newgame") {
+						g.saveGame(sPath);
+					}
+					else if (sPath == "") { 
+						return;
+					}
+
+				}
+				else if (c == 'n') {
+					selectedOption = 0;
+					continue;
+
+				}
+
+			}
+			else {
+				return;
+
+			}
+		}
+		else if (selectedOption == 2)
+		{
+			CConsole::clearScreen(White);
+			options();
+			break;
+		}
+		else if (selectedOption == 3)
+		{
+			//About option selected
+			CConsole::clearScreen(White);
+			about();
+			break;
+		}
+		else if (selectedOption == 4)
+		{
+			//About option selected
+			CConsole::clearScreen(White);
+			help();
+			break;
+		}
+		else if (selectedOption == 5) {
+			CConsole::clearScreen(White);
+			exitGame();
+			return;
+
+		}
+	}
+
+	/*if (g != NULL)
+		delete g;*/
+
+}
+
+char CMenu::showMenu() {
 	CConsole::clearScreen(Blue);
 	Sleep(1);
 	CConsole::showConsoleCursor(false);
-	CGame* g = new CGame;
-	
+	char c = 0;
 	selectedOption = 0;
 	while (true) {
 		drawTitle(false, Red);
@@ -20,7 +129,6 @@ void CMenu::showMenu() {
 
 		userInput = displayMenuOptions();
 		Audio::playSound(tapSound);
-
 		if (userInput == 'w') {
 			if (selectedOption >= 0)
 			{
@@ -44,148 +152,11 @@ void CMenu::showMenu() {
 			}
 
 		}
-
-		else if (userInput == 13) {  // Enter key
-			char c;
-
-
-
-			if (selectedOption == 0) {
-				CConsole::clearScreen(White);
-				subMenu();
-				CRoad::setUpRoad();
-				CRoad::drawMap();
-				g->initGame();
-				g->showScore(g->getScore(), 138);
-				c = g->startGame();
-				if (c == 'r') {
-					CConsole::clearScreen(White);
-					showMenu();
-
-				}
-				else if (c == 'l') {
-					string sPath = g->savePopUp();
-					if (sPath != "" && sPath != "newgame") {
-						g->saveGame(sPath);
-					}
-					else if (sPath == "") {
-						showMenu();
-					}
-
-				}
-				else if (c == 'n') {
-					delete g;
-					g = new CGame;
-					//CConsole::clearScreen(White);
-					CRoad::setUpRoad();
-					CRoad::drawMap();
-					g->initGame();
-					g->showScore(g->getScore(), 138);
-					g->showLevel(g->getLevel(), 176);
-					g->startGame();
-				}
-
-			}
-			else if (selectedOption == 1) {
-
-				CConsole::clearScreen(White);
-				string path = g->loadPopUp();
-				if (path != "") {
-					CRoad::setUpRoad();
-					CConsole::clearScreen(White);
-					CRoad::drawMap();
-					subMenu();
-					g->initGame();
-					g->loadGame(path);
-					g->showScore(g->getScore(), 138);
-					c = g->startGame();
-					if (c == 'r') {
-						CConsole::clearScreen(White);
-						showMenu();
-
-					}
-					//else if (c == 'n') {
-					//	//delete g;
-					//	CConsole::clearScreen(White);
-					//	showMenu();
-					//	setUserInput(13);
-					//	setOption(0);
-					//	subMenu();
-					//	delete g;
-
-					//	/*/g->initGame();
-					//	c = g->startGame();*/
-					//}
-					else if (c == 'l') {
-						string sPath = g->savePopUp();
-						if (sPath != "" && sPath != "newgame") {
-							g->saveGame(sPath);
-						}
-						else if (sPath == "") {
-							showMenu();
-						}
-						/*else {
-							CConsole::clearScreen(White);
-							showMenu();
-							setUserInput(13);
-							setOption(0);
-							subMenu();
-							delete g;
-
-
-						}*/
-					}
-					else if (c == 'n') {
-						delete g;
-						g = new CGame;
-						//CConsole::clearScreen(White);
-						CRoad::setUpRoad();
-						CRoad::drawMap();
-						g->initGame();
-						g->showScore(g->getScore(), 138);
-						g->showLevel(g->getLevel(), 176);
-						g->startGame();
-					}
-
-				}
-				else showMenu();
-				break;
-			}
-			else if (selectedOption == 2)
-			{
-				CConsole::clearScreen(White);
-				options();
-				break;
-			}
-			else if (selectedOption == 3)
-			{
-				//About option selected
-				CConsole::clearScreen(White);
-				about();
-				break;
-			}
-			else if (selectedOption == 4)
-			{
-				//About option selected
-				CConsole::clearScreen(White);
-				help();
-				break;
-			}
-			else if (selectedOption == 5) {
-				CConsole::clearScreen(White);
-				delete g;
-				exitGame();
-				return;
-
-			}
-			if (g != NULL)
-				delete g;
+		else if (userInput == 13) {
+			return selectedOption;
 		}
 	}
-	
-
 }
-
 int CMenu::displayMenuOptions() {
 	int userInput;
 	CConsole::gotoXY(70, 16);
@@ -210,7 +181,7 @@ int CMenu::displayMenuOptions() {
 	}
 }
 
-void CMenu::options()
+char CMenu::options()
 {
 	CConsole::clearScreen(White);
 	int Color = Red;
@@ -312,13 +283,14 @@ void CMenu::options()
 			}
 		}
 		else if (userInput == 'r') {
-			showMenu();
+
+			return userInput;
 		}
 	}
-	cin.ignore();
+	
 }
 
-void CMenu::about()
+char CMenu::about()
 {
 	CConsole::clearScreen(White);
 	int Color = Red;
@@ -395,13 +367,15 @@ void CMenu::about()
 		cout << "Press R to return to the main menu...";
 		char key = CConsole::getInput();
 		if (key == 'r') {
-			showMenu();
+	
+
+			return key;
 		}
 	}
-	cin.ignore();
+
 
 }
-void CMenu::help()
+char CMenu::help()
 {
 	CConsole::clearScreen(White);
 	int Color = Red;
@@ -459,10 +433,10 @@ void CMenu::help()
 		cout << "Press R to return to the main menu...";
 		char key = CConsole::getInput();
 		if (key == 'r') {
-			showMenu();
+
+			return key;
 		}
 	}
-	cin.ignore();
 
 }
 void CMenu::exitGame() {
@@ -593,8 +567,8 @@ void CMenu::exitGame() {
 
 	}
 	// Optionally, you can add any cleanup or save game data logic here.
-	// ...
-	cin.ignore();
+
+	
 	exit(0);
 	// Exit the program
 }

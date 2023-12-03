@@ -2,14 +2,13 @@
 #include<Windows.h>
 #include<iostream>
 #include"CAudio.h"
-bool isSoundPlaying = false; //sau nay neu out ra vao menu thi nhac ko bi reset lai tu dau
+
 using namespace std;
 
-string Audio::path;
+string Audio::path = "audio/";
 
 Audio::Audio()
 {
-	path = "audio/";
 }
 
 void Audio::playSound(string type)

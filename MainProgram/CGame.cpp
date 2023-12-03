@@ -135,7 +135,7 @@ char CGame::startGame()
 	while (1) {
 		if (pp.IS_DEAD()||!is_running) {
 			t1.join();
-			if (key == 0) return deadPopUp();
+			if (pp.IS_DEAD()) return deadPopUp();
 			/*if (key == 'n') {
 				
 			}*/
@@ -1098,7 +1098,7 @@ string CGame::loadPopUp() {
 				cout << "                                                                                                                        " << endl;
 			}
 			CConsole::gotoXY(95, 20);
-			// Clear the console, you can change this based on your system
+
 			for (int i = startIndex; i < startIndex + 5 && i < fn.names.size(); ++i) {
 				if (i == currChoice - 1) {
 					std::cout << "> " << fn.names[i] << endl << std::endl << std::endl << "                                                                                               ";
