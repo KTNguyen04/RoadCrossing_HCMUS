@@ -14,6 +14,9 @@ int main()
 	int choice = 0;
 	CConsole c;
 	CConsole::setUpConsole();
+	CRoad::setUpRoad();
+
+	Sleep(100);
 	CMenu m;
 	while (1) {
 		m.showMenu();

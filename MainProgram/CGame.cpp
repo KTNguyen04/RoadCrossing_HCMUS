@@ -135,7 +135,7 @@ char CGame::startGame()
 	while (1) {
 		if (pp.IS_DEAD()||!is_running) {
 			t1.join();
-			if (pp.IS_DEAD()) return deadPopUp();
+			//if (pp.IS_DEAD()) return deadPopUp();
 			/*if (key == 'n') {
 				
 			}*/
@@ -406,6 +406,10 @@ bool CGame::saveGame(const string& name)
 
 		transform(trucks.begin(), trucks.end(), info.truckSpeed.begin(),
 			[](const CTruck& st) { return st.getSpeed(); });
+		info.truckDirect.resize(info.numTruck);
+
+		transform(trucks.begin(), trucks.end(), info.truckDirect.begin(),
+			[](const CTruck& st) { return st.getDirect(); });
 
 		info.numTruck2 = truck2s.size();
 		info.coorXTruck2.resize(info.numTruck2);
@@ -420,7 +424,10 @@ bool CGame::saveGame(const string& name)
 
 		transform(truck2s.begin(), truck2s.end(), info.truck2Speed.begin(),
 			[](const CTruck& st) { return st.getSpeed(); });
+		info.truck2Direct.resize(info.numTruck2);
 
+		transform(truck2s.begin(), truck2s.end(), info.truck2Direct.begin(),
+			[](const CTruck& st) { return st.getDirect(); });
 		info.numCar = cars.size();
 		info.coorXCar.resize(info.numCar);
 
@@ -434,6 +441,11 @@ bool CGame::saveGame(const string& name)
 
 		transform(cars.begin(), cars.end(), info.carSpeed.begin(),
 			[](const CCar& st) { return st.getSpeed(); });
+		info.carDirect.resize(info.numCar);
+
+		transform(cars.begin(), cars.end(), info.carDirect.begin(),
+			[](const CCar& st) { return st.getDirect(); });
+
 		fileM.saving<saveInfo>(info);
 
 		fileM.closeFile();
@@ -493,17 +505,27 @@ void CGame::loadGame(const string& name)
 		for (int i = 0; i < info.numTruck; i++) {
 			trucks[i].setCoorX(info.coorXTruck[i]);
 			trucks[i].setCoorY(info.coorYTruck[i]);
+			trucks[i].setSpeed(info.truckSpeed[i]);
+			trucks[i].setDirect(info.truckDirect[i]);
 		}
 
 		truck2s.resize(info.numTruck2);
 		for (int i = 0; i < info.numTruck2; i++) {
 			truck2s[i].setCoorX(info.coorXTruck2[i]);
 			truck2s[i].setCoorY(info.coorYTruck2[i]);
+			truck2s[i].setSpeed(info.truck2Speed[i]);	
+			truck2s[i].setDirect(info.truck2Direct[i]);
+
+
 		}
 		cars.resize(info.numCar);
 		for (int i = 0; i < info.numCar; i++) {
 			cars[i].setCoorX(info.coorXCar[i]);
 			cars[i].setCoorY(info.coorYCar[i]);
+			cars[i].setSpeed(info.carSpeed[i]);
+			cars[i].setDirect(info.carDirect[i]);
+
+
 		}
 		fileM.closeFile();
 

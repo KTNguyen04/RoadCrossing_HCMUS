@@ -5,15 +5,16 @@
 
 void CMenu::run() {
 	char c = 0;
+
 	while (1) {
 		if (selectedOption == 0) {
 			CGame g;
 			CConsole::clearScreen(White);
 			subMenu();
-			CRoad::setUpRoad();
 			CRoad::drawMap();
 			g.initGame();
 			g.showScore(g.getScore(), 138);
+			g.showLevel(g.getLevel(), 171);
 			c = g.startGame();
 			if (c == 'r') {
 				/*delete g;
@@ -46,11 +47,13 @@ void CMenu::run() {
 
 				CRoad::setUpRoad();
 				CConsole::clearScreen(White);
-				CRoad::drawMap();
 				subMenu();
 				g.initGame();
 				g.loadGame(path);
+				CRoad::drawMap();
+				
 				g.showScore(g.getScore(), 138);
+				g.showLevel(g.getLevel(), 171);
 				c = g.startGame();
 				if (c == 'r') {
 
@@ -82,22 +85,22 @@ void CMenu::run() {
 		else if (selectedOption == 2)
 		{
 			CConsole::clearScreen(White);
-			options();
-			break;
+			c= options();
+			if (c == 'r') return;
 		}
 		else if (selectedOption == 3)
 		{
 			//About option selected
 			CConsole::clearScreen(White);
 			about();
-			break;
+			if (c == 'r') return;
 		}
 		else if (selectedOption == 4)
 		{
 			//About option selected
 			CConsole::clearScreen(White);
-			help();
-			break;
+			c=help();
+			if (c == 'r') return;
 		}
 		else if (selectedOption == 5) {
 			CConsole::clearScreen(White);
@@ -474,12 +477,14 @@ void CMenu::exitGame() {
 		CConsole::drawHorLine(62, 63, 16, block, Color, backColor);
 		CConsole::drawHorLine(64, 65, 17, block, Color, backColor);
 		CConsole::drawHorLine(66, 67, 18, block, Color, backColor);
-		//Draw H
+		//Draw K
 		CConsole::drawVerLine(15, 19, 71, block, Color, backColor);
 		CConsole::drawVerLine(15, 19, 72, block, Color, backColor);
-		CConsole::drawVerLine(15, 19, 77, block, Color, backColor);
-		CConsole::drawVerLine(15, 19, 78, block, Color, backColor);
-		CConsole::drawHorLine(73, 76, 17, block, Color, backColor);
+		CConsole::drawHorLine(73, 74, 17, block, Color, backColor);
+		CConsole::drawHorLine(75, 76, 16, block, Color, backColor);
+		CConsole::drawHorLine(75, 76, 18, block, Color, backColor);
+		CConsole::drawHorLine(77, 78, 15, block, Color, backColor);
+		CConsole::drawHorLine(77, 78, 19, block, Color, backColor);
 		//Draw Y
 		CConsole::drawVerLine(15, 17, 84, block, Color, backColor);
 		CConsole::drawVerLine(15, 17, 85, block, Color, backColor);

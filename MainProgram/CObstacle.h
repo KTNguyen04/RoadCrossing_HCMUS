@@ -24,8 +24,9 @@ public:
 	void setCoorX(const int &x);
 	void setCoorY(const int &y);
 	void setSpeed(int speed);
-	int getSpeed();
-	string getDirect();
+	void setDirect(string direct);
+	
+	string getDirect()const;
 	
 	//virtual bool isInBoard(bool isForDraw = false, int x = -1) = 0;
 };

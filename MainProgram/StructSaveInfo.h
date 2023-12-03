@@ -29,15 +29,20 @@ struct saveInfo {
 	vector<int> coorXTruck;
 	vector<int> coorYTruck;
 	vector<int> truckSpeed;
+	vector<string> truckDirect;
 	int numTruck2;
 	vector<int> coorXTruck2;
 	vector<int> coorYTruck2;
 	vector<int> truck2Speed;
+	vector<string> truck2Direct;
+
 
 	int numCar;
 	vector<int> coorXCar;
 	vector<int> coorYCar;
 	vector<int> carSpeed;
+	vector<string> carDirect;
+
 
 
 };

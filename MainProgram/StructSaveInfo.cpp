@@ -78,6 +78,11 @@ ostream& operator<<(ostream& outDev, const saveInfo& info) {
 		outDev << '\n';
 
 	}
+	for (auto& i : info.truckDirect) {
+		outDev << i;
+		outDev << '\n';
+
+	}
 	outDev << info.numTruck2;
 	outDev << '\n';
 
@@ -92,6 +97,11 @@ ostream& operator<<(ostream& outDev, const saveInfo& info) {
 
 	}
 	for (auto& i : info.truck2Speed) {
+		outDev << i;
+		outDev << '\n';
+
+	}
+	for (auto& i : info.truck2Direct) {
 		outDev << i;
 		outDev << '\n';
 
@@ -111,6 +121,11 @@ ostream& operator<<(ostream& outDev, const saveInfo& info) {
 
 	}
 	for (auto& i : info.carSpeed) {
+		outDev << i;
+		outDev << '\n';
+
+	}
+	for (auto& i : info.carDirect) {
 		outDev << i;
 		outDev << '\n';
 
@@ -170,6 +185,9 @@ istream& operator>>(istream& inDev, saveInfo& info) {
 	info.truckSpeed.resize(info.numTruck);
 	for (int i = 0; i < info.numTruck; i++)
 		inDev >> info.truckSpeed[i];
+	info.truckDirect.resize(info.numTruck);
+	for (int i = 0; i < info.numTruck; i++)
+		inDev >> info.truckDirect[i];
 
 	inDev >> info.numTruck2;
 	info.coorXTruck2.resize(info.numTruck2);
@@ -181,6 +199,10 @@ istream& operator>>(istream& inDev, saveInfo& info) {
 	info.truck2Speed.resize(info.numTruck2);
 	for (int i = 0; i < info.numTruck2; i++)
 		inDev >> info.truck2Speed[i];
+	info.truck2Direct.resize(info.numTruck2);
+	for (int i = 0; i < info.numTruck2; i++)
+		inDev >> info.truck2Direct[i];
+
 
 	inDev >> info.numCar;
 	info.coorXCar.resize(info.numCar);
@@ -192,6 +214,9 @@ istream& operator>>(istream& inDev, saveInfo& info) {
 	info.carSpeed.resize(info.numCar);
 	for (int i = 0; i < info.numCar; i++)
 		inDev >> info.carSpeed[i];
+	info.carDirect.resize(info.numCar);
+	for (int i = 0; i < info.numCar; i++)
+		inDev >> info.carDirect[i];
 	return inDev;
 
 }

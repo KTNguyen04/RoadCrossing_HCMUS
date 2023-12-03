@@ -29,6 +29,7 @@ void CObstacle::move()
 		//if (!isInBoard() && !isInit()) coorX = CGame::getCoorTopLeftX() + CGame::getWidth() - 1;
 	}
 	else if (direct == "left") {
+
 		coorX -= speed;
 
 		if ((coorX <= (CGame::getCoorTopLeftX() - this->width + 1)) && !isInit()) {
@@ -101,13 +102,13 @@ void CObstacle::setSpeed(int speed)
 {
 	this->speed = speed;
 }
-
-int CObstacle::getSpeed()
+void CObstacle::setDirect(string direct)
 {
-	return speed;
+	this->direct = direct;
 }
 
-string CObstacle::getDirect()
+
+string CObstacle::getDirect() const
 {
 	return direct;
 }
