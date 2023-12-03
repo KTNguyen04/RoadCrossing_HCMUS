@@ -92,7 +92,7 @@ void CMenu::run() {
 		{
 			//About option selected
 			CConsole::clearScreen(White);
-			about();
+			c=about();
 			if (c == 'r') return;
 		}
 		else if (selectedOption == 4)
@@ -371,7 +371,6 @@ char CMenu::about()
 		char key = CConsole::getInput();
 		if (key == 'r') {
 	
-
 			return key;
 		}
 	}
@@ -573,7 +572,7 @@ void CMenu::exitGame() {
 	}
 	// Optionally, you can add any cleanup or save game data logic here.
 
-	
+	cin.ignore();
 	exit(0);
 	// Exit the program
 }
