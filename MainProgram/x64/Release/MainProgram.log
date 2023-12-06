@@ -1,8 +1,6 @@
-﻿  CMenu.cpp
-  Generating code
-  Previous IPDB and IOBJ mismatch, fall back to full compilation.
-C:\Users\Pro\OneDrive - VNU-HCMUS\Nam_2\HK1_23_24\OOP\Project\Code\CrossingRoadGame\MainProgram\CMenu.cpp(444): warning C4715: 'CMenu::help': not all control paths return a value
-C:\Users\Pro\OneDrive - VNU-HCMUS\Nam_2\HK1_23_24\OOP\Project\Code\CrossingRoadGame\MainProgram\CMenu.cpp(380): warning C4715: 'CMenu::about': not all control paths return a value
-  All 1381 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+﻿  Generating code
+  0 of 1381 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   MainProgram.vcxproj -> C:\Users\Pro\OneDrive - VNU-HCMUS\Nam_2\HK1_23_24\OOP\Project\Code\CrossingRoadGame\x64\Release\MainProgram.exe
