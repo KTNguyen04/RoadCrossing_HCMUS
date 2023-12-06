@@ -689,7 +689,7 @@ void CMenu::drawTitle(bool isForRemove, int Color)
 }
 void CMenu::drawStartOption(bool isForRemove, int color, bool isSelected)
 {
-	int highlightColor = isSelected ? Yellow : color;
+	int highlightColor = isSelected ? Green : color;
 	int backColor = White;
 	int x = 85;
 	if (!isForRemove)
@@ -748,7 +748,7 @@ void CMenu::drawStartOption(bool isForRemove, int color, bool isSelected)
 }
 void CMenu::drawLoadOption(bool isForRemove, int color, bool isSelected)
 {
-	int highlightColor = isSelected ? Yellow : color;
+	int highlightColor = isSelected ? Green : color;
 	int backColor = White;
 	int x = 85;
 	if (!isForRemove)
@@ -798,7 +798,7 @@ void CMenu::drawLoadOption(bool isForRemove, int color, bool isSelected)
 }
 void CMenu::drawOptionsOption(bool isForRemove, int color, bool isSelected)
 {
-	int highlightColor = isSelected ? Yellow : color;
+	int highlightColor = isSelected ? Green : color;
 	int backColor = White;
 	int x = 85;
 	if (!isForRemove)
@@ -863,7 +863,7 @@ void CMenu::drawOptionsOption(bool isForRemove, int color, bool isSelected)
 }
 void CMenu::drawAboutOption(bool isForRemove, int color, bool isSelected)
 {
-	int highlightColor = isSelected ? Yellow : color;
+	int highlightColor = isSelected ? Green : color;
 	int backColor = White;
 	int x = 85;
 	if (!isForRemove)
@@ -918,7 +918,7 @@ void CMenu::drawAboutOption(bool isForRemove, int color, bool isSelected)
 }
 void CMenu::drawHelpOption(bool isForRemove, int color, bool isSelected)
 {
-	int highlightColor = isSelected ? Yellow : color;
+	int highlightColor = isSelected ? Green : color;
 	int backColor = White;
 	int x = 85;
 	if (!isForRemove)
@@ -962,7 +962,7 @@ void CMenu::drawHelpOption(bool isForRemove, int color, bool isSelected)
 }
 void CMenu::drawExitOption(bool isForRemove, int color, bool isSelected)
 {
-	int highlightColor = isSelected ? Yellow : color;
+	int highlightColor = isSelected ? Green : color;
 	int backColor = White;
 	int x = 85;
 	if (!isForRemove)
