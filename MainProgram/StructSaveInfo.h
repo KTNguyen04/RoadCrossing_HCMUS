@@ -58,7 +58,3 @@ ostream& operator<<(ostream& outDev, const fileNames& fn);
 
 istream& operator>>(istream& inDev, fileNames& fn);
 
-//istream& operator>>(istream& inDev, saveInfo& info) {
-//	inDev >> num;
-//
-//}

@@ -181,14 +181,14 @@ void CConsole::clearScreen(int color) {
 	GetConsoleScreenBufferInfo(console, &csbi);
 	DWORD consoleSize = csbi.dwSize.X * csbi.dwSize.Y;
 
-	// Điều chỉnh màu sắc và nền trước khi xóa
+
 	CConsole::setColor(color);
 	CConsole::drawHorLine(0, CConsole::getConsoleWid(), 0, ' ', color, color);
 	for (int i = 1; i < CConsole::getConsoleHei(); ++i) {
 		CConsole::drawHorLine(0, CConsole::getConsoleWid(), i, ' ', color, color);
 	}
 
-	// Đặt lại con trỏ về vị trí ban đầu
+
 	SetConsoleCursorPosition(console, topLeft);
 	
 }

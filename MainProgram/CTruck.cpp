@@ -98,15 +98,6 @@ void CTruck::drawObject(bool isForRemove)
 
 		}
 
-		//x++;
-		//if (isInBoard(true, x)) {
-		//	CConsole::drawChar(x, coorY, botBlock, Black, Blue);
-		//	CConsole::drawChar(x, coorY - 1, block, Blue, backColor);
-		//	//	CConsole::drawChar(x, coorY - 2, block, Black, backColor);
-		//	CConsole::drawChar(x, coorY - 2, botBlock, Black, DarkYellow);
-		//	//CConsole::drawChar(x, coorY - 3, block, Yellow, backColor);
-
-		//}
 		x++;
 		if (isInBoard(true, x)) {
 

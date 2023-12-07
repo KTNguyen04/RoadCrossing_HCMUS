@@ -216,13 +216,6 @@ void CPeople::peopleMoving(char c)
 	else if (c == 'a') moveLeft();
 	else if (c == 's') moveDown();
 	else if (c == 'd') moveRight();
-	/*drawPeople(true);
-	drawPeople();*/
-	//this_thread::sleep_for(chrono::milliseconds(100));
-	//mPeo.unlock();
-
-
-	//CGame::drawRoad();
 
 }
 
@@ -278,11 +271,9 @@ bool CPeople::isDrown(const CBridge& br)
 int CPeople::relaxBackGround(const int& y, const int& x)
 {
 	int backColor = -1;
-	//if (y >= CRoad::sepPave[3]) backColor = paveColor;
+
 	if (y >= CRoad::sepLane[3] / 2 && y < CRoad::sepLane[3] / 2 + lane / 2) {
-		/*if (CRoad::specifyRoad[CRoad::sepLane[3]] == "lane") {
-			backColor = laneColor;
-		}*/
+
 		backColor = riverColor;
 		for (int i = 0; i < CGame::sepBridges.size(); i++) {
 			if (x >= CGame::sepBridges[i] && x < CGame::sepBridges[i] + bridgeWidth)
@@ -290,21 +281,15 @@ int CPeople::relaxBackGround(const int& y, const int& x)
 		}
 	}
 	else if (y >= CRoad::sepLane[2] / 2 && y < CRoad::sepLane[2] / 2 + lane / 2) {
-		/*if (CRoad::specifyRoad[CRoad::sepLane[2]] == "lane") {
-			backColor = laneColor;
-		}*/
+
 		backColor = laneColor;
 	}
 	else if (y >= CRoad::sepLane[1] / 2 && y < CRoad::sepLane[1] / 2 + lane / 2) {
-		/*if (CRoad::specifyRoad[CRoad::sepLane[1]] == "lane") {
-			backColor = laneColor;
-		}*/
+
 		backColor = laneColor;
 	}
 	else if (y >= CRoad::sepLane[0] / 2 && y < CRoad::sepLane[0] / 2 + lane / 2) {
-		/*if (CRoad::specifyRoad[CRoad::sepLane[0]] == "lane") {
-			backColor = laneColor;
-		}*/
+	
 		backColor = laneColor;
 	}
 	else if (y < CRoad::saveLane[0]) backColor = winColor;

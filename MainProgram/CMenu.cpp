@@ -17,9 +17,6 @@ void CMenu::run() {
 			g.showLevel(g.getLevel(), 171);
 			c = g.startGame();
 			if (c == 'r') {
-				/*delete g;
-				CConsole::clearScreen(White);
-				showMenu();*/
 				return;
 
 			}
@@ -109,9 +106,6 @@ void CMenu::run() {
 
 		}
 	}
-
-	/*if (g != NULL)
-		delete g;*/
 
 }
 

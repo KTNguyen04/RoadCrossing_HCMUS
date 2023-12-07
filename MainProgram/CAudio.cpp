@@ -19,9 +19,7 @@ void Audio::playSound(string type)
 	wstring wideString(type.begin(), type.end());
 	wstring command = L"open \"" + wideString + L"\" type waveaudio alias sound";
 	mciSendString(command.c_str(), NULL, 0, NULL);
-	//Play sound
 	mciSendString(L"play sound", NULL, 0, NULL);
-	//	mciSendString(L"stop sound", NULL, 0, NULL);
 
 
 }

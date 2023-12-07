@@ -31,7 +31,6 @@ class CConsole
 {
 public:
 	CConsole() {};
-	//~CConsole();
 	static void setUpConsole();
 	static void fixConsoleWindow();
 	static void removeScrollBar();

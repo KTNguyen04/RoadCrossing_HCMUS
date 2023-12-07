@@ -1,17 +1,17 @@
 ﻿  CGame.cpp
-C:\Users\Pro\OneDrive - VNU-HCMUS\Nam_2\HK1_23_24\OOP\Project\Code\CrossingRoadGame\MainProgram\CGame.cpp(368,39): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Pro\OneDrive - VNU-HCMUS\Nam_2\HK1_23_24\OOP\Project\Code\CrossingRoadGame\MainProgram\CGame.cpp(371,37): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Pro\OneDrive - VNU-HCMUS\Nam_2\HK1_23_24\OOP\Project\Code\CrossingRoadGame\MainProgram\CGame.cpp(379,39): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Pro\OneDrive - VNU-HCMUS\Nam_2\HK1_23_24\OOP\Project\Code\CrossingRoadGame\MainProgram\CGame.cpp(396,32): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Pro\OneDrive - VNU-HCMUS\Nam_2\HK1_23_24\OOP\Project\Code\CrossingRoadGame\MainProgram\CGame.cpp(414,34): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Pro\OneDrive - VNU-HCMUS\Nam_2\HK1_23_24\OOP\Project\Code\CrossingRoadGame\MainProgram\CGame.cpp(431,28): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Pro\OneDrive - VNU-HCMUS\Nam_2\HK1_23_24\OOP\Project\Code\CrossingRoadGame\MainProgram\CGame.cpp(1278,3): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Pro\OneDrive - VNU-HCMUS\Nam_2\HK1_23_24\OOP\Project\Code\CrossingRoadGame\MainProgram\CGame.cpp(1323,3): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Pro\OneDrive - VNU-HCMUS\Nam_2\HK1_23_24\OOP\Project\Code\CrossingRoadGame\MainProgram\CGame.cpp(1410,3): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Pro\OneDrive - VNU-HCMUS\Nam_2\HK1_23_24\OOP\Project\Code\CrossingRoadGame\MainProgram\CGame.cpp(570,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Pro\OneDrive - VNU-HCMUS\Nam_2\HK1_23_24\OOP\Project\Code\CrossingRoadGame\MainProgram\CGame.cpp(284,23): message : see reference to function template instantiation 'void CGame::resetPosObs<CTruck>(std::vector<CTruck,std::allocator<CTruck>> &,const int &)' being compiled
-C:\Users\Pro\OneDrive - VNU-HCMUS\Nam_2\HK1_23_24\OOP\Project\Code\CrossingRoadGame\MainProgram\CGame.cpp(550,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\Pro\OneDrive - VNU-HCMUS\Nam_2\HK1_23_24\OOP\Project\Code\CrossingRoadGame\MainProgram\CGame.cpp(330,17): message : see reference to function template instantiation 'void CGame::addObs<CTruck>(std::vector<CTruck,std::allocator<CTruck>> &)' being compiled
+C:\Users\Pro\OneDrive - VNU-HCMUS\Nam_2\HK1_23_24\OOP\Project\Code\CrossingRoadGame\MainProgram\CGame.cpp(305,39): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Pro\OneDrive - VNU-HCMUS\Nam_2\HK1_23_24\OOP\Project\Code\CrossingRoadGame\MainProgram\CGame.cpp(308,37): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Pro\OneDrive - VNU-HCMUS\Nam_2\HK1_23_24\OOP\Project\Code\CrossingRoadGame\MainProgram\CGame.cpp(316,39): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Pro\OneDrive - VNU-HCMUS\Nam_2\HK1_23_24\OOP\Project\Code\CrossingRoadGame\MainProgram\CGame.cpp(333,32): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Pro\OneDrive - VNU-HCMUS\Nam_2\HK1_23_24\OOP\Project\Code\CrossingRoadGame\MainProgram\CGame.cpp(351,34): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Pro\OneDrive - VNU-HCMUS\Nam_2\HK1_23_24\OOP\Project\Code\CrossingRoadGame\MainProgram\CGame.cpp(368,28): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Pro\OneDrive - VNU-HCMUS\Nam_2\HK1_23_24\OOP\Project\Code\CrossingRoadGame\MainProgram\CGame.cpp(1154,3): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Pro\OneDrive - VNU-HCMUS\Nam_2\HK1_23_24\OOP\Project\Code\CrossingRoadGame\MainProgram\CGame.cpp(1199,3): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Pro\OneDrive - VNU-HCMUS\Nam_2\HK1_23_24\OOP\Project\Code\CrossingRoadGame\MainProgram\CGame.cpp(1286,3): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Pro\OneDrive - VNU-HCMUS\Nam_2\HK1_23_24\OOP\Project\Code\CrossingRoadGame\MainProgram\CGame.cpp(507,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Pro\OneDrive - VNU-HCMUS\Nam_2\HK1_23_24\OOP\Project\Code\CrossingRoadGame\MainProgram\CGame.cpp(221,23): message : see reference to function template instantiation 'void CGame::resetPosObs<CTruck>(std::vector<CTruck,std::allocator<CTruck>> &,const int &)' being compiled
+C:\Users\Pro\OneDrive - VNU-HCMUS\Nam_2\HK1_23_24\OOP\Project\Code\CrossingRoadGame\MainProgram\CGame.cpp(487,1): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\Pro\OneDrive - VNU-HCMUS\Nam_2\HK1_23_24\OOP\Project\Code\CrossingRoadGame\MainProgram\CGame.cpp(267,17): message : see reference to function template instantiation 'void CGame::addObs<CTruck>(std::vector<CTruck,std::allocator<CTruck>> &)' being compiled
   Generating code
   1 of 1381 functions (<0.1%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation

@@ -61,7 +61,6 @@ public:
 	void initGame();
 	static void drawFrame();
 	static void drawRoad();
-	//	static void drawBackGround();
 	static int getWidth();
 	static int getHeight();
 	static int getCoorTopLeftX();
@@ -72,18 +71,13 @@ public:
 	char startGame();
 	template<class obstacle>
 	bool isAbleToCreate(obstacle& O1, obstacle& O2);
+	template<class T>
+	vector<T> createListObstacle(int x, int y, int number, string direct);
 	void initTrafficLights();
 	void initBridges();
 
-	template<class T>
-	vector<T> createListObstacle(int x, int y, int number, string direct);
-
-	
 	template <class obs>
 	void deleteShadow(vector<obs>& obss);
-
-	//static void relaxBackGround(const int& y, int& backColor);
-
 	void levelUp();
 	template<class obs>
 	void setObssSpeed(vector<obs>& obss);
@@ -96,21 +90,21 @@ public:
 	void resetPosBridge();   //0123
 	void resetPosTrafficLight();
 	void resetPosPp();
-	//void changeLight(CTrafficLight& tf);
-	
 	void increDifficulty();
 	static vector<int> sepBridges;
 	void tlLightUp();
 	void drawBridge();
 
+	
+
 	bool saveGame(const string& name);
 	void loadGame(const string& name);
-
 	char deadPopUp();
 	char victoryPopUp();
-	string loadPopUp(); //dung trong option load
+	string loadPopUp(); 
 	string savePopUp(bool isForRemove = false);
-	bool isAvail(string input); //kiem tra ten file nhap vao ko bi trung vs cac file da save
+	bool isAvail(string input);
+
 	void showLevel(int level, int x);
 	void showScore(int score, int x);
 	int getScore();

@@ -35,17 +35,6 @@ bool CFileWork::isEmpty()
 	return (file.tellg() == 0);
 }
 
-//void CFileWork::clearList()
-//{
-//	savedInf.infos.clear();
-//}
-//
-//
-//void CFileWork::getInfo(string info)
-//{
-//	savedInf.infos.push_back(info);
-//}
-
 template<class T>
 void CFileWork::saving(const T& data) {
 	file.seekp(0);

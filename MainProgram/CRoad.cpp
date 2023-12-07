@@ -30,16 +30,11 @@ void CRoad::drawRoad(const int&y,const int &color)
 void CRoad::drawPavement()
 {
 	for (int i = 0; i < 4; i++) {
-		//int backCl = specifyRoad[saveLane[i]] == "lane" ? laneColor : riverColor;
+
 		CConsole::drawHorLine(CGame::getCoorTopLeftX(), CGame::getCoorTopLeftX() + CGame::getWidth() - 1, sepPave[i] / 2, block, paveColor, background);
 		CConsole::drawHorLine(CGame::getCoorTopLeftX(), CGame::getCoorTopLeftX() + CGame::getWidth() - 1, sepPave[i] / 2 + 1, block, paveColor, background);
 		CConsole::drawHorLine(CGame::getCoorTopLeftX(), CGame::getCoorTopLeftX() + CGame::getWidth() - 1, sepPave[i] / 2 + 2, block, paveColor, background);
 		CConsole::drawHorLine(CGame::getCoorTopLeftX(), CGame::getCoorTopLeftX() + CGame::getWidth() - 1, sepPave[i] / 2 + 3, block, paveColor, background);
-		//if (i == 3) backCl = background;
-		//else
-		//	backCl = specifyRoad[saveLane[i + 1]] == "lane" ? laneColor : riverColor;
-		//
-		//CConsole::drawHorLine(CGame::getCoorTopLeftX(), CGame::getCoorTopLeftX() + CGame::getWidth() - 1, sepPave[i] / 2 + pavement / 2, topBlock, paveColor, backCl);
 
 	}
 }

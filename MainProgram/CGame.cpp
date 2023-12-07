@@ -15,20 +15,12 @@ CGame::CGame()
 {
 	key = 0;
 	score = 0;
-	//CRoad::setUpRoad();
-	//sepBridges.resize(bridges.size());
-
 
 }
 
 void CGame::initGame() {
 	level = 1;
-	//drawFrame();
-	//drawRoad();
-
 	score = 0;
-
-	//CRoad::drawMap();
 	initTrafficLights();
 	bool flag = false;
 	initObstacle();
@@ -49,10 +41,6 @@ void CGame::drawFrame()
 
 	CConsole::drawVerLine(coorTopLeftY + 1, coorTopLeftY + frameHeight / 2 - 2, coorTopLeftX + frameWidth - 1, wc2, Black);
 	CConsole::drawChar(coorTopLeftX + frameWidth - 1, coorTopLeftY + frameHeight / 2 - 1, L'\u2518', Black);
-
-
-
-
 
 }
 void CGame::drawBridge() {
@@ -79,15 +67,6 @@ void CGame::drawRoad()
 	}
 }
 
-//void CGame::drawBackGround()
-//{
-//	for (int i = 0; i < 4; i++) {
-//		fillRect(coorTopLeftX, coorTopLeftY + pavement / 2+i*(pavement+lane)/2, 0, frameWidth - 1, 220, laneColor);
-//		fillRect(coorTopLeftX, coorTopLeftY + pavement / 2 + 1+ i * (pavement + lane) / 2, lane / 2 - 2, frameWidth - 1, 219, laneColor);
-//		fillRect(coorTopLeftX, coorTopLeftY + pavement / 2 + lane / 2+ i * (pavement + lane) / 2, 0, frameWidth - 1, 223, laneColor);
-//	}
-//
-//}
 
 int CGame::getWidth()
 {
@@ -109,14 +88,6 @@ int CGame::getCoorTopLeftY()
 	return coorTopLeftY;
 }
 
-
-//void CGame::insertRectSpace(int x, int y, int height, int width, int color)
-//{
-//	for (int i = y; i >= y - height; i--) {
-//		CConsole::drawHorLine(x, x + width, i, 219, color);
-//	}
-//}
-
 void CGame::fillRect(int x, int y, int hei, int wid, wchar_t c, int color)
 {
 	for (int i = y; i <= y + hei; i++) {
@@ -135,37 +106,17 @@ char CGame::startGame()
 	while (1) {
 		if (pp.IS_DEAD()||!is_running) {
 			t1.join();
-			//if (pp.IS_DEAD()) return deadPopUp();
-			/*if (key == 'n') {
-				
-			}*/
+			if (pp.IS_DEAD()&&is_running) return deadPopUp();
 			return key;
 		}
-		//unique_lock<mutex> lock(m);
-		//cv2.wait(lock, [] {return finish_move; });
 		if (canmove) {
-
 			ready = true;
-
 			key = CConsole::getInput();
-			//if (tolower(key) == 'l') {
-			//	ready = false;
-			//	//CConsole::clearScreen(White);
-			//	string sPath = savePopUp();
-			//	if (sPath != "") {
-			//		saveGame(sPath);
-			//	}
-			//	ready = true;
-			//}
 			pp.peopleMoving(key);
 			Audio::playSound(moveSound);
 		}
 
 	}
-
-	////t2.join();
-	//t3.join();
-	//
 }
 
 void CGame::initTrafficLights()
@@ -239,21 +190,7 @@ void CGame::deleteShadow(vector<obs>& obss)
 	}
 }
 
-//template<class obstacle>
-//void CGame::moveObstacle() {
-//
-//	/*int getAvg = frameWidth / obs.size();
-//	int maxDis = (getAvg - obs.front().getWidth()) * 2;
-//	int minDis = 4;*/
-//
-//
-//	for (int i = 0; i < obs.size(); i++) {
-//		obs[i].move();
-//
-//	}
-//}
 
-//template<class obstacle>
 void CGame::initObstacle()
 {
 	int test = coorTopLeftY + 2 * (lane + pavement) / 2 - 1;
@@ -636,9 +573,6 @@ void CGame::subThread(bool& canmove, bool& rd, bool& isRun)
 			canmove = false;
 
 			if (pp.isNeedDraw()) {
-				//	m.unlock();
-
-
 				pp.drawPeople(true);
 				pp.drawPeople(false);
 
@@ -646,11 +580,9 @@ void CGame::subThread(bool& canmove, bool& rd, bool& isRun)
 				pp.setOldy(pp.getY());
 			}
 			if (pp.levelComplete()) {
-				//system("cls");
-				//setGame();
 				canmove = false;
 				Audio::playSound(levelUpSound);
-				//this_thread::sleep_for(chrono::microseconds(50));
+	
 
 				levelUp();
 				/*if (level > 19) {
@@ -671,17 +603,8 @@ void CGame::subThread(bool& canmove, bool& rd, bool& isRun)
 
 				pp.drawPeople();
 				canmove = true;
-//this_thread::sleep_for(chrono::microseconds(100));
-
 			}
-			
-			//	cv2.notify_one();
-
-			//lock_guard<mutex> lg(mt);
-
-
 			isDrowned = true;
-
 			sort(bridges.begin(), bridges.end(), [](const CBridge& a, const CBridge& b) {
 				return a.getCoorX() <= b.getCoorX();
 				});
@@ -698,25 +621,17 @@ void CGame::subThread(bool& canmove, bool& rd, bool& isRun)
 				}
 
 			}
-
 			if (isDrowned) {
 				audio.playSound(diveSound);
 				pp.dead(true);
 				Sleep(1);
-
 				pp.drawPeople(true);
-				//this_thread::sleep_for(chrono::microseconds(50));
 				pp.drawPeople();
 				Sleep(1);
-
 				key = deadPopUp();
-
 				canmove = true;
-				
-			
+				isRun = false;
 				continue;
-
-				//exit(0);
 			}
 
 			int maxx = 4;
@@ -741,31 +656,21 @@ void CGame::subThread(bool& canmove, bool& rd, bool& isRun)
 				}
 				if (pp.isCollide(e)) {
 					pp.dead(true);
-
 					audio.playSound(hitSound);
 					Sleep(1);
-
 					pp.drawPeople(true);
-					//this_thread::sleep_for(chrono::microseconds(50));
 					pp.drawPeople();
-					//audio.playSound(gameOverSound);
 					Sleep(1);
 
 					key = deadPopUp();
 					canmove = true;
+					isRun = false;
 
 					continue;
-
-
-
-					//system("pause");
 				}
 
 			}
 			for (auto& e : trucks) {
-				//	this_thread::sleep_for(chrono::microseconds(200 / e.getSpeed()));
-
-
 				if (trafficLights[0].getState() == "green") {
 					e.drawObject(true);
 					e.move();
@@ -774,31 +679,20 @@ void CGame::subThread(bool& canmove, bool& rd, bool& isRun)
 
 				if (pp.isCollide(e)) {
 					pp.dead(true);
-
 					audio.playSound(hitSound);
 					Sleep(1);
-
 					pp.drawPeople(true);
-					//this_thread::sleep_for(chrono::microseconds(50));
 					pp.drawPeople();
-
-
 					Sleep(1);
-
 					key = deadPopUp();
-
+					canmove = true;
+					isRun = false;
 
 					continue;
-
-					//system("pause");
-
 				}
 
 			}
 			for (auto& e : truck2s) {
-				//	this_thread::sleep_for(chrono::microseconds(200 / e.getSpeed()));
-
-
 				if (trafficLights[2].getState() == "green") {
 					e.drawObject(true);
 					e.move();
@@ -806,32 +700,18 @@ void CGame::subThread(bool& canmove, bool& rd, bool& isRun)
 				}
 				if (pp.isCollide(e)) {
 					pp.dead(true);
-
 					audio.playSound(hitSound);
-
-
 					pp.drawPeople(true);
-					//this_thread::sleep_for(chrono::microseconds(50));
 					pp.drawPeople();
-
 					Sleep(1);
-
 					key = deadPopUp();
-
+					canmove = true;
+					isRun = false;
 
 					continue;
-
-
-					//system("pause");
-
 				}
-
 			}
 			canmove = true;
-
-			//Sleep(1);
-
-		//subsub.join();
 		}
 	}
 	return;
@@ -1167,11 +1047,7 @@ string CGame::savePopUp(bool isForRemove) {
 		CConsole::drawVerLine(43, 53, 101, block, 0, 15);
 		CConsole::drawHorLine(2, 101, 53, botBlock, 15, 0);
 
-
-
 		string file_name;
-
-
 
 		string s = "Enter filename you would like to save as: ";
 		CConsole::drawString(15, 45, s, Black);

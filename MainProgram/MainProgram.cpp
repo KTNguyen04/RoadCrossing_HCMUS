@@ -4,8 +4,7 @@
 #include "CPeople.h"
 #include "CMenu.h"
 #include "CAudio.h"
-#include<mutex>
-#include <future>
+
 
 using namespace std;
 int main()

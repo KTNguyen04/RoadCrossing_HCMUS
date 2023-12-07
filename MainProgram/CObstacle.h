@@ -28,6 +28,5 @@ public:
 	
 	string getDirect()const;
 	
-	//virtual bool isInBoard(bool isForDraw = false, int x = -1) = 0;
 };
 

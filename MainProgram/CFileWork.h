@@ -18,16 +18,16 @@ class CFileWork
 public:
 	CFileWork();
 	void setPath(const string& name,const string& rootFolder );
+	void setFileName(const string& fileName);
 	bool openFile();
 	void closeFile();
-	void setFileName(const string& fileName);
 
 	template<class T>
 	void saving(const T& data);
 	template<class T>
 	T loading();
-	bool isEmpty();
 
+	bool isEmpty();
 
 };
 

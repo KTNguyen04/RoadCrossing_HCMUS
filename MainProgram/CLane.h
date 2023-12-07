@@ -6,6 +6,5 @@ class CLane:public CRoad
 	
 public:
 	CLane();
-	//void drawRoad();
 };
 

@@ -12,38 +12,6 @@ CCar::CCar(int x, int y, string direct, int speed):CObstacle(x, y, direct, speed
 
 }
 
-//void CCar::move()
-//{
-//
-//	Sleep(1);
-//	//	if (isInBoard())
-//	drawObject(true);
-//	if (direct == "right") {//left to right
-//		coorX += speed;
-//		if ((coorX >= (CGame::getCoorTopLeftX() + CGame::getWidth())) && !isInit()) {
-//			coorX -= CGame::getWidth();
-//			coorX -= this->width;
-//		}
-//		//if (!isInBoard() && !isInit()) coorX = CGame::getCoorTopLeftX() + CGame::getWidth() - 1;
-//	}
-//	else if (direct == "left") {
-//		coorX -= speed;
-//
-//		if ((coorX <= (CGame::getCoorTopLeftX() - this->width + 1)) && !isInit()) {
-//			coorX += CGame::getWidth();
-//			coorX += this->width;
-//		}
-//		//if (!isInBoard() && !isInit()) coorX += speed;
-//	}
-//
-//	//CGame::drawRoad();
-//	//coorX %= CGame::getWidth();
-//
-//	//if ( isInBoard())
-//	drawObject();
-//
-//}
-
 void CCar::drawObject(bool isForRemove)
 {
 	if (!isForRemove) {
@@ -100,7 +68,7 @@ void CCar::drawObject(bool isForRemove)
 			CConsole::drawChar(x, coorY , botBlock, Black, White);
 			CConsole::drawChar(x, coorY - 1, botBlock, Black, Red);
 			CConsole::drawChar(x, coorY - 2, block, Black, backColor);
-			//CConsole::drawChar(x, coorY - 1, botBlock, Black, Red);
+
 		}
 
 		x++;
@@ -155,7 +123,6 @@ void CCar::drawObject(bool isForRemove)
 			CConsole::drawChar(x, coorY , botBlock, backColor, backColor);
 			CConsole::drawChar(x, coorY - 1, botBlock, backColor, backColor);
 			CConsole::drawChar(x, coorY - 2, block, backColor, backColor);
-			//CConsole::drawChar(x, coorY - 1, botBlock, Black, Red);
 		}
 		x++;
 		if (isInBoard(true, x)) {
@@ -188,7 +155,6 @@ void CCar::drawObject(bool isForRemove)
 			CConsole::drawChar(x, coorY , botBlock, backColor, backColor);
 			CConsole::drawChar(x, coorY - 1, botBlock, backColor, backColor);
 			CConsole::drawChar(x, coorY - 2, block, backColor, backColor);
-			//CConsole::drawChar(x, coorY - 1, botBlock, Black, Red);
 		}
 
 		x++;
@@ -224,21 +190,3 @@ void CCar::drawObject(bool isForRemove)
 	}
 }
 
-//
-//bool CCar::isInBoard(bool isForDraw, int x)
-//{
-//	if (!isForDraw) {
-//		bool b1 = coorX >= CGame::getCoorTopLeftX() && coorX <= CGame::getCoorTopLeftX() + CGame::getWidth() - 1;
-//
-//		return b1;
-//	}
-//
-//	bool b1 = (x >= CGame::getCoorTopLeftX()) && (x <= (CGame::getCoorTopLeftX() + CGame::getWidth() -1));
-//
-//	return b1;
-//}
-
-
-//bool CCar::isInit() {
-//	return  (coorX <= CGame::getCoorTopLeftX() - this->width) || (coorX >= CGame::getCoorTopLeftX() + CGame::getWidth() + 1);
-//}
