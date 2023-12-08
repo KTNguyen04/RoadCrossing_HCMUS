@@ -98,15 +98,15 @@ void CGame::fillRect(int x, int y, int hei, int wid, wchar_t c, int color)
 
 char CGame::startGame()
 {
-	bool canmove = true, ready = false,is_running = true;
+	bool canmove = true, ready = false, is_running = true;
 	pp.drawPeople();
 	tlLightUp();
 	drawBridge();
-	thread t1(&CGame::subThread, this, std::ref(canmove), std::ref(ready),ref(is_running));
+	thread t1(&CGame::subThread, this, std::ref(canmove), std::ref(ready), ref(is_running));
 	while (1) {
-		if (pp.IS_DEAD()||!is_running) {
+		if (pp.IS_DEAD() || !is_running) {
 			t1.join();
-			if (pp.IS_DEAD()&&is_running) return deadPopUp();
+			if (pp.IS_DEAD() && is_running) return deadPopUp();
 			return key;
 		}
 		if (canmove) {
@@ -262,17 +262,19 @@ void CGame::resetPosPp()
 void CGame::increDifficulty()
 {
 	if (level <= 19) {
-		if (level % 6 == 2) {
+		if (level >= 6) {
+			if (level % 6 == 2) {
 
-			addObs(trucks);
-		}
-		else if (level % 6 == 3) {
+				addObs(trucks);
+			}
+			else if (level % 6 == 3) {
 
-			addObs(cars);
-		}
-		else if (level % 6 == 4) {
-			addObs(truck2s);
+				addObs(cars);
+			}
+			else if (level % 6 == 4) {
+				addObs(truck2s);
 
+			}
 		}
 		if (level >= 5) {
 			if (level % 6 == 5 && level) {
@@ -450,7 +452,7 @@ void CGame::loadGame(const string& name)
 		for (int i = 0; i < info.numTruck2; i++) {
 			truck2s[i].setCoorX(info.coorXTruck2[i]);
 			truck2s[i].setCoorY(info.coorYTruck2[i]);
-			truck2s[i].setSpeed(info.truck2Speed[i]);	
+			truck2s[i].setSpeed(info.truck2Speed[i]);
 			truck2s[i].setDirect(info.truck2Direct[i]);
 
 
@@ -550,7 +552,7 @@ void CGame::subThread(bool& canmove, bool& rd, bool& isRun)
 	bool isDrowned = true;
 	while (!pp.IS_DEAD()) {
 		if (rd) {
-			if (tolower(key )== 'r') {
+			if (tolower(key) == 'r') {
 				isRun = false;
 				return;
 			}
@@ -582,7 +584,7 @@ void CGame::subThread(bool& canmove, bool& rd, bool& isRun)
 			if (pp.levelComplete()) {
 				canmove = false;
 				Audio::playSound(levelUpSound);
-	
+
 
 				levelUp();
 				/*if (level > 19) {
@@ -876,8 +878,8 @@ char CGame::victoryPopUp()
 
 	//Draw VICTORY
 	//Draw V
-	CConsole::drawVerLine(11, 13, 20, block, Red,White);
-	CConsole::drawVerLine(11, 13, 21, block,Red, White);
+	CConsole::drawVerLine(11, 13, 20, block, Red, White);
+	CConsole::drawVerLine(11, 13, 21, block, Red, White);
 	CConsole::drawHorLine(22, 23, 14, block, Red, White);
 	CConsole::drawHorLine(26, 27, 14, block, Red, White);
 	CConsole::drawHorLine(24, 25, 15, block, Red, White);
@@ -935,12 +937,12 @@ char CGame::victoryPopUp()
 	cout << "               R To BACK";
 	CConsole::gotoXY(30, 28);
 	cout << "               N to New Game";
-	
+
 	cin.clear();
 	char choice;
 	do {
 		choice = CConsole::getInput();
-	} while (choice != 'l' && choice != 'r'&&choice!='n');
+	} while (choice != 'l' && choice != 'r' && choice != 'n');
 	return choice;
 }
 
